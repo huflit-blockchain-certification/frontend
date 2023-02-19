@@ -1,21 +1,48 @@
-import Header from '@/components/common/header'
-import * as React from 'react'
+import dynamic from 'next/dynamic'
+import Link from 'next/link'
+import { useRouter } from 'next/router'
+import React, { useEffect, useState } from 'react'
+
+//When we don't want to render at severside, we can use dynamic
+
+const Header = dynamic(() => import('@/components/common/header'), { ssr: false })
 
 export interface AboutProps {}
 
 export default function About(props: AboutProps) {
+  const router = useRouter()
+  const [posts, setPosts] = useState([])
+  useEffect(() => {
+    ;(async () => {
+      const res = await fetch('https://jsonplaceholder.typicode.com/todos')
+      const data = await res.json()
+      setPosts(data)
+    })()
+  }, [])
+
+  function handleNextPage() {
+    router.push({
+      pathname: '/about',
+      query: {
+        page: 2,
+      },
+    })
+  }
+
   return (
     <div>
       <Header />
-      <div className="p-6 max-w-sm mx-auto bg-white rounded-xl shadow-lg flex items-center space-x-4">
-        <div className="shrink-0">
-          <img className="h-12 w-12" src="/img/logo.svg" alt="ChitChat Logo" />
-        </div>
-        <div>
-          <div className="text-xl font-medium text-black">ChitChat</div>
-          <p className="text-slate-500">You have a new message!</p>
-        </div>
-      </div>{' '}
+      <div className="text-slate-700 text-7xl">About</div>
+      <ul>
+        {posts.map((post: any) => (
+          <li key={post.id}>
+            <Link href={`/posts/${post.id}`}>{post.title}</Link>
+          </li>
+        ))}
+        <button className="p-3 shadow border-l-amber-50 bg-slate-500" onClick={handleNextPage}>
+          Next
+        </button>
+      </ul>
     </div>
   )
 }
