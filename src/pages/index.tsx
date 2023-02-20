@@ -1,5 +1,5 @@
 import Head from 'next/head'
-
+import MainLayout from '@/layouts/MainLayout/mainLayout'
 export default function Home() {
   return (
     <>
@@ -9,11 +9,9 @@ export default function Home() {
         <meta name="viewport" content="width=device-width, initial-scale=1" />
         <link rel="icon" href="/favicon.ico" />
       </Head>
-      <main className="p-3">
-        <div className="p-5 shadow border-2 rounded-lg">
-          <p className="font-bold text-4xl">HUFLIT-BLOCKCHAIN-CERTIFICATE NEXTJS</p>
-        </div>
-      </main>
+      <MainLayout>
+        <></>
+      </MainLayout>
     </>
   )
 }

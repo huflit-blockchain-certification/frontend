@@ -6,7 +6,7 @@ import useSWR from 'swr'
 
 //When we don't want to render at severside, we can use dynamic
 
-const Header = dynamic(() => import('@/components/common/header'), { ssr: false })
+const Header = dynamic(() => import('@/components/common/Header/header'), { ssr: false })
 
 export interface AboutProps {}
 
