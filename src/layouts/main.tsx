@@ -10,7 +10,7 @@ export default function MainLayout({ children }: MainLayoutProps) {
   return (
     <div>
       <Menu />
-      <main className="container mx-auto">{children}</main>
+      <main className="pb-8">{children}</main>
       <hr></hr>
       <BottomNavigation />
     </div>
