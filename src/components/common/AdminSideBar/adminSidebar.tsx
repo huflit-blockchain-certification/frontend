@@ -12,7 +12,7 @@ import {
 } from 'react-icons/hi'
 export interface AdminSideBar {}
 
-export default function App(props: AdminSideBar) {
+export default function AdminSideBar(props: AdminSideBar) {
   return (
     <div className="w-fit">
       <Sidebar aria-label="blockchain-sidebar">

@@ -1,18 +1,14 @@
 import * as React from 'react'
 import { Menu } from '@/components/common/Menu/menu'
 import BottomNavigation from '@/components/common/BottomNavigation/bottomNavigation'
+import { LayoutProps } from 'models/'
 
-export interface MainLayoutProps {
-  children: React.ReactNode
-}
-
-export default function MainLayout({ children }: MainLayoutProps) {
+export function MainLayout({ children }: LayoutProps) {
   return (
-    <div>
+    <>
       <Menu />
       <main className="pb-8">{children}</main>
-      <hr></hr>
       <BottomNavigation />
-    </div>
+    </>
   )
 }

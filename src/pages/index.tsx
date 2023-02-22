@@ -1,5 +1,5 @@
 import Head from 'next/head'
-import MainLayout from '@/layouts/main'
+import { MainLayout } from '@/layouts'
 import { Button, Label, TextInput } from 'flowbite-react'
 
 export default function Home() {
@@ -11,26 +11,25 @@ export default function Home() {
         <meta name="viewport" content="width=device-width, initial-scale=1" />
         <link rel="icon" href="/favicon.ico" />
       </Head>
-      <MainLayout>
-        <img
-          alt="home-image"
-          className="w-full"
-          src="https://binhdinh.vbcc.vn/upload/21325/20210506/Group_48_b0114.png"
-        />
+      <img
+        alt="home-image"
+        className="w-full"
+        src="https://binhdinh.vbcc.vn/upload/21325/20210506/Group_48_b0114.png"
+      />
 
-        <div className="flex justify-center">
-          <form className="flex flex-col gap-4 shadow p-5 w-1/3">
-            <div className="font-bold text-red-600 text-center">Tra cứu văn bằng chứng chỉ</div>
-            <div>
-              <div className="mb-2 block">
-                <Label htmlFor="name" value="Họ tên" />
-              </div>
-              <TextInput id="name" type="name" placeholder="name@flowbite.com" required={true} />
+      <div className="flex justify-center">
+        <form className="flex flex-col gap-4 shadow p-5 w-1/3">
+          <div className="font-bold text-red-600 text-center">Tra cứu văn bằng chứng chỉ</div>
+          <div>
+            <div className="mb-2 block">
+              <Label htmlFor="name" value="Họ tên" />
             </div>
-            <Button type="submit">Tra cứu</Button>
-          </form>
-        </div>
-      </MainLayout>
+            <TextInput id="name" type="name" placeholder="name@flowbite.com" required={true} />
+          </div>
+          <Button type="submit">Tra cứu</Button>
+        </form>
+      </div>
     </>
   )
 }
+Home.Layout = MainLayout
