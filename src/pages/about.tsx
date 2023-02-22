@@ -6,7 +6,10 @@ import useSWR from 'swr'
 
 //When we don't want to render at severside, we can use dynamic
 
-const Header = dynamic(() => import('@/components/common/Header/header'), { ssr: false })
+const Menu = dynamic(
+  () => import('@/components/common/Menu/menu').then((module) => ({ default: module.Menu })),
+  { ssr: false }
+)
 
 export interface AboutProps {}
 
@@ -32,7 +35,7 @@ export default function About(props: AboutProps) {
 
   return (
     <div>
-      <Header />
+      <Menu />
       <div className="text-slate-700 text-7xl">About</div>
       <ul>
         {data.map((post: any) => (
