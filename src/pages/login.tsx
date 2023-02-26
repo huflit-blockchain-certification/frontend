@@ -1,0 +1,36 @@
+import { Input } from '@/components/common/Form/Input/Input'
+import { APP_NAME } from '@/dynamic'
+import { FormLayout, MainLayout } from '@/layouts'
+import { loginSchema } from '@/validation/User/login.user.validation'
+import { yupResolver } from '@hookform/resolvers/yup'
+import { Button } from 'flowbite-react'
+import * as React from 'react'
+import { useForm } from 'react-hook-form'
+import { FieldValues } from 'react-hook-form/dist/types'
+import { login } from './api/User/login.user.api'
+
+export interface LoginProps {}
+
+export default function LoginPage(props: LoginProps) {
+  const { control, handleSubmit } = useForm({ resolver: yupResolver(loginSchema) })
+  const onSubmit = (data: FieldValues) => {}
+
+  return (
+    <FormLayout disableHeader onSubmit={handleSubmit(onSubmit)}>
+      <div className="flex h-screen">
+        <div className="m-auto">
+          <div className="flex flex-col gap-5 p-10 shadow w-96 rounded-lg hover:shadow-lg">
+            <div className="text-center font-semibold text-2xl">{APP_NAME}</div>
+            <Input label="Tên đăng nhập" name="userName" control={control} required />
+            <Input label="Mật khẩu " name="password" control={control} required />
+            <div className="m-auto">
+              <Button type="submit">Login</Button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </FormLayout>
+  )
+}
+
+LoginPage.Layout = MainLayout
