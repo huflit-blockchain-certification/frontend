@@ -1,3 +1,4 @@
+import moment from 'moment'
 import React from 'react'
 import { useController, Control } from 'react-hook-form'
 
@@ -19,7 +20,10 @@ export function DatePicker({ name, control, label, placeholder, required, ref }:
 
   return (
     <>
-      <label style={{ fontWeight: '500', fontSize: '12px' }}>
+      <label
+        style={{ fontWeight: '500', fontSize: '12px' }}
+        className={error && `block mb-2 text-sm font-medium text-red-700 dark:text-red-500`}
+      >
         {label} {required && <span style={{ color: 'red', fontWeight: 'bold' }}>*</span>}
       </label>
       <div className="relative w-full">
@@ -40,7 +44,7 @@ export function DatePicker({ name, control, label, placeholder, required, ref }:
         </div>
 
         <input
-          value={value}
+          value={moment(value).format('YYYY-MM-DD')}
           onChange={(e) => {
             onChange(e.target.value)
           }}
@@ -48,7 +52,16 @@ export function DatePicker({ name, control, label, placeholder, required, ref }:
           name={name}
           placeholder={placeholder ?? ''}
           type="date"
-          className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full pl-10 p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+          className={
+            !error
+              ? `bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg 
+          focus:ring-blue-500 focus:border-blue-500 block w-full pl-10 p-2.5 dark:bg-gray-700 
+          dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 
+          dark:focus:border-blue-500`
+              : `bg-red-50 border border-red-500 text-red-900 placeholder-red-700 text-sm rounded-lg focus:ring-red-500 dark:bg-gray-700
+               focus:border-red-500 block w-full p-2.5 
+               dark:text-red-500 dark:placeholder-red-500 dark:border-red-500`
+          }
         />
       </div>
       <div style={{ fontSize: '.875em', color: '#b02a37', width: '100%' }}>

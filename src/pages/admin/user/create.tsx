@@ -8,32 +8,26 @@ import { HiOutlineX } from 'react-icons/hi'
 import { yupResolver } from '@hookform/resolvers/yup'
 import { registerSchema } from '@/validation/User/register.user.validation'
 import { FieldValues } from 'react-hook-form/dist/types'
-import { register } from '../api/User/register.user.api'
+import { register } from '../../api/User/register.user.api'
 import { registerDTO } from '@/DTO/User/register.dto.user'
 import Radio from '@/components/common/Form/Radio/radio'
+import { registerDefaultForm } from '@/default/register.default'
 
 export interface UserPageProps {}
 
 export default function UserPage(props: UserPageProps) {
-  const defaultForm: registerDTO = {
-    listUser: [
-      {
-        name: '',
-        address: '',
-        dateOfBirth: new Date(),
-        email: '',
-        gender: '',
-        identity: '',
-        nation: '',
-        password: '',
-        phone: '',
-        roles: ['hello'],
-        userName: '',
-      },
-    ],
-  }
+  const genderOptions = [
+    { value: 'MALE', label: 'Male' },
+    { value: 'FEMALE', label: 'Female' },
+    { value: 'OTHER', label: 'Other' },
+  ]
 
-  const { control, handleSubmit, reset } = useForm<registerDTO>({
+  const {
+    control,
+    handleSubmit,
+    reset,
+    formState: { errors },
+  } = useForm<registerDTO>({
     resolver: yupResolver(registerSchema),
   })
 
@@ -45,7 +39,7 @@ export default function UserPage(props: UserPageProps) {
     register(data)
   }
   useEffect(() => {
-    reset(defaultForm)
+    reset(registerDefaultForm)
   }, [])
 
   return (
@@ -60,11 +54,11 @@ export default function UserPage(props: UserPageProps) {
               control={control}
               required
             />
-            <Input
-              name={`listUser[${index}].gender`}
+            <Radio
               label="Giới tính"
+              name={`listUser[${index}].gender`}
               control={control}
-              required
+              options={genderOptions}
             />
             <Input
               name={`listUser[${index}].nation`}
@@ -93,7 +87,6 @@ export default function UserPage(props: UserPageProps) {
               type="password"
               required
             />
-            <Radio />
             <HiOutlineX
               className="absolute top-2 right-2 text-2xl cursor-pointer"
               onClick={() => remove(index)}

@@ -1,6 +1,5 @@
-const { env } = process
+const API_VERSION = process.env.NEXT_PUBLIC_API_VERSION || 'v1'
+const API_URL = process.env.NEXT_PUBLIC_API_URL || `http://localhost:3001/api/${API_VERSION}`
+const API_KEY = process.env.NEXT_PUBLIC_API_KEY || ''
 
-const API_VERSION = env.API_VERSION
-const API_URL = env.API_URL || `http://localhost:3001/api/${API_VERSION || 'v1'}`
-
-export { API_VERSION, API_URL }
+export { API_VERSION, API_URL, API_KEY }

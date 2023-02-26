@@ -1,4 +1,4 @@
-import { API_URL } from '@/constants'
+import { API_URL, API_KEY } from '@/constants'
 
 interface IFetcher {
   method: string
@@ -22,6 +22,7 @@ const fetcher = async ({ method, url, body, ...rest }: IFetcher) => {
     headers: headers
       ? headers
       : {
+          'x-api-key': API_KEY,
           'Content-Type': 'application/json',
           // 'Content-Type': 'application/x-www-form-urlencoded',
         },
