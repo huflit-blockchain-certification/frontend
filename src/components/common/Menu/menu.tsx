@@ -1,5 +1,5 @@
 import { APP_NAME } from '@/dynamic'
-import { Button, Dropdown, Navbar } from 'flowbite-react'
+import { Dropdown, Navbar } from 'flowbite-react'
 import Image from 'next/image'
 import { useRouter } from 'next/router'
 import * as React from 'react'
@@ -9,7 +9,7 @@ export function Menu(props: Navbar) {
   const router = useRouter()
   return (
     <Navbar fluid={true} rounded={true} border={true}>
-      <Navbar.Brand href="/">
+      <Navbar.Brand className="cursor-pointer" onClick={() => router.push('/')}>
         <Image
           width="50"
           height="50"
@@ -22,18 +22,19 @@ export function Menu(props: Navbar) {
         </span>
       </Navbar.Brand>
       <Navbar.Collapse>
-        <Navbar.Link href="/" active={true}>
+        <Navbar.Link className="cursor-pointer" onClick={() => router.push('/')} active={true}>
           Trang chủ
         </Navbar.Link>
-        <Navbar.Link href="/">Thông tin</Navbar.Link>
-        <Navbar.Link href="/">Dịch vụ</Navbar.Link>
-        <Navbar.Link href="/">Giá cả</Navbar.Link>
-        <Navbar.Link href="/">Liên hệ</Navbar.Link>
-        <Navbar.Link href="/login">Đăng nhập</Navbar.Link>
+        <Navbar.Link className="cursor-pointer">Thông tin</Navbar.Link>
+        <Navbar.Link className="cursor-pointer">Dịch vụ</Navbar.Link>
+        <Navbar.Link className="cursor-pointer">Giá cả</Navbar.Link>
+        <Navbar.Link className="cursor-pointer">Liên hệ</Navbar.Link>
+        <Navbar.Link className="cursor-pointer" onClick={() => router.push('/login')}>
+          Đăng nhập
+        </Navbar.Link>
         <Dropdown inline={true} label="Tài khoản" size="sm">
           <Dropdown.Item></Dropdown.Item>
           <Dropdown.Item onClick={() => router.push('/admin')}>Quản trị</Dropdown.Item>
-          <Dropdown.Item>Đăng nhập</Dropdown.Item>
           <Dropdown.Item>Đăng xuất</Dropdown.Item>
         </Dropdown>
       </Navbar.Collapse>

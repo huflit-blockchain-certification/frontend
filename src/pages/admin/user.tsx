@@ -2,22 +2,38 @@ import { DatePicker } from '@/components/common/Form/DatePicker/DatePicker'
 import { Input } from '@/components/common/Form/Input/Input'
 import { AdminLayout, FormLayout, MultipleFormLayout } from '@/layouts'
 import { Button } from 'flowbite-react'
-import * as React from 'react'
+import React, { useEffect } from 'react'
 import { useFieldArray, useForm } from 'react-hook-form'
 import { HiOutlineX } from 'react-icons/hi'
 import { yupResolver } from '@hookform/resolvers/yup'
 import { registerSchema } from '@/validation/User/register.user.validation'
 import { FieldValues } from 'react-hook-form/dist/types'
+import { register } from '../api/User/register.user.api'
+import { registerDTO } from '@/DTO/User/register.dto.user'
+import Radio from '@/components/common/Form/Radio/radio'
 
 export interface UserPageProps {}
 
 export default function UserPage(props: UserPageProps) {
-  const {
-    control,
-    handleSubmit,
-    formState: { errors },
-    getValues,
-  } = useForm({
+  const defaultForm: registerDTO = {
+    listUser: [
+      {
+        name: '',
+        address: '',
+        dateOfBirth: new Date(),
+        email: '',
+        gender: '',
+        identity: '',
+        nation: '',
+        password: '',
+        phone: '',
+        roles: ['hello'],
+        userName: '',
+      },
+    ],
+  }
+
+  const { control, handleSubmit, reset } = useForm<registerDTO>({
     resolver: yupResolver(registerSchema),
   })
 
@@ -25,7 +41,12 @@ export default function UserPage(props: UserPageProps) {
     control,
     name: 'listUser',
   })
-  const onSubmit = (data: FieldValues) => {}
+  const onSubmit = (data: registerDTO) => {
+    register(data)
+  }
+  useEffect(() => {
+    reset(defaultForm)
+  }, [])
 
   return (
     <FormLayout onSubmit={handleSubmit(onSubmit)} customActions={<CustomActions append={append} />}>
@@ -72,6 +93,7 @@ export default function UserPage(props: UserPageProps) {
               type="password"
               required
             />
+            <Radio />
             <HiOutlineX
               className="absolute top-2 right-2 text-2xl cursor-pointer"
               onClick={() => remove(index)}

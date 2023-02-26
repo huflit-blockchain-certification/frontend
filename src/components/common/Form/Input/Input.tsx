@@ -4,7 +4,7 @@ import { useController, Control } from 'react-hook-form'
 
 interface DatePickerProps {
   name: string
-  control: Control
+  control: Control<any>
   label?: string
   placeholder?: string
   ref?: React.RefObject<HTMLInputElement>
@@ -32,6 +32,7 @@ export function Input({
         {label} {required && <span style={{ color: 'red', fontWeight: 'bold' }}>*</span>}
       </label>
       <TextInput
+        color={error && 'failure'}
         value={value}
         onChange={(e) => {
           onChange(e.target.value)
