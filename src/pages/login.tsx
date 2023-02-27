@@ -8,24 +8,19 @@ import { Button } from 'flowbite-react'
 import * as React from 'react'
 import { useForm } from 'react-hook-form'
 import { login } from './api/User/login.user.api'
-import { useCookies } from 'react-cookie'
 import { useRouter } from 'next/router'
 import Swal from 'sweetalert2'
-
 export interface LoginProps {}
 
 export default function LoginPage(props: LoginProps) {
-  const [cookies, setCookies] = useCookies(['accessToken', 'refreshToken'])
   const router = useRouter()
   const { control, handleSubmit, reset } = useForm<LoginDTO>({
     resolver: yupResolver(loginSchema),
     defaultValues: { userName: '', password: '' },
   })
+
   const onSubmit = (data: LoginDTO) => {
-    login(data, (record) => {
-      const { accessToken, refreshToken } = record.data.tokens
-      setCookies('accessToken', accessToken)
-      setCookies('refreshToken', refreshToken)
+    login(data, () => {
       router.push('/')
       Swal.fire({ title: 'Login succesfully', icon: 'success' })
     })

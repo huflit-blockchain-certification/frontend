@@ -3,10 +3,11 @@ import * as React from 'react'
 import { LayoutProps } from 'models/'
 import AdminSideBar from '@/components/common/AdminSideBar/adminSidebar'
 import BottomNavigation from '@/components/common/BottomNavigation/bottomNavigation'
+import { Auth } from '@/components/common/Auth/auth'
 
 export function AdminLayout({ children }: LayoutProps) {
   return (
-    <>
+    <Auth>
       <Menu />
       <div className="grid grid-cols-12">
         <div className="col-span-2">
@@ -17,6 +18,6 @@ export function AdminLayout({ children }: LayoutProps) {
         </div>
       </div>
       <BottomNavigation />
-    </>
+    </Auth>
   )
 }

@@ -9,16 +9,16 @@ interface IFetcher {
   headers?: any
   redirect?: RequestRedirect
   referrerPolicy?: ReferrerPolicy
-  body: any
+  body?: any
 }
 
 const fetcher = async ({ method, url, body, ...rest }: IFetcher) => {
   const { cache, credentials, headers, redirect, referrerPolicy, mode } = rest
-  const response = await fetch(`${API_URL}/${url}`, {
+  const response = await fetch(`${API_URL}${url}`, {
     method, // *GET, POST, PUT, DELETE, etc.
     mode, // no-cors, *cors, same-origin
     cache, // *default, no-cache, reload, force-cache, only-if-cached
-    credentials, // include, *same-origin, omit
+    credentials: credentials ? credentials : 'include', // include, *same-origin, omit
     headers: headers
       ? headers
       : {
