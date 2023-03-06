@@ -1,6 +1,5 @@
 import Head from 'next/head'
 import { MainLayout } from '@/layouts'
-import { Button, Label, TextInput } from 'flowbite-react'
 
 export default function Home() {
   return (
@@ -22,11 +21,11 @@ export default function Home() {
           <div className="font-bold text-red-600 text-center">Tra cứu văn bằng chứng chỉ</div>
           <div>
             <div className="mb-2 block">
-              <Label htmlFor="name" value="Họ tên" />
+              <label htmlFor="name" />
             </div>
-            <TextInput id="name" type="name" placeholder="name@flowbite.com" required={true} />
+            <input id="name" type="name" placeholder="name@flowbite.com" required={true} />
           </div>
-          <Button type="submit">Tra cứu</Button>
+          <button type="submit">Tra cứu</button>
         </form>
       </div>
     </>

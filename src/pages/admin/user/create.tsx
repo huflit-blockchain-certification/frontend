@@ -1,7 +1,6 @@
 import { DatePicker } from '@/components/common/Form/DatePicker/DatePicker'
 import { Input } from '@/components/common/Form/Input/Input'
 import { AdminLayout, FormLayout, MultipleFormLayout } from '@/layouts'
-import { Button } from 'flowbite-react'
 import React, { useEffect } from 'react'
 import { useFieldArray, useForm } from 'react-hook-form'
 import { HiOutlineX } from 'react-icons/hi'
@@ -12,14 +11,15 @@ import { register } from '../../api/User/register.user.api'
 import { registerDTO } from '@/DTO/User/register.dto.user'
 import Radio from '@/components/common/Form/Radio/radio'
 import { registerDefaultForm } from '@/default/register.default'
+import { Button } from '@mui/material'
 
 export interface UserPageProps {}
 
 export default function UserPage(props: UserPageProps) {
   const genderOptions = [
-    { value: 'MALE', label: 'Male' },
-    { value: 'FEMALE', label: 'Female' },
-    { value: 'OTHER', label: 'Other' },
+    { value: 'Nam', label: 'Male' },
+    { value: 'Nữ', label: 'Female' },
+    { value: 'Khác', label: 'Other' },
   ]
 
   const {
@@ -105,8 +105,12 @@ function CustomActions({ append }: FieldValues) {
   return (
     <div className="ml-auto">
       <div className="flex gap-3">
-        <Button onClick={handleAdd}>Add</Button>
-        <Button type="submit">Save</Button>
+        <Button variant="outlined" onClick={handleAdd}>
+          Tạo
+        </Button>
+        <Button variant="outlined" type="submit">
+          Lưu
+        </Button>
       </div>
     </div>
   )

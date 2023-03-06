@@ -1,15 +1,15 @@
-import { TextInput } from 'flowbite-react'
 import React from 'react'
 import { useController, Control } from 'react-hook-form'
+import TextField from '@mui/material/TextField'
 
 interface DatePickerProps {
   name: string
   control: Control<any>
   label?: string
   placeholder?: string
-  ref?: React.RefObject<HTMLInputElement>
   required?: boolean
   type?: string
+  fullWidth?: boolean
 }
 
 export function Input({
@@ -18,33 +18,28 @@ export function Input({
   label,
   placeholder,
   required,
-  ref,
+  fullWidth,
   ...rest
 }: DatePickerProps) {
   const {
-    field: { value, onChange },
+    field: { value, onChange, ref },
     fieldState: { error },
   } = useController({ name, control })
 
   return (
-    <div>
-      <label style={{ fontWeight: '500', fontSize: '12px' }}>
-        {label} {required && <span style={{ color: 'red', fontWeight: 'bold' }}>*</span>}
-      </label>
-      <TextInput
-        color={error && 'failure'}
-        value={value}
-        onChange={(e) => {
-          onChange(e.target.value)
-        }}
-        ref={ref}
-        name={name}
-        placeholder={placeholder ?? ''}
-        {...rest}
-      />
-      <div style={{ fontSize: '.875em', color: '#b02a37', width: '100%' }}>
-        {error && error.message}
-      </div>
-    </div>
+    <TextField
+      error={error && true}
+      label={label}
+      value={value}
+      onChange={(e) => {
+        onChange(e.target.value)
+      }}
+      ref={ref}
+      name={name}
+      placeholder={placeholder ?? ''}
+      helperText={error && error.message}
+      fullWidth={fullWidth && true}
+      {...rest}
+    />
   )
 }

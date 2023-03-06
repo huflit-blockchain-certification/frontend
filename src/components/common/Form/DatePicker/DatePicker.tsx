@@ -1,72 +1,55 @@
 import moment from 'moment'
 import React from 'react'
 import { useController, Control } from 'react-hook-form'
+import { LocalizationProvider } from '@mui/x-date-pickers'
+import { AdapterMoment } from '@mui/x-date-pickers/AdapterMoment'
+import { DatePicker as DatePickField } from '@mui/x-date-pickers/DatePicker'
 
 interface DatePickerProps {
   name: string
   control: Control<any>
   label?: string
   placeholder?: string
-  ref?: React.RefObject<HTMLInputElement>
   required?: boolean
   type?: string
+  fullWidth?: boolean
 }
 
-export function DatePicker({ name, control, label, placeholder, required, ref }: DatePickerProps) {
+export function DatePicker({
+  name,
+  control,
+  label,
+  placeholder,
+  required,
+  fullWidth,
+  ...rest
+}: DatePickerProps) {
   const {
-    field: { value, onChange },
+    field: { value, onChange, ref },
     fieldState: { error },
   } = useController({ name, control })
 
   return (
-    <>
-      <label
-        style={{ fontWeight: '500', fontSize: '12px' }}
-        className={error && `block mb-2 text-sm font-medium text-red-700 dark:text-red-500`}
-      >
-        {label} {required && <span style={{ color: 'red', fontWeight: 'bold' }}>*</span>}
-      </label>
-      <div className="relative w-full">
-        <div className="absolute inset-y-0 left-0 flex items-center pl-3 pointer-events-none">
-          <svg
-            aria-hidden="true"
-            className="w-5 h-5 text-gray-500 dark:text-gray-400"
-            fill="currentColor"
-            viewBox="0 0 20 20"
-            xmlns="http://www.w3.org/2000/svg"
-          >
-            <path
-              fillRule="evenodd"
-              d="M6 2a1 1 0 00-1 1v1H4a2 2 0 00-2 2v10a2 2 0 002 2h12a2 2 0 002-2V6a2 2 0 00-2-2h-1V3a1 1 0 10-2 0v1H7V3a1 1 0 00-1-1zm0 5a1 1 0 000 2h8a1 1 0 100-2H6z"
-              clip-rule="evenodd"
-            ></path>
-          </svg>
-        </div>
-
-        <input
-          value={moment(value).format('YYYY-MM-DD')}
-          onChange={(e) => {
-            onChange(e.target.value)
-          }}
-          ref={ref}
-          name={name}
-          placeholder={placeholder ?? ''}
-          type="date"
-          className={
-            !error
-              ? `bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg 
-          focus:ring-blue-500 focus:border-blue-500 block w-full pl-10 p-2.5 dark:bg-gray-700 
-          dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 
-          dark:focus:border-blue-500`
-              : `bg-red-50 border border-red-500 text-red-900 placeholder-red-700 text-sm rounded-lg focus:ring-red-500 dark:bg-gray-700
-               focus:border-red-500 block w-full p-2.5 
-               dark:text-red-500 dark:placeholder-red-500 dark:border-red-500`
-          }
-        />
-      </div>
-      <div style={{ fontSize: '.875em', color: '#b02a37', width: '100%' }}>
-        {error && error.message}
-      </div>
-    </>
+    <LocalizationProvider dateAdapter={AdapterMoment}>
+      <DatePickField
+        label={label}
+        value={moment(value)}
+        format="DD/MM/YYYY"
+        onChange={(e) => {
+          onChange(e)
+        }}
+        slotProps={{
+          textField: {
+            helperText: error && error.message,
+            placeholder: placeholder ?? '',
+            name,
+            ref,
+            error: error && true,
+            fullWidth: fullWidth && true,
+            ...rest,
+          },
+        }}
+      />
+    </LocalizationProvider>
   )
 }

@@ -1,24 +1,24 @@
-import { Button } from 'flowbite-react'
 import { useRouter } from 'next/router'
 import React from 'react'
-
+import Button from '@mui/material/Button'
 interface TableLayoutProps {
   children: React.ReactNode
   title?: string
+  slug: string
 }
 
-export function TableLayout({ title, children }: TableLayoutProps) {
+export function TableLayout({ title, children, slug }: TableLayoutProps) {
   const router = useRouter()
   return (
     <>
       <div className="flex p-5">
-        <div className="text-2xl font-bold">{title?.toUpperCase() + ' MANAGEMENT' || ''}</div>
+        <div className="text-2xl font-bold">{title?.toUpperCase() || ''}</div>
         <Button
+          variant="outlined"
           className="ml-auto"
-          type="submit"
-          onClick={() => router.push(`/admin/${title}/create`)}
+          onClick={() => router.push(`/admin/${slug}/create`)}
         >
-          Create
+          Tạo
         </Button>
       </div>
       {children}

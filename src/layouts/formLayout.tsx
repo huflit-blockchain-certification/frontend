@@ -1,4 +1,3 @@
-import { Button } from 'flowbite-react'
 import React from 'react'
 interface FormProps {
   children: React.ReactNode
@@ -19,13 +18,7 @@ export function FormLayout({
     <form onSubmit={onSubmit}>
       {!disableHeader && (
         <div className="flex p-5">
-          {customActions ? (
-            customActions
-          ) : (
-            <Button className="ml-auto" type="submit">
-              Save
-            </Button>
-          )}
+          {customActions ? customActions : <div className="ml-auto">Lưu</div>}
         </div>
       )}
       <div className={className ?? ''}>{children}</div>
