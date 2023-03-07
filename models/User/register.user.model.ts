@@ -1,7 +1,7 @@
 export interface User {
   userName: string
   password: string
-  roles: Array<String>
+  roles: string | string[]
   name: string
   email: string
   phone: string

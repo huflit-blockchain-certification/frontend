@@ -1,6 +1,7 @@
 import { useRouter } from 'next/router'
 import React from 'react'
 import Button from '@mui/material/Button'
+import { GoBack } from '@/components/common/Goback/goback'
 interface TableLayoutProps {
   children: React.ReactNode
   title?: string
@@ -12,14 +13,15 @@ export function TableLayout({ title, children, slug }: TableLayoutProps) {
   return (
     <>
       <div className="flex p-5">
-        <div className="text-2xl font-bold">{title?.toUpperCase() || ''}</div>
-        <Button
-          variant="outlined"
-          className="ml-auto"
-          onClick={() => router.push(`/admin/${slug}/create`)}
-        >
-          Tạo
-        </Button>
+        <div className="flex flex-col gap-3">
+          <GoBack />
+          <div className="text-2xl font-bold">{title?.toUpperCase() || ''}</div>
+        </div>
+        <div className="ml-auto">
+          <Button variant="outlined" onClick={() => router.push(`/admin/${slug}/create`)}>
+            Tạo
+          </Button>
+        </div>
       </div>
       {children}
     </>

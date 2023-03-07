@@ -7,27 +7,27 @@ import { HiOutlineX } from 'react-icons/hi'
 import { yupResolver } from '@hookform/resolvers/yup'
 import { registerSchema } from '@/validation/User/register.user.validation'
 import { FieldValues } from 'react-hook-form/dist/types'
-import { register } from '../../api/User/register.user.api'
 import { registerDTO } from '@/DTO/User/register.dto.user'
 import Radio from '@/components/common/Form/Radio/radio'
-import { registerDefaultForm } from '@/default/register.default'
+import { registerDefaultForm } from '@/default/student.register.default'
 import { Button } from '@mui/material'
+import _ from 'lodash'
+import { register } from '@/pages/api/User/register.user.api'
 
 export interface UserPageProps {}
 
 export default function UserPage(props: UserPageProps) {
   const genderOptions = [
-    { value: 'Nam', label: 'Male' },
-    { value: 'Nữ', label: 'Female' },
-    { value: 'Khác', label: 'Other' },
+    { value: 'MALE', label: 'Nam' },
+    { value: 'FEMALE', label: 'Nữ' },
+    { value: 'OTHER', label: 'Khác' },
+  ]
+  const roleOptions = [
+    { value: 'UNIVERSITY', label: 'Đại hoc' },
+    { value: 'STUDENT', label: 'Học sinh' },
   ]
 
-  const {
-    control,
-    handleSubmit,
-    reset,
-    formState: { errors },
-  } = useForm<registerDTO>({
+  const { control, handleSubmit, reset } = useForm<registerDTO>({
     resolver: yupResolver(registerSchema),
   })
 
@@ -35,8 +35,8 @@ export default function UserPage(props: UserPageProps) {
     control,
     name: 'listUser',
   })
-  const onSubmit = (data: registerDTO) => {
-    register(data)
+  const onSubmit = async (data: registerDTO) => {
+    await register(data)
   }
   useEffect(() => {
     reset(registerDefaultForm)
@@ -47,6 +47,12 @@ export default function UserPage(props: UserPageProps) {
       <div className="grid grid-cols-2 gap-4">
         {fields.map((field, index) => (
           <MultipleFormLayout key={field.id} className="relative">
+            <Radio
+              label="Vai trò"
+              name={`listUser[${index}].roles`}
+              control={control}
+              options={roleOptions}
+            />
             <Input name={`listUser[${index}].name`} label="Tên" control={control} required />
             <Input
               name={`listUser[${index}].phone`}
@@ -74,6 +80,7 @@ export default function UserPage(props: UserPageProps) {
               control={control}
               required
             />
+            <Input name={`listUser[${index}].email`} label="Email" control={control} required />
             <Input
               name={`listUser[${index}].userName`}
               label="Tên tài khoản"
@@ -106,7 +113,7 @@ function CustomActions({ append }: FieldValues) {
     <div className="ml-auto">
       <div className="flex gap-3">
         <Button variant="outlined" onClick={handleAdd}>
-          Tạo
+          Thêm
         </Button>
         <Button variant="outlined" type="submit">
           Lưu

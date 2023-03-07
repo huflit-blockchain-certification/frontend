@@ -1,4 +1,4 @@
-import { AdminLayout, MainLayout, TableLayout } from '@/layouts'
+import { AdminLayout, TableLayout } from '@/layouts'
 import * as React from 'react'
 import Box from '@mui/material/Box'
 import { DataGrid, GridColDef, GridValueGetterParams } from '@mui/x-data-grid'
@@ -49,7 +49,7 @@ const rows = [
   { id: 9, lastName: 'Roxie', firstName: 'Harvey', age: 65 },
 ]
 
-export default function UserTablePage(props: UserTablePageProps) {
+export default function StudentUserListPage(props: UserTablePageProps) {
   return (
     <TableLayout title="Tài khoản" slug="user">
       <Box sx={{ height: 400, width: '100%' }}>
@@ -72,4 +72,4 @@ export default function UserTablePage(props: UserTablePageProps) {
   )
 }
 
-UserTablePage.Layout = AdminLayout
+StudentUserListPage.Layout = AdminLayout

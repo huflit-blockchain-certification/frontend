@@ -1,15 +1,20 @@
 import { APP_NAME } from '@/dynamic'
 import { useRouter } from 'next/router'
-import * as React from 'react'
+import React, { useState, useEffect } from 'react'
 import Popover from '@mui/material/Popover'
 import Link from 'next/link'
+import { useCookies } from 'react-cookie'
 
 export interface Navbar {}
 
 export function Menu(props: Navbar) {
   const router = useRouter()
-
-  const [anchorEl, setAnchorEl] = React.useState<HTMLElement | null>(null)
+  const [cookies] = useCookies(['access_token'])
+  const [accessToken, setAccessToken] = useState()
+  const [anchorEl, setAnchorEl] = useState<HTMLElement | null>(null)
+  useEffect(() => {
+    setAccessToken(cookies.access_token)
+  }, [cookies.access_token])
 
   const handleOpen = (event: React.MouseEvent<HTMLElement>) => {
     setAnchorEl(event.currentTarget)
@@ -57,36 +62,41 @@ export function Menu(props: Navbar) {
                 Giá cả
               </a>
             </li>
-            <li>
-              <Link
-                href="/login"
-                className="block py-2 pl-3 pr-4 text-gray-700 rounded hover:bg-gray-100 md:hover:bg-transparent md:border-0 md:hover:text-blue-700 md:p-0 dark:text-gray-400 md:dark:hover:text-white dark:hover:bg-gray-700 dark:hover:text-white md:dark:hover:bg-transparent"
-              >
-                Đăng nhập
-              </Link>
-            </li>
-            <li>
-              <a
-                className="cursor-pointer block py-2 pl-3 pr-4 text-gray-700 rounded hover:bg-gray-100 md:hover:bg-transparent md:border-0 md:hover:text-blue-700 md:p-0 dark:text-gray-400 md:dark:hover:text-white dark:hover:bg-gray-700 dark:hover:text-white md:dark:hover:bg-transparent"
-                onClick={handleOpen}
-              >
-                Tài khoản
-              </a>
-              <Popover
-                id={id}
-                open={open}
-                anchorEl={anchorEl}
-                onClose={handleClose}
-                anchorOrigin={{
-                  vertical: 'bottom',
-                  horizontal: 'left',
-                }}
-              >
-                <div className="flex flex-col w-32 p-3 cursor-pointer">
-                  <Link href="/admin">Quản lý</Link>
-                </div>
-              </Popover>
-            </li>
+            {!accessToken && (
+              <li>
+                <Link
+                  href="/login"
+                  className="block py-2 pl-3 pr-4 text-gray-700 rounded hover:bg-gray-100 md:hover:bg-transparent md:border-0 md:hover:text-blue-700 md:p-0 dark:text-gray-400 md:dark:hover:text-white dark:hover:bg-gray-700 dark:hover:text-white md:dark:hover:bg-transparent"
+                >
+                  Đăng nhập
+                </Link>
+              </li>
+            )}
+            {accessToken && (
+              <li>
+                <a
+                  className="cursor-pointer block py-2 pl-3 pr-4 text-gray-700 rounded hover:bg-gray-100 md:hover:bg-transparent md:border-0 md:hover:text-blue-700 md:p-0 dark:text-gray-400 md:dark:hover:text-white dark:hover:bg-gray-700 dark:hover:text-white md:dark:hover:bg-transparent"
+                  onClick={handleOpen}
+                >
+                  Tài khoản
+                </a>
+                <Popover
+                  id={id}
+                  open={open}
+                  anchorEl={anchorEl}
+                  onClose={handleClose}
+                  anchorOrigin={{
+                    vertical: 'bottom',
+                    horizontal: 'left',
+                  }}
+                >
+                  <div className="flex flex-col w-32 p-3 cursor-pointer">
+                    <Link href="/admin">Quản lý</Link>
+                    <Link href="/logout">Đăng xuất</Link>
+                  </div>
+                </Popover>
+              </li>
+            )}
           </ul>
         </div>
       </div>

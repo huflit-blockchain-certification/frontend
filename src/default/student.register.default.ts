@@ -12,7 +12,7 @@ const registerDefaultForm: registerDTO = {
       nation: '',
       password: '',
       phone: '',
-      roles: ['hello'],
+      roles: 'STUDENT',
       userName: '',
     },
   ],

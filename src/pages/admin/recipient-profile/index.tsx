@@ -1,5 +1,6 @@
 import TableData from '@/components/common/Form/Table/table'
 import { AdminLayout, TableLayout } from '@/layouts'
+import { GridColDef, GridValueGetterParams } from '@mui/x-data-grid'
 import React, { useEffect, useState } from 'react'
 
 export interface RecipentProfileProps {}
@@ -17,26 +18,43 @@ export default function RecipentProfilePage(props: RecipentProfileProps) {
       setLoading(false)
     })()
   }, [])
-
-  const columns = [
+  const columns: GridColDef[] = [
+    { field: 'id', headerName: 'ID', width: 90 },
     {
-      title: 'Mã hồ sơ',
-      dataIndex: 'id',
+      field: 'firstName',
+      headerName: 'First name',
+      width: 150,
+      editable: true,
     },
-    { title: 'Họ và tên', dataIndex: 'title' },
-    { title: 'Kì thi', dataIndex: '' },
-    { title: 'Năm tốt nghiệp', dataIndex: '' },
-    { title: 'Khóa tốt nghiệp', dataIndex: '' },
-    { title: 'Hội đồng thi', dataIndex: '' },
-    { title: 'Người nhận văn bằng', dataIndex: '' },
-    { title: 'Số hiệu vào bảng', dataIndex: '' },
-    { title: 'Số vào sổ', dataIndex: '' },
+    {
+      field: 'lastName',
+      headerName: 'Last name',
+      width: 150,
+      editable: true,
+    },
+    {
+      field: 'age',
+      headerName: 'Age',
+      type: 'number',
+      width: 110,
+      editable: true,
+    },
+    {
+      field: 'fullName',
+      headerName: 'Full name',
+      description: 'This column has a value getter and is not sortable.',
+      sortable: false,
+      width: 160,
+      valueGetter: (params: GridValueGetterParams) =>
+        `${params.row.firstName || ''} ${params.row.lastName || ''}`,
+    },
   ]
+
   return (
     <>
       {!loading && (
         <TableLayout title="Hồ sơ người nhận" slug="recipient-profile">
-          <TableData columns={columns} data={data} />
+          <TableData columns={columns} rows={data} />
         </TableLayout>
       )}
     </>

@@ -1,4 +1,6 @@
 import * as React from 'react'
+import Box from '@mui/material/Box'
+import { DataGrid, GridColDef, GridValueGetterParams } from '@mui/x-data-grid'
 
 interface Columns {
   title: string
@@ -6,10 +8,29 @@ interface Columns {
   render?: (key?: string, record?: Object) => React.ReactNode
 }
 export interface TableProps {
-  columns: Array<Columns>
-  data?: Array<any>
+  columns: GridColDef[]
+  rows: any[]
 }
 
-export default function TableData({ columns, data }: TableProps) {
-  return <div className="flex flex-col gap-3"></div>
+export default function TableData({ columns, rows }: TableProps) {
+  return (
+    <div className="flex flex-col gap-3">
+      <Box sx={{ height: 400, width: '100%' }}>
+        <DataGrid
+          rows={rows}
+          columns={columns}
+          initialState={{
+            pagination: {
+              paginationModel: {
+                pageSize: 5,
+              },
+            },
+          }}
+          pageSizeOptions={[5]}
+          checkboxSelection
+          disableRowSelectionOnClick
+        />
+      </Box>
+    </div>
+  )
 }

@@ -1,5 +1,6 @@
 import Head from 'next/head'
 import { MainLayout } from '@/layouts'
+import { Button, TextField } from '@mui/material'
 
 export default function Home() {
   return (
@@ -23,9 +24,11 @@ export default function Home() {
             <div className="mb-2 block">
               <label htmlFor="name" />
             </div>
-            <input id="name" type="name" placeholder="name@flowbite.com" required={true} />
+            <TextField label="Tra cứu" name="search" required={true} fullWidth />
           </div>
-          <button type="submit">Tra cứu</button>
+          <Button type="submit" variant="outlined">
+            Tra cứu
+          </Button>
         </form>
       </div>
     </>

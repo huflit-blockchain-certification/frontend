@@ -1,6 +1,6 @@
 import React from 'react'
-import { useController, Control } from 'react-hook-form'
-import TextField from '@mui/material/TextField'
+import { useController, Control, Controller } from 'react-hook-form'
+import { TextField } from '@mui/material'
 
 interface DatePickerProps {
   name: string
@@ -27,19 +27,25 @@ export function Input({
   } = useController({ name, control })
 
   return (
-    <TextField
-      error={error && true}
-      label={label}
-      value={value}
-      onChange={(e) => {
-        onChange(e.target.value)
-      }}
-      ref={ref}
+    <Controller
       name={name}
-      placeholder={placeholder ?? ''}
-      helperText={error && error.message}
-      fullWidth={fullWidth && true}
-      {...rest}
+      control={control}
+      render={({ field }) => (
+        <TextField
+          {...field}
+          error={error && true}
+          label={label}
+          value={value ?? ''}
+          onChange={(e: any) => {
+            onChange(e.target.value)
+          }}
+          ref={ref}
+          placeholder={placeholder ?? ''}
+          helperText={error && error.message}
+          fullWidth={fullWidth && true}
+          {...rest}
+        />
+      )}
     />
   )
 }
