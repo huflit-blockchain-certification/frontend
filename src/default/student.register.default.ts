@@ -12,10 +12,10 @@ const registerDefaultForm: registerDTO = {
       nation: '',
       password: '',
       phone: '',
-      roles: 'STUDENT',
       userName: '',
     },
   ],
+  roles: ['UNIVERSITY'],
 }
 
 export { registerDefaultForm }

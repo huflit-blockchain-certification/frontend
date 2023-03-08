@@ -6,9 +6,10 @@ interface TableLayoutProps {
   children: React.ReactNode
   title?: string
   slug: string
+  onCreateClick?: () => void
 }
 
-export function TableLayout({ title, children, slug }: TableLayoutProps) {
+export function TableLayout({ title, children, slug, onCreateClick }: TableLayoutProps) {
   const router = useRouter()
   return (
     <>
@@ -18,7 +19,10 @@ export function TableLayout({ title, children, slug }: TableLayoutProps) {
           <div className="text-2xl font-bold">{title?.toUpperCase() || ''}</div>
         </div>
         <div className="ml-auto">
-          <Button variant="outlined" onClick={() => router.push(`/admin/${slug}/create`)}>
+          <Button
+            variant="outlined"
+            onClick={() => (onCreateClick ? onCreateClick() : router.push(`/admin/${slug}/create`))}
+          >
             Tạo
           </Button>
         </div>

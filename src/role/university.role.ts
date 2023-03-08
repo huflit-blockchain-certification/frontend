@@ -1,0 +1,2 @@
+const universityPermissions = [{}]
+export { universityPermissions }

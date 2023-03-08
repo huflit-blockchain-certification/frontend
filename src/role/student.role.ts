@@ -1,0 +1,2 @@
+const studentPermissions = [{}]
+export { studentPermissions }

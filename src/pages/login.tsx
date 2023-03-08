@@ -34,7 +34,7 @@ export default function LoginPage(props: LoginProps) {
       const { accessToken, refreshToken } = record.data.tokens
       setCookie('access_token', accessToken)
       setCookie('refresh_token', refreshToken)
-      setCookie
+      localStorage.setItem('user', JSON.stringify(record.data.userData))
       router.push('/')
       Toast.fire({ title: 'Login succesfully', icon: 'success' })
     })

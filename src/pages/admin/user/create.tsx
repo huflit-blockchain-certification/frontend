@@ -22,12 +22,7 @@ export default function UserPage(props: UserPageProps) {
     { value: 'FEMALE', label: 'Nữ' },
     { value: 'OTHER', label: 'Khác' },
   ]
-  const roleOptions = [
-    { value: 'UNIVERSITY', label: 'Đại hoc' },
-    { value: 'STUDENT', label: 'Học sinh' },
-  ]
-
-  const { control, handleSubmit, reset } = useForm<registerDTO>({
+  const { control, handleSubmit, reset, watch, setValue } = useForm<registerDTO>({
     resolver: yupResolver(registerSchema),
   })
 
@@ -40,19 +35,18 @@ export default function UserPage(props: UserPageProps) {
   }
   useEffect(() => {
     reset(registerDefaultForm)
+    const user = localStorage.getItem('user') && JSON.parse(localStorage.getItem('user') || '')
+    if (user && user.roles.includes('STUDENT')) {
+      setValue('roles', user.roles)
+    }
   }, [])
 
+  const watchRoles = watch('roles')
   return (
     <FormLayout onSubmit={handleSubmit(onSubmit)} customActions={<CustomActions append={append} />}>
       <div className="grid grid-cols-2 gap-4">
         {fields.map((field, index) => (
           <MultipleFormLayout key={field.id} className="relative">
-            <Radio
-              label="Vai trò"
-              name={`listUser[${index}].roles`}
-              control={control}
-              options={roleOptions}
-            />
             <Input name={`listUser[${index}].name`} label="Tên" control={control} required />
             <Input
               name={`listUser[${index}].phone`}
@@ -66,20 +60,24 @@ export default function UserPage(props: UserPageProps) {
               control={control}
               options={genderOptions}
             />
-            <Input
-              name={`listUser[${index}].nation`}
-              label="Quốc tịch"
-              control={control}
-              required
-            />
+            {watchRoles.includes('UNIVERSITY') && (
+              <>
+                <Input
+                  name={`listUser[${index}].nation`}
+                  label="Quốc tịch"
+                  control={control}
+                  required
+                />
+                <DatePicker
+                  name={`listUser[${index}].dateOfBirth`}
+                  label="Ngày sinh"
+                  control={control}
+                  required
+                />
+              </>
+            )}
             <Input name={`listUser[${index}].address`} label="Địa chỉ" control={control} required />
             <Input name={`listUser[${index}].identity`} label="CMND" control={control} required />
-            <DatePicker
-              name={`listUser[${index}].dateOfBirth`}
-              label="Ngày sinh"
-              control={control}
-              required
-            />
             <Input name={`listUser[${index}].email`} label="Email" control={control} required />
             <Input
               name={`listUser[${index}].userName`}
