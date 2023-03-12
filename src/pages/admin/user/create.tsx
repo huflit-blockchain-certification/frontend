@@ -13,10 +13,12 @@ import { registerDefaultForm } from '@/default/student.register.default'
 import { Button } from '@mui/material'
 import _ from 'lodash'
 import { register } from '@/pages/api/User/register.user.api'
+import { Select } from '@/components/common/Form/Select/select'
+import { countries } from '@/static/countries'
+import { AuthProps } from 'models'
+import AuthGlobal from '@/container/auth.global'
 
-export interface UserPageProps {}
-
-export default function UserPage(props: UserPageProps) {
+function CreateUserPage({ accessToken }: AuthProps) {
   const genderOptions = [
     { value: 'MALE', label: 'Nam' },
     { value: 'FEMALE', label: 'Nữ' },
@@ -31,7 +33,7 @@ export default function UserPage(props: UserPageProps) {
     name: 'listUser',
   })
   const onSubmit = async (data: registerDTO) => {
-    await register(data)
+    await register(data, accessToken)
   }
   useEffect(() => {
     reset(registerDefaultForm)
@@ -62,7 +64,10 @@ export default function UserPage(props: UserPageProps) {
             />
             {watchRoles.includes('UNIVERSITY') && (
               <>
-                <Input
+                <Select
+                  options={countries}
+                  optionLabel="en_short_name"
+                  optionValue="en_short_name"
                   name={`listUser[${index}].nation`}
                   label="Quốc tịch"
                   control={control}
@@ -102,7 +107,6 @@ export default function UserPage(props: UserPageProps) {
     </FormLayout>
   )
 }
-
 function CustomActions({ append }: FieldValues) {
   const handleAdd = () => {
     append({})
@@ -121,4 +125,5 @@ function CustomActions({ append }: FieldValues) {
   )
 }
 
-UserPage.Layout = AdminLayout
+CreateUserPage.Layout = AdminLayout
+export default AuthGlobal(CreateUserPage)

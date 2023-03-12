@@ -1,3 +1,4 @@
+import { errorMessage } from '@/components/common/Toast/responseMessage'
 import { fetcher } from '../fetcher'
 
 const refreshToken = async () => {
@@ -9,6 +10,7 @@ const refreshToken = async () => {
     return record
   } catch (err: any) {
     console.log(err.message)
+    errorMessage()
   }
 }
 export { refreshToken }

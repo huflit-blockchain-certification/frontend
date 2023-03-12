@@ -11,9 +11,11 @@ export interface SelectProps {
   required?: boolean
   type?: string
   fullWidth?: boolean
-  options?: any[]
+  options: any[]
   handleChange?: (event: any) => void
   defaultValue?: any
+  optionLabel?: string
+  optionValue?: string
 }
 
 export function Select({
@@ -26,11 +28,14 @@ export function Select({
   fullWidth,
   options,
   defaultValue,
+  optionLabel,
+  optionValue,
 }: SelectProps) {
   const {
     field: { value, onChange, ref },
     fieldState: { error },
   } = useController({ name, control })
+
   return (
     <>
       <Controller
@@ -47,11 +52,12 @@ export function Select({
             fullWidth={fullWidth && true}
             ref={ref}
             placeholder={placeholder ?? ''}
+            MenuProps={{ PaperProps: { sx: { maxHeight: 350 } } }}
           >
             {options &&
               options.map((option, index) => (
-                <MenuItem key={index} value={option?.value}>
-                  {option.label}
+                <MenuItem key={index} value={optionValue ? option[optionValue] : option?.value}>
+                  {optionLabel ? option[optionLabel] : option.label}
                 </MenuItem>
               ))}
           </SelectField>

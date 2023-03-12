@@ -1,4 +1,4 @@
-import { useEffect } from 'react'
+import { useEffect, useState } from 'react'
 import { useCookies } from 'react-cookie'
 import { useRouter } from 'next/router'
 import jwt_decode, { JwtPayload } from 'jwt-decode'
@@ -11,6 +11,7 @@ export interface useAuthProps {}
 export function useAuth() {
   const router = useRouter()
   const [cookies] = useCookies(['access_token'])
+  const [accessToken, setAccessToken] = useState<JwtPayload>()
 
   useEffect(() => {
     ;(async () => {
@@ -30,8 +31,10 @@ export function useAuth() {
       const stillValid = moment(exp).unix() < moment().unix()
       if (!stillValid) {
         console.log('Refresh token ...')
-        await refreshToken()
+        return await refreshToken()
       }
+      setAccessToken(accessToken)
     })()
   }, [])
+  return { accessToken }
 }

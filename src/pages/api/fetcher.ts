@@ -10,9 +10,10 @@ interface IFetcher {
   redirect?: RequestRedirect
   referrerPolicy?: ReferrerPolicy
   body?: any
+  accessToken?: string
 }
 
-const fetcher = async ({ method, url, body, ...rest }: IFetcher) => {
+const fetcher = async ({ method, url, body, accessToken, ...rest }: IFetcher) => {
   const { cache, credentials, headers, redirect, referrerPolicy, mode } = rest
   const response = await fetch(`${API_URL}${url}`, {
     method, // *GET, POST, PUT, DELETE, etc.
@@ -23,6 +24,7 @@ const fetcher = async ({ method, url, body, ...rest }: IFetcher) => {
       ? headers
       : {
           'x-api-key': API_KEY,
+          Authorization: `Bearer ${accessToken || ''}`,
           'Content-Type': 'application/json',
           // 'Content-Type': 'application/x-www-form-urlencoded',
         },

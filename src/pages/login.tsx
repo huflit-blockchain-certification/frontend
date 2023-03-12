@@ -1,6 +1,6 @@
 import { Input } from '@/components/common/Form/Input/Input'
 import { RefreshTokenDTO } from '@/DTO/User/login.dto.user'
-import { ACCESS_TOKEN, APP_NAME, REFRESH_TOKEN } from '@/dynamic'
+import { APP_NAME } from '@/static'
 import { FormLayout, MainLayout } from '@/layouts'
 import { loginSchema } from '@/validation/User/login.user.validation'
 import { yupResolver } from '@hookform/resolvers/yup'
@@ -12,7 +12,6 @@ import { LoadingIndicator } from '@/components/common/LoadingIndicator/loadingIn
 import Button from '@mui/material/Button'
 import { useCookies } from 'react-cookie'
 import { LoginnedPage } from '@/components/common/Auth/logined'
-import { Toast } from '@/components/common/Toast/toast'
 export interface LoginProps {}
 
 export default function LoginPage(props: LoginProps) {
@@ -36,7 +35,6 @@ export default function LoginPage(props: LoginProps) {
       setCookie('refresh_token', refreshToken)
       localStorage.setItem('user', JSON.stringify(record.data.userData))
       router.push('/')
-      Toast.fire({ title: 'Login succesfully', icon: 'success' })
     })
   }
 

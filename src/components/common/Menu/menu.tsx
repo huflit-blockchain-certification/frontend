@@ -1,4 +1,4 @@
-import { APP_NAME } from '@/dynamic'
+import { APP_NAME } from '@/static'
 import { useRouter } from 'next/router'
 import React, { useState, useEffect } from 'react'
 import Popover from '@mui/material/Popover'

@@ -1,3 +1,4 @@
+import { errorMessage, successMessage } from '@/components/common/Toast/responseMessage'
 import { RefreshTokenDTO } from '@/DTO/User/login.dto.user'
 import { fetcher } from '../fetcher'
 
@@ -9,9 +10,11 @@ const login = async (data: RefreshTokenDTO, actions: (action: any) => void) => {
       body: data,
     })
     await actions(record)
+    successMessage()
     return record
   } catch (err: any) {
     console.log(err.message)
+    errorMessage()
   }
 }
 export { login }
