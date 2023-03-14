@@ -1,4 +1,4 @@
-import { errorMessage } from '@/components/common/Toast/responseMessage'
+import { errorMessage } from '@/components/common/Toast/response.toast.component'
 import { fetcher } from '../fetcher'
 
 const refreshToken = async () => {

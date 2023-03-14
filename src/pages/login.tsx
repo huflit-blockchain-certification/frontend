@@ -1,4 +1,4 @@
-import { Input } from '@/components/common/Form/Input/Input'
+import { Input } from '@/components/common/Form/Input/Input.component'
 import { RefreshTokenDTO } from '@/DTO/User/login.dto.user'
 import { APP_NAME } from '@/static'
 import { FormLayout, MainLayout } from '@/layouts'
@@ -8,10 +8,10 @@ import * as React from 'react'
 import { useForm } from 'react-hook-form'
 import { login } from './api/User/login.user.api'
 import { useRouter } from 'next/router'
-import { LoadingIndicator } from '@/components/common/LoadingIndicator/loadingIndicator'
+import { LoadingIndicator } from '@/components/common/LoadingIndicator/loadingIndicator.component'
 import Button from '@mui/material/Button'
 import { useCookies } from 'react-cookie'
-import { LoginnedPage } from '@/components/common/Auth/logined'
+import { LoginnedPage } from '@/components/common/Auth/loggied.component'
 export interface LoginProps {}
 
 export default function LoginPage(props: LoginProps) {

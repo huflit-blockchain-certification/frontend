@@ -1,4 +1,4 @@
-import { Toast } from '@/components/common/Toast/toast'
+import { Toast } from '@/components/common/Toast/response.component'
 import { useRouter } from 'next/router'
 import { useEffect } from 'react'
 import { useCookies } from 'react-cookie'

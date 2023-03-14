@@ -4,9 +4,10 @@ export interface User {
   name: string
   email: string
   phone: string
-  dateOfBirth?: Date
+  dateOfBirth?: Date | string
   gender: string
   nation?: string
   address: string
   identity: string
+  roles: string[]
 }

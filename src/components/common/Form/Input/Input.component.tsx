@@ -10,6 +10,8 @@ interface DatePickerProps {
   required?: boolean
   type?: string
   fullWidth?: boolean
+  disabled?: boolean
+  onChangeOverried?: () => void
 }
 
 export function Input({
@@ -19,6 +21,8 @@ export function Input({
   placeholder,
   required,
   fullWidth,
+  disabled,
+  onChangeOverried,
   ...rest
 }: DatePickerProps) {
   const {
@@ -37,7 +41,7 @@ export function Input({
           label={label}
           value={value ?? ''}
           onChange={(e: any) => {
-            onChange(e.target.value)
+            onChangeOverried ? onChangeOverried() : onChange(e.target.value)
           }}
           ref={ref}
           placeholder={placeholder ?? ''}

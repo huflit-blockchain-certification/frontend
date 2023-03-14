@@ -1,6 +1,4 @@
 import * as yup from 'yup'
-import { ConditionBuilder } from 'yup/lib/Condition'
-import { SchemaLike } from 'yup/lib/types'
 
 const userSchema = yup.object().shape({
   name: yup.string().required('Tên không được để trống'),
@@ -9,10 +7,9 @@ const userSchema = yup.object().shape({
   gender: yup.string().required('Giới tính không được để trống'),
   address: yup.string().required('Địa chỉ không được để trống'),
   identity: yup.string().required('CMND không được để trống'),
+  password: yup.string().required('Mật khẩu không được để trống'),
   nation: yup.string().nullable(),
   dateOfBirth: yup.date().nullable(),
-  userName: yup.string().required('Tên đăng nhập không được để trống'),
-  password: yup.string().required('Mật khẩu không được để trống'),
 })
 
 export const registerSchema = yup.object().shape({

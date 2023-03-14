@@ -1,5 +1,5 @@
-import { DatePicker } from '@/components/common/Form/DatePicker/DatePicker'
-import { Input } from '@/components/common/Form/Input/Input'
+import { DatePicker } from '@/components/common/Form/DatePicker/datepicker.component'
+import { Input } from '@/components/common/Form/Input/Input.component'
 import { AdminLayout, FormLayout, MultipleFormLayout } from '@/layouts'
 import React, { useEffect } from 'react'
 import { useFieldArray, useForm } from 'react-hook-form'
@@ -8,23 +8,23 @@ import { yupResolver } from '@hookform/resolvers/yup'
 import { registerSchema } from '@/validation/User/register.user.validation'
 import { FieldValues } from 'react-hook-form/dist/types'
 import { registerDTO } from '@/DTO/User/register.dto.user'
-import Radio from '@/components/common/Form/Radio/radio'
-import { registerDefaultForm } from '@/default/student.register.default'
+import Radio from '@/components/common/Form/Radio/radio.component'
+import { registerUserUniversityDefaultForm } from '@/default/student.register.default'
 import { Button } from '@mui/material'
 import _ from 'lodash'
 import { register } from '@/pages/api/User/register.user.api'
-import { Select } from '@/components/common/Form/Select/select'
+import { Select } from '@/components/common/Form/Select/select.component'
 import { countries } from '@/static/countries'
-import { AuthProps } from 'models'
-import AuthGlobal from '@/container/auth.global'
+import { useCookies } from 'react-cookie'
 
-function CreateUserPage({ accessToken }: AuthProps) {
+function CreateUserPage() {
+  const [cookies] = useCookies(['access_token'])
   const genderOptions = [
     { value: 'MALE', label: 'Nam' },
     { value: 'FEMALE', label: 'Nữ' },
     { value: 'OTHER', label: 'Khác' },
   ]
-  const { control, handleSubmit, reset, watch, setValue } = useForm<registerDTO>({
+  const { control, handleSubmit, reset, setValue, watch } = useForm<registerDTO>({
     resolver: yupResolver(registerSchema),
   })
 
@@ -33,17 +33,19 @@ function CreateUserPage({ accessToken }: AuthProps) {
     name: 'listUser',
   })
   const onSubmit = async (data: registerDTO) => {
-    await register(data, accessToken)
+    const customData = {
+      ...data,
+      listUser: data.listUser.map((item) => {
+        item.userName = item.identity
+        return item
+      }),
+    }
+    await register(customData, cookies.access_token)
   }
   useEffect(() => {
-    reset(registerDefaultForm)
-    const user = localStorage.getItem('user') && JSON.parse(localStorage.getItem('user') || '')
-    if (user && user.roles.includes('STUDENT')) {
-      setValue('roles', user.roles)
-    }
+    reset(registerUserUniversityDefaultForm)
   }, [])
 
-  const watchRoles = watch('roles')
   return (
     <FormLayout onSubmit={handleSubmit(onSubmit)} customActions={<CustomActions append={append} />}>
       <div className="grid grid-cols-2 gap-4">
@@ -62,34 +64,24 @@ function CreateUserPage({ accessToken }: AuthProps) {
               control={control}
               options={genderOptions}
             />
-            {watchRoles.includes('UNIVERSITY') && (
-              <>
-                <Select
-                  options={countries}
-                  optionLabel="en_short_name"
-                  optionValue="en_short_name"
-                  name={`listUser[${index}].nation`}
-                  label="Quốc tịch"
-                  control={control}
-                  required
-                />
-                <DatePicker
-                  name={`listUser[${index}].dateOfBirth`}
-                  label="Ngày sinh"
-                  control={control}
-                  required
-                />
-              </>
-            )}
-            <Input name={`listUser[${index}].address`} label="Địa chỉ" control={control} required />
-            <Input name={`listUser[${index}].identity`} label="CMND" control={control} required />
-            <Input name={`listUser[${index}].email`} label="Email" control={control} required />
-            <Input
-              name={`listUser[${index}].userName`}
-              label="Tên tài khoản"
+            {/* <Select
+              options={countries}
+              optionLabel="en_short_name"
+              optionValue="en_short_name"
+              name={`listUser[${index}].nation`}
+              label="Quốc tịch"
               control={control}
               required
             />
+            <DatePicker
+              name={`listUser[${index}].dateOfBirth`}
+              label="Ngày sinh"
+              control={control}
+              required
+            /> */}
+            <Input name={`listUser[${index}].address`} label="Địa chỉ" control={control} required />
+            <Input name={`listUser[${index}].identity`} label="CMND" control={control} required />
+            <Input name={`listUser[${index}].email`} label="Email" control={control} required />
             <Input
               name={`listUser[${index}].password`}
               label="Mật khẩu"
@@ -126,4 +118,4 @@ function CustomActions({ append }: FieldValues) {
 }
 
 CreateUserPage.Layout = AdminLayout
-export default AuthGlobal(CreateUserPage)
+export default CreateUserPage

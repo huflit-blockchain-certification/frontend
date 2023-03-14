@@ -1,4 +1,4 @@
-import { GoBack } from '@/components/common/Goback/goback'
+import { GoBack } from '@/components/common/Goback/goback.component'
 import React from 'react'
 interface FormProps {
   children: React.ReactNode

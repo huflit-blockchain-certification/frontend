@@ -1,7 +1,7 @@
 import { useRouter } from 'next/router'
 import React from 'react'
 import Button from '@mui/material/Button'
-import { GoBack } from '@/components/common/Goback/goback'
+import { GoBack } from '@/components/common/Goback/goback.component'
 interface TableLayoutProps {
   children: React.ReactNode
   title?: string

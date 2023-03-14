@@ -4,7 +4,7 @@ import { useRouter } from 'next/router'
 import jwt_decode, { JwtPayload } from 'jwt-decode'
 import moment from 'moment'
 import { refreshToken } from '@/pages/api/User/refresh.user.api'
-import { Toast } from '@/components/common/Toast/toast'
+import { Toast } from '@/components/common/Toast/response.component'
 
 export interface useAuthProps {}
 

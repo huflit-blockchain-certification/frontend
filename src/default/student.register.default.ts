@@ -1,21 +1,21 @@
 import { registerDTO } from '@/DTO/User/register.dto.user'
 
-const registerDefaultForm: registerDTO = {
+const registerUserUniversityDefaultForm: registerDTO = {
   listUser: [
     {
-      name: '',
-      address: '',
-      dateOfBirth: new Date(),
-      email: '',
+      name: 'longshaww',
+      address: '219 Âu Dương Lân Phường 2 Quận 8',
+      // dateOfBirth: moment('12-13-2001').toDate(),
+      // nation: 'Vietnam',
+      email: 'at400123@gmail.com',
       gender: 'OTHER',
-      identity: '',
-      nation: '',
-      password: '',
-      phone: '',
-      userName: '',
+      identity: '100011109110',
+      password: 'Shadoww123',
+      phone: '0938131201',
+      userName: '100011109110',
+      roles: ['UNIVERSITY'],
     },
   ],
-  roles: ['UNIVERSITY'],
 }
 
-export { registerDefaultForm }
+export { registerUserUniversityDefaultForm }

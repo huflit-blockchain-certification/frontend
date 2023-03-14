@@ -32,6 +32,11 @@ const fetcher = async ({ method, url, body, accessToken, ...rest }: IFetcher) =>
     referrerPolicy, // no-referrer, *no-referrer-when-downgrade, origin, origin-when-cross-origin, same-origin, strict-origin, strict-origin-when-cross-origin, unsafe-url
     body: JSON.stringify(body), // body data type must match "Content-Type" header
   })
+  if (!response.ok) {
+    return response.text().then((text) => {
+      throw new Error(JSON.parse(text).message)
+    })
+  }
   return await response.json() // parses JSON response into native JavaScript objects
 }
 

@@ -1,6 +1,6 @@
 import React from 'react'
-import { Menu } from '@/components/common/Menu/menu'
-import BottomNavigation from '@/components/common/BottomNavigation/bottomNavigation'
+import { Menu } from '@/components/common/Menu/menu.component'
+import BottomNavigation from '@/components/common/BottomNavigation/bottom.navgiation.component'
 import { LayoutProps } from 'models/'
 
 export function MainLayout({ children }: LayoutProps) {

@@ -1,4 +1,4 @@
-import { errorMessage, successMessage } from '@/components/common/Toast/responseMessage'
+import { errorMessage, successMessage } from '@/components/common/Toast/response.toast.component'
 import { RefreshTokenDTO } from '@/DTO/User/login.dto.user'
 import { fetcher } from '../fetcher'
 

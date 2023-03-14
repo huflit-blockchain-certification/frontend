@@ -1,4 +1,4 @@
-import TableData from '@/components/common/Form/Table/table'
+import TableData from '@/components/common/Form/Table/table.component'
 import { AdminLayout, TableLayout } from '@/layouts'
 import { GridColDef, GridValueGetterParams } from '@mui/x-data-grid'
 import React, { useEffect, useState } from 'react'

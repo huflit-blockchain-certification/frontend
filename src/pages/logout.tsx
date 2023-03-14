@@ -1,4 +1,3 @@
-import AuthGlobal from '@/container/auth.global'
 import { AuthProps } from 'models'
 import { useRouter } from 'next/router'
 import { useEffect } from 'react'
@@ -18,4 +17,4 @@ function LogoutPage({ accessToken }: AuthProps) {
   }, [])
 }
 
-export default AuthGlobal(LogoutPage)
+export default LogoutPage
