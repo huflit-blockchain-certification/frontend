@@ -1,21 +1,22 @@
 import { registerDTO } from '@/DTO/User/register.dto.user'
+import moment from 'moment'
 
-const registerUserUniversityDefaultForm: registerDTO = {
+const registerUserStudentDefaultForm: registerDTO = {
   listUser: [
     {
-      name: 'longshaww',
-      address: '219 Âu Dương Lân Phường 2 Quận 8',
-      // dateOfBirth: moment('12-13-2001').toDate(),
-      // nation: 'Vietnam',
-      email: 'at400123@gmail.com',
-      gender: 'OTHER',
-      identity: '100011109110',
-      password: 'Shadoww123',
-      phone: '0938131201',
-      userName: '100011109110',
-      roles: ['UNIVERSITY'],
+      name: '',
+      address: '',
+      dateOfBirth: moment('01-01-2001').toDate(),
+      nation: 'Vietnam',
+      email: '',
+      gender: 'MALE',
+      identity: '',
+      password: '',
+      phone: '',
+      userName: '',
+      roles: ['STUDENT'],
     },
   ],
 }
 
-export { registerUserUniversityDefaultForm }
+export { registerUserStudentDefaultForm }

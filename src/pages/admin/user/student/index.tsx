@@ -1,10 +1,9 @@
 import { AdminLayout, TableLayout } from '@/layouts'
 import * as React from 'react'
 import Box from '@mui/material/Box'
-import { DataGrid, GridColDef, GridValueGetterParams } from '@mui/x-data-grid'
+import { DataGrid, GridColDef, GridPaginationModel, GridValueGetterParams } from '@mui/x-data-grid'
 import { useFetchStudentListUser } from '@/hooks/User/useFetchStudentListUser'
 import { useCookies } from 'react-cookie'
-import { useFetchUniversityListUser } from '@/hooks/User/useFetchUniversityListUser'
 
 export interface UserTablePageProps {}
 
@@ -29,22 +28,25 @@ const columns: GridColDef[] = [
 
 export default function StudentUserListPage() {
   const [cookies] = useCookies(['access_token'])
-  const { listUsers, pagination } = useFetchUniversityListUser(cookies.access_token)
+  const { listUsers, pagination, setPagination, loading } = useFetchStudentListUser(
+    cookies.access_token
+  )
+  const handlePaginationModelChange = (newModel: GridPaginationModel) => {
+    console.log(newModel)
+    setPagination(newModel)
+  }
   return (
-    <TableLayout title="Tài khoản" slug="/user/university">
+    <TableLayout title="Tài khoản" slug="/user/student">
       <Box sx={{ height: 700, width: '100%' }}>
         <DataGrid
           rows={listUsers ?? []}
           columns={columns}
           getRowId={(row) => row._id}
-          initialState={{
-            pagination: {
-              paginationModel: {
-                page: pagination?.page || 1,
-                pageSize: pagination?.limit || 10,
-              },
-            },
-          }}
+          rowCount={20}
+          loading={loading}
+          paginationMode="server"
+          paginationModel={pagination}
+          onPaginationModelChange={handlePaginationModelChange}
           pageSizeOptions={[5]}
           checkboxSelection
           disableRowSelectionOnClick

@@ -4,15 +4,18 @@ import React, { useEffect } from 'react'
 import { useFieldArray, useForm } from 'react-hook-form'
 import { HiOutlineX } from 'react-icons/hi'
 import { yupResolver } from '@hookform/resolvers/yup'
-import { registerUniversitySchema } from '@/validation/User/register.university.user.validation'
 import { FieldValues } from 'react-hook-form/dist/types'
 import { registerDTO } from '@/DTO/User/register.dto.user'
 import Radio from '@/components/common/Form/Radio/radio.component'
-import { registerUserUniversityDefaultForm } from '@/default/university.register.default copy'
+import { registerUserStudentDefaultForm } from '@/default/student.register.default'
 import { Button } from '@mui/material'
 import _ from 'lodash'
-import { registerUniversities } from '@/pages/api/User/register.user.api'
+import { registerStudents } from '@/pages/api/User/register.user.api'
 import { useCookies } from 'react-cookie'
+import { Select } from '@/components/common/Form/Select/select.component'
+import { DatePicker } from '@/components/common/Form/DatePicker/datepicker.component'
+import { countries } from '@/static/countries'
+import { registerStudentSchema } from '@/validation/User/register.student.user.validation'
 import { whatToDoNextModal } from '@/components/common/WhatToDoNextModal/whatToDoNextModal'
 import { useRouter } from 'next/router'
 
@@ -25,7 +28,7 @@ function CreateUserPage() {
     { value: 'OTHER', label: 'Khác' },
   ]
   const { control, handleSubmit, reset } = useForm<registerDTO>({
-    resolver: yupResolver(registerUniversitySchema),
+    resolver: yupResolver(registerStudentSchema),
   })
 
   const { fields, append, remove } = useFieldArray({
@@ -40,16 +43,16 @@ function CreateUserPage() {
         return item
       }),
     }
-    await registerUniversities(customData, cookies.access_token, async () => {
+    await registerStudents(customData, cookies.access_token, async () => {
       await whatToDoNextModal({
         action: 'create',
-        onConfirm: () => reset(registerUserUniversityDefaultForm),
+        onConfirm: () => reset(registerUserStudentDefaultForm),
         onDismiss: () => router.back(),
       })
     })
   }
   useEffect(() => {
-    reset(registerUserUniversityDefaultForm)
+    reset(registerUserStudentDefaultForm)
   }, [])
 
   return (
@@ -70,7 +73,7 @@ function CreateUserPage() {
               control={control}
               options={genderOptions}
             />
-            {/* <Select
+            <Select
               options={countries}
               optionLabel="en_short_name"
               optionValue="en_short_name"
@@ -84,7 +87,7 @@ function CreateUserPage() {
               label="Ngày sinh"
               control={control}
               required
-            /> */}
+            />
             <Input name={`listUser[${index}].address`} label="Địa chỉ" control={control} required />
             <Input name={`listUser[${index}].identity`} label="CMND" control={control} required />
             <Input name={`listUser[${index}].email`} label="Email" control={control} required />
