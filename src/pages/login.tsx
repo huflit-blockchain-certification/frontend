@@ -1,7 +1,7 @@
 import { Input } from '@/components/common/Form/Input/Input.component'
 import { RefreshTokenDTO } from '@/DTO/User/login.dto.user'
 import { APP_NAME } from '@/static'
-import { FormLayout, MainLayout } from '@/layouts'
+import { FormHeader, MainLayout } from '@/layouts'
 import { loginSchema } from '@/validation/User/login.user.validation'
 import { yupResolver } from '@hookform/resolvers/yup'
 import * as React from 'react'
@@ -42,7 +42,7 @@ export default function LoginPage(props: LoginProps) {
 
   return (
     <LoginnedPage>
-      <FormLayout disableHeader onSubmit={handleSubmit(onSubmit)}>
+      <FormHeader disableHeader onSubmit={handleSubmit(onSubmit)}>
         <div className="flex h-screen">
           <div className="m-auto">
             <div className="flex flex-col gap-5 p-10 shadow w-96 rounded-lg hover:shadow-lg">
@@ -59,7 +59,7 @@ export default function LoginPage(props: LoginProps) {
             </div>
           </div>
         </div>
-      </FormLayout>
+      </FormHeader>
     </LoginnedPage>
   )
 }

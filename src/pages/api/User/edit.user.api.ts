@@ -1,12 +1,13 @@
 import { errorMessage } from '@/components/common/Toast/response.toast.component'
 import { fetcher } from '../fetcher'
 
-const listUniversitys = async (accessToken: string) => {
+const editUserUniversity = async (id: string | number, data: any, accessToken: string) => {
   try {
     const record = await fetcher({
-      method: 'GET',
-      url: '/users/universities?page=1&limit=10',
+      method: 'PATCH',
+      url: `/users/universities/${id}`,
       accessToken,
+      body: data,
     })
 
     return record
@@ -15,12 +16,13 @@ const listUniversitys = async (accessToken: string) => {
     errorMessage()
   }
 }
-const listStudents = async (page: number, accessToken: string) => {
+const editStudentUniversity = async (id: string | number, data: any, accessToken: string) => {
   try {
     const record = await fetcher({
-      method: 'GET',
-      url: `/users/students?page=${page}&limit=10`,
+      method: 'PATCH',
+      url: `/users/students/${id}`,
       accessToken,
+      body: data,
     })
 
     return record
@@ -29,4 +31,4 @@ const listStudents = async (page: number, accessToken: string) => {
     errorMessage()
   }
 }
-export { listUniversitys, listStudents }
+export { editUserUniversity, editStudentUniversity }

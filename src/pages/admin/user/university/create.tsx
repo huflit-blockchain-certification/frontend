@@ -1,5 +1,5 @@
 import { Input } from '@/components/common/Form/Input/Input.component'
-import { AdminLayout, FormLayout, MultipleFormLayout } from '@/layouts'
+import { AdminLayout, FormHeader, FormLayout } from '@/layouts'
 import React, { useEffect } from 'react'
 import { useFieldArray, useForm } from 'react-hook-form'
 import { HiOutlineX } from 'react-icons/hi'
@@ -53,10 +53,10 @@ function CreateUserPage() {
   }, [])
 
   return (
-    <FormLayout onSubmit={handleSubmit(onSubmit)} customActions={<CustomActions append={append} />}>
+    <FormHeader onSubmit={handleSubmit(onSubmit)} customActions={<CustomActions append={append} />}>
       <div className="grid grid-cols-2 gap-4">
         {fields.map((field, index) => (
-          <MultipleFormLayout key={field.id} className="relative">
+          <FormLayout key={field.id} className="relative">
             <Input name={`listUser[${index}].name`} label="Tên" control={control} required />
             <Input
               name={`listUser[${index}].phone`}
@@ -99,10 +99,10 @@ function CreateUserPage() {
               className="absolute top-2 right-2 text-2xl cursor-pointer"
               onClick={() => remove(index)}
             />
-          </MultipleFormLayout>
+          </FormLayout>
         ))}
       </div>
-    </FormLayout>
+    </FormHeader>
   )
 }
 function CustomActions({ append }: FieldValues) {

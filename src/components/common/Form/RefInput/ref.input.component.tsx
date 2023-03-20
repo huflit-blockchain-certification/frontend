@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react'
-import { useController, Control, Controller } from 'react-hook-form'
+import { useController, Control, Controller, UseFormSetValue } from 'react-hook-form'
 import { TextField } from '@mui/material'
 
 interface DatePickerProps {
@@ -13,7 +13,7 @@ interface DatePickerProps {
   disabled?: boolean
   onChangeOverried?: () => void
   baseInput: any
-  setValue: (field: string, value: any) => void
+  setValue: UseFormSetValue<any>
 }
 
 export function RefInput({
@@ -53,7 +53,7 @@ export function RefInput({
           onChange={(e: any) => {
             onChangeOverried ? onChangeOverried() : onChange(e.target.value)
           }}
-          disabled={disable}
+          // disabled={disable}
           ref={ref}
           placeholder={placeholder ?? ''}
           helperText={error && error.message}

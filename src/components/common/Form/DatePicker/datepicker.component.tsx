@@ -29,7 +29,6 @@ export function DatePicker({
     fieldState: { error },
   } = useController({ name, control })
 
-  console.log(moment(value))
   return (
     <Controller
       name={name}

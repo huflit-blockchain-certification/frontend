@@ -1,11 +1,11 @@
 import { errorMessage } from '@/components/common/Toast/response.toast.component'
 import { fetcher } from '../fetcher'
 
-const listUniversitys = async (accessToken: string) => {
+const detailUserUniversity = async (id: string | number, accessToken: string) => {
   try {
     const record = await fetcher({
       method: 'GET',
-      url: '/users/universities?page=1&limit=10',
+      url: `/users/universities/detail/${id}`,
       accessToken,
     })
 
@@ -15,11 +15,11 @@ const listUniversitys = async (accessToken: string) => {
     errorMessage()
   }
 }
-const listStudents = async (page: number, accessToken: string) => {
+const detailUserStudent = async (id: string | number, accessToken: string) => {
   try {
     const record = await fetcher({
       method: 'GET',
-      url: `/users/students?page=${page}&limit=10`,
+      url: `/users/students/detail/${id}`,
       accessToken,
     })
 
@@ -29,4 +29,4 @@ const listStudents = async (page: number, accessToken: string) => {
     errorMessage()
   }
 }
-export { listUniversitys, listStudents }
+export { detailUserUniversity, detailUserStudent }

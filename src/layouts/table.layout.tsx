@@ -5,7 +5,7 @@ import { GoBack } from '@/components/common/Goback/goback.component'
 interface TableLayoutProps {
   children: React.ReactNode
   title?: string
-  slug: string
+  slug?: string
   onCreateClick?: () => void
 }
 

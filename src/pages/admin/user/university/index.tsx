@@ -2,7 +2,7 @@ import { AdminLayout, TableLayout } from '@/layouts'
 import * as React from 'react'
 import Box from '@mui/material/Box'
 import { DataGrid, GridColDef, GridValueGetterParams } from '@mui/x-data-grid'
-import { useFetchStudentListUser } from '@/hooks/User/useFetchStudentListUser'
+import { useStudentTableControl } from '@/hooks/User/useStudentTableControl'
 import { useCookies } from 'react-cookie'
 import { useFetchUniversityListUser } from '@/hooks/User/useFetchUniversityListUser'
 
