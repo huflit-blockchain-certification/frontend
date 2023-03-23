@@ -1,57 +1,65 @@
 import { AdminLayout, TableLayout } from '@/layouts'
-import * as React from 'react'
 import Box from '@mui/material/Box'
-import { DataGrid, GridColDef, GridValueGetterParams } from '@mui/x-data-grid'
-import { useStudentTableControl } from '@/hooks/User/useStudentTableControl'
+import { useStudentTableControl } from '@/hooks/common/useTableControl'
 import { useCookies } from 'react-cookie'
-import { useFetchUniversityListUser } from '@/hooks/User/useFetchUniversityListUser'
-
+import React from 'react'
+import { CustomModal } from '@/components/common/Modal/modal.component'
+import RegisterStudentForm from '@/components/User/register.student.form'
+import { Button } from '@mui/material'
+import { deleteStudents, deleteUniversities } from '@/pages/api/User/delete.user.api'
+import { listUniversitys } from '@/pages/api/User/list.user'
+import TableData from '@/components/common/Form/Table/table.component'
+import useStudentsColumns from '@/hooks/User/useStudentColumns'
+import RegisterUniversityForm from '@/components/User/register.university.form'
 export interface UserTablePageProps {}
 
-const columns: GridColDef[] = [
-  { field: '_id', headerName: 'ID' },
-  {
-    field: 'identity',
-    headerName: 'CMND',
-  },
-  {
-    field: 'name',
-    headerName: 'Tên',
-    // valueGetter: (params: GridValueGetterParams) => `${params.row.roles || ''} `,
-  },
-  {
-    field: 'email',
-    headerName: 'Email',
-  },
-  { field: 'gender', headerName: 'Giới tính' },
-  { field: 'createdAt', headerName: 'Ngày tạo' },
-]
-
-export default function StudentUserListPage() {
+export default function UniversityUserListPage({}: any) {
   const [cookies] = useCookies(['access_token'])
-  const { listUsers, pagination } = useFetchUniversityListUser(cookies.access_token)
+
+  const {
+    listData,
+    pagination,
+    loading,
+    rowSelectionModel,
+    handleRowSelection,
+    onDeleteRowClick,
+    onFilterChange,
+    handlePaginationModelChange,
+    open,
+    recordId,
+    setRecordId,
+    setOpen,
+  } = useStudentTableControl({
+    accessToken: cookies.access_token,
+    listingApi: listUniversitys,
+    deleteApi: deleteUniversities,
+  })
+  const { columns } = useStudentsColumns({ setOpen, setRecordId })
+
   return (
-    <TableLayout title="Tài khoản" slug="/user/university">
+    <TableLayout title="Tài khoản" onCreateClick={() => setOpen(true)}>
       <Box sx={{ height: 700, width: '100%' }}>
-        <DataGrid
-          rows={listUsers ?? []}
+        <CustomModal beforeClose={() => setRecordId(undefined)} open={open} setOpen={setOpen}>
+          <RegisterUniversityForm recordId={recordId} setOpen={setOpen} />
+        </CustomModal>
+        {rowSelectionModel.length > 0 && (
+          <Button variant="outlined" color="error" className="mb-2" onClick={onDeleteRowClick}>
+            Delete
+          </Button>
+        )}
+        <TableData
           columns={columns}
-          getRowId={(row) => row._id}
-          initialState={{
-            pagination: {
-              paginationModel: {
-                page: pagination?.page || 1,
-                pageSize: pagination?.limit || 10,
-              },
-            },
-          }}
-          pageSizeOptions={[5]}
-          checkboxSelection
-          disableRowSelectionOnClick
+          listData={listData}
+          loading={loading}
+          rowSelectionModel={rowSelectionModel}
+          handleRowSelection={handleRowSelection}
+          handlePaginationModelChange={handlePaginationModelChange}
+          onFilterChange={onFilterChange}
+          pagination={pagination}
         />
       </Box>
     </TableLayout>
   )
 }
 
-StudentUserListPage.Layout = AdminLayout
+UniversityUserListPage.Layout = AdminLayout

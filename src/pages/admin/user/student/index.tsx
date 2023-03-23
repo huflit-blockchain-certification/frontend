@@ -1,67 +1,44 @@
 import { AdminLayout, TableLayout } from '@/layouts'
 import Box from '@mui/material/Box'
-import { DataGrid, GridPaginationModel, GridRowSelectionModel } from '@mui/x-data-grid'
-import { useStudentTableControl } from '@/hooks/User/useStudentTableControl'
+import { useStudentTableControl } from '@/hooks/common/useTableControl'
 import { useCookies } from 'react-cookie'
-import React, { useState } from 'react'
+import React from 'react'
 import { CustomModal } from '@/components/common/Modal/modal.component'
-import RegisterStudentForm from '@/components/User/register.student.form'
-import { HiEye } from 'react-icons/hi'
 import { Button } from '@mui/material'
+import { deleteStudents } from '@/pages/api/User/delete.user.api'
+import { listStudents } from '@/pages/api/User/list.user'
+import TableData from '@/components/common/Form/Table/table.component'
+import useStudentsColumns from '@/hooks/User/useStudentColumns'
+import RegisterStudentForm from '@/components/User/register.student.form'
 export interface UserTablePageProps {}
 
-export default function StudentUserListPage() {
-  const columns: any = [
-    { field: '_id', headerName: 'ID', width: 250 },
-    {
-      field: 'identity',
-      headerName: 'CMND',
-      width: 150,
-    },
-    {
-      field: 'name',
-      headerName: 'Tên',
-      width: 200,
-    },
-    {
-      field: 'email',
-      headerName: 'Email',
-      width: 200,
-    },
-    { field: 'gender', headerName: 'Giới tính' },
-    { field: 'createdAt', headerName: 'Ngày tạo', width: 200 },
-    {
-      renderCell: (params: any) => (
-        <HiEye
-          className="text-xl cursor-pointer"
-          onClick={() => {
-            setOpen(true)
-            setRecordId(params.id)
-          }}
-        />
-      ),
-    },
-  ]
+export default function StudentUserListPage({}: any) {
   const [cookies] = useCookies(['access_token'])
-  const [recordId, setRecordId] = useState()
-  const [open, setOpen] = useState(false)
+
   const {
-    listUsers,
+    listData,
     pagination,
-    setPagination,
     loading,
     rowSelectionModel,
     handleRowSelection,
     onDeleteRowClick,
-  } = useStudentTableControl(cookies.access_token)
-  const handlePaginationModelChange = (newModel: GridPaginationModel) => {
-    setPagination({ ...newModel, page: newModel.page + 1 })
-  }
+    onFilterChange,
+    handlePaginationModelChange,
+    open,
+    recordId,
+    setRecordId,
+    setOpen,
+  } = useStudentTableControl({
+    accessToken: cookies.access_token,
+    listingApi: listStudents,
+    deleteApi: deleteStudents,
+  })
+  const { columns } = useStudentsColumns({ setOpen, setRecordId })
 
   return (
     <TableLayout title="Tài khoản" onCreateClick={() => setOpen(true)}>
       <Box sx={{ height: 700, width: '100%' }}>
-        <CustomModal open={open} setOpen={setOpen}>
+        <CustomModal beforeClose={() => setRecordId(undefined)} open={open} setOpen={setOpen}>
           <RegisterStudentForm recordId={recordId} setOpen={setOpen} />
         </CustomModal>
         {rowSelectionModel.length > 0 && (
@@ -69,21 +46,15 @@ export default function StudentUserListPage() {
             Delete
           </Button>
         )}
-        <DataGrid
-          rows={listUsers ?? []}
+        <TableData
           columns={columns}
-          getRowId={(row) => row._id}
-          rowCount={20}
+          listData={listData}
           loading={loading}
-          keepNonExistentRowsSelected
-          paginationMode="server"
           rowSelectionModel={rowSelectionModel}
-          onRowSelectionModelChange={handleRowSelection}
-          onPaginationModelChange={handlePaginationModelChange}
-          paginationModel={{ ...pagination, page: pagination?.page - 1 }}
-          pageSizeOptions={[5]}
-          checkboxSelection
-          disableRowSelectionOnClick
+          handleRowSelection={handleRowSelection}
+          handlePaginationModelChange={handlePaginationModelChange}
+          onFilterChange={onFilterChange}
+          pagination={pagination}
         />
       </Box>
     </TableLayout>

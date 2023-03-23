@@ -13,3 +13,7 @@ export type NextPageWithLayout = NextPage & {
 export type AppPropsWithLayout = AppProps & {
   Component: NextPageWithLayout
 }
+export interface FormProps {
+  recordId: number | string | undefined | any
+  setOpen: any
+}

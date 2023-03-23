@@ -18,13 +18,16 @@ const style = {
 
 interface CustomModalProps {
   open: boolean
+  beforeClose: () => void
   setOpen: (state: boolean) => void
   children: ReactNode
 }
 
-export function CustomModal({ children, open, setOpen }: CustomModalProps) {
-  const handleOpen = () => setOpen(true)
-  const handleClose = () => setOpen(false)
+export function CustomModal({ children, open, setOpen, beforeClose }: CustomModalProps) {
+  const handleClose = () => {
+    beforeClose()
+    setOpen(false)
+  }
 
   return (
     <div>

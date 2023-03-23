@@ -32,7 +32,7 @@ export function FormHeader({
                 {customActions ? (
                   customActions
                 ) : (
-                  <Button variant="outlined" className="ml-auto" type="submit">
+                  <Button variant="outlined" style={{ marginLeft: 'auto' }} type="submit">
                     Lưu
                   </Button>
                 )}
