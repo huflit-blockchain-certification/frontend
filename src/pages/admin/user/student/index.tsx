@@ -28,6 +28,7 @@ export default function StudentUserListPage({}: any) {
     recordId,
     setRecordId,
     setOpen,
+    crudOperation,
   } = useStudentTableControl({
     accessToken: cookies.access_token,
     listingApi: listStudents,
@@ -39,7 +40,11 @@ export default function StudentUserListPage({}: any) {
     <TableLayout title="Tài khoản" onCreateClick={() => setOpen(true)}>
       <Box sx={{ height: 700, width: '100%' }}>
         <CustomModal beforeClose={() => setRecordId(undefined)} open={open} setOpen={setOpen}>
-          <RegisterStudentForm recordId={recordId} setOpen={setOpen} />
+          <RegisterStudentForm
+            recordId={recordId}
+            setOpen={setOpen}
+            afterActions={{ create: crudOperation.create, edit: crudOperation.edit }}
+          />
         </CustomModal>
         {rowSelectionModel.length > 0 && (
           <Button variant="outlined" color="error" className="mb-2" onClick={onDeleteRowClick}>

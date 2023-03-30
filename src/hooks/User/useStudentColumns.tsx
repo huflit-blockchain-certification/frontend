@@ -1,5 +1,6 @@
 import { HiPencil } from 'react-icons/hi'
 import * as React from 'react'
+import { dateFormat } from '@/utils/formatter'
 
 interface ColumnsProps {
   open?: boolean
@@ -26,7 +27,23 @@ export default function useStudentsColumns({ open, setOpen, setRecordId }: Colum
       width: 200,
     },
     { field: 'gender', headerName: 'Giới tính' },
-    { field: 'createdAt', headerName: 'Ngày tạo', width: 200 },
+    {
+      field: 'nation',
+      headerName: 'Quốc tịch',
+      width: 150,
+    },
+    {
+      field: 'dateOfBirth',
+      headerName: 'Ngày sinh',
+      width: 100,
+      renderCell: (params: any) => <div>{dateFormat(params?.dateOfBirth)}</div>,
+    },
+    {
+      field: 'createdAt',
+      headerName: 'Ngày tạo',
+      width: 100,
+      renderCell: (params: any) => <div>{dateFormat(params?.createdAt)}</div>,
+    },
     {
       headerName: 'Tùy chỉnh',
       renderCell: (params: any) => (
@@ -34,7 +51,7 @@ export default function useStudentsColumns({ open, setOpen, setRecordId }: Colum
           className="text-xl cursor-pointer"
           onClick={() => {
             setOpen(true)
-            setRecordId(params.id)
+            setRecordId(params?.id)
           }}
         />
       ),

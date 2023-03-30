@@ -1,7 +1,6 @@
 import { Toast } from '@/components/common/Toast/response.component'
 import { GridFilterModel, GridPaginationModel, GridRowSelectionModel } from '@mui/x-data-grid'
 import { useCallback, useEffect, useState } from 'react'
-import { useCookies } from 'react-cookie'
 
 interface useTableControlProps {
   accessToken: string
@@ -44,6 +43,24 @@ export function useStudentTableControl({
     }
   }
 
+  const crudOperation = {
+    create: (response: any) => {
+      if (!response) return
+      setListData([...listData, response.data.data])
+    },
+    edit: (response: any) => {
+      if (!response) return
+      setListData(
+        listData.map((item: any) => {
+          if (item?.id === response?.id) {
+            item = response.data.data
+          }
+          return item
+        })
+      )
+    },
+  }
+
   useEffect(() => {
     ;(async () => {
       try {
@@ -66,6 +83,7 @@ export function useStudentTableControl({
   }, [accessToken, pagination?.page, queryOptions, listingApi])
   return {
     listData,
+    setListData,
     pagination,
     loading,
     setLoading,
@@ -78,5 +96,6 @@ export function useStudentTableControl({
     setOpen,
     recordId,
     setRecordId,
+    crudOperation,
   }
 }

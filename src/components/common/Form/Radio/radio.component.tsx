@@ -22,6 +22,7 @@ export default function Radio({
   required,
   label,
   handleChange,
+  ...rest
 }: RadioProps) {
   const {
     field: { value, onChange },
@@ -38,6 +39,7 @@ export default function Radio({
           row
           value={value}
           onChange={(e) => (handleChange ? handleChange : onChange(e.target.value))}
+          {...rest}
         >
           {options &&
             options.map(({ label, value }, index) => (

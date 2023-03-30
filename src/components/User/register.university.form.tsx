@@ -6,19 +6,19 @@ import { yupResolver } from '@hookform/resolvers/yup'
 import { registerUniversitySchema } from '@/validation/User/register.university.user.validation'
 import { registerDTO } from '@/DTO/User/register.dto.user'
 import Radio from '@/components/common/Form/Radio/radio.component'
-import { registerUserUniversityDefaultForm } from '@/default/university.register.default copy'
+import { registerUserUniversityDefaultForm } from '@/default/university.register.default'
 import _ from 'lodash'
 import { registerUniversities } from '@/pages/api/User/register.user.api'
 import { useCookies } from 'react-cookie'
 import { FormProps } from 'models'
 import { editUserUniversity } from '@/pages/api/User/edit.user.api'
-import { successMessage } from '../common/Toast/response.toast.component'
 import { RefInput } from '../common/Form/RefInput/ref.input.component'
 import { User } from 'models/User/register.user.model'
 import { detailUserUniversity } from '@/pages/api/User/detail.user.api'
 import { genderOptions } from '@/static/gender'
+import { commonSubmissionHandler } from '@/pages/api/common.api'
 
-function RegisterUniversityForm({ recordId, setOpen }: FormProps) {
+function RegisterUniversityForm({ recordId, setOpen, afterActions }: FormProps) {
   const [cookies] = useCookies(['access_token'])
   const [loading, setLoading] = useState(false)
 
@@ -28,15 +28,16 @@ function RegisterUniversityForm({ recordId, setOpen }: FormProps) {
   })
 
   const onSubmit = async (data: registerDTO) => {
-    setLoading(true)
-    if (recordId) {
-      await editUserUniversity(recordId, data, cookies.access_token)
-      return setOpen(false)
-    }
-    await registerUniversities([data], cookies.access_token)
-    setOpen(false)
-    setLoading(false)
-    successMessage('Created')
+    commonSubmissionHandler({
+      afterActions,
+      createRequest: registerUniversities,
+      editRequest: editUserUniversity,
+      formData: data,
+      setLoading,
+      setOpen,
+      token: cookies.access_token,
+      recordId,
+    })
   }
   useEffect(() => {
     ;(async () => {
@@ -60,28 +61,28 @@ function RegisterUniversityForm({ recordId, setOpen }: FormProps) {
   }, [])
 
   return (
-    <FormHeader onSubmit={handleSubmit(onSubmit)} loading={loading}>
+    <FormHeader
+      onSubmit={handleSubmit(onSubmit)}
+      loading={loading}
+      options={recordId && { disabled: true }}
+    >
       <div className="w-full">
         <FormLayout className="relative">
           <Input name="phone" label="Số điện thoại" control={control} required />
           <Radio label="Giới tính" name="gender" control={control} options={genderOptions} />
           <Input name="address" label="Địa chỉ" control={control} required />
-          {!recordId && (
-            <>
-              <Input name="name" label="Tên" control={control} required />
-              <Input name="identity" label="CMND" control={control} required />
-              <RefInput
-                name="userName"
-                label="Tên tài khoản"
-                baseInput={watch('identity')}
-                control={control}
-                required
-                setValue={setValue}
-              />
-              <Input name="email" label="Email" control={control} required />
-              <Input name="password" label="Mật khẩu" control={control} type="password" required />
-            </>
-          )}
+          <Input name="name" label="Tên" control={control} required />
+          <Input name="identity" label="CMND" control={control} required />
+          <RefInput
+            name="userName"
+            label="Tên tài khoản"
+            baseInput={watch('identity')}
+            control={control}
+            required
+            setValue={setValue}
+          />
+          <Input name="email" label="Email" control={control} required />
+          <Input name="password" label="Mật khẩu" control={control} type="password" required />
         </FormLayout>
       </div>
     </FormHeader>

@@ -4,9 +4,7 @@ import { useStudentTableControl } from '@/hooks/common/useTableControl'
 import { useCookies } from 'react-cookie'
 import React from 'react'
 import { CustomModal } from '@/components/common/Modal/modal.component'
-import RegisterStudentForm from '@/components/User/register.student.form'
-import { Button } from '@mui/material'
-import { deleteStudents, deleteUniversities } from '@/pages/api/User/delete.user.api'
+import { deleteUniversities } from '@/pages/api/User/delete.user.api'
 import { listUniversitys } from '@/pages/api/User/list.user'
 import TableData from '@/components/common/Form/Table/table.component'
 import useStudentsColumns from '@/hooks/User/useStudentColumns'
@@ -21,14 +19,13 @@ export default function UniversityUserListPage({}: any) {
     pagination,
     loading,
     rowSelectionModel,
-    handleRowSelection,
-    onDeleteRowClick,
     onFilterChange,
     handlePaginationModelChange,
     open,
     recordId,
     setRecordId,
     setOpen,
+    crudOperation,
   } = useStudentTableControl({
     accessToken: cookies.access_token,
     listingApi: listUniversitys,
@@ -40,19 +37,18 @@ export default function UniversityUserListPage({}: any) {
     <TableLayout title="Tài khoản" onCreateClick={() => setOpen(true)}>
       <Box sx={{ height: 700, width: '100%' }}>
         <CustomModal beforeClose={() => setRecordId(undefined)} open={open} setOpen={setOpen}>
-          <RegisterUniversityForm recordId={recordId} setOpen={setOpen} />
+          <RegisterUniversityForm
+            recordId={recordId}
+            setOpen={setOpen}
+            afterActions={{ create: crudOperation.create, edit: crudOperation.edit }}
+          />
         </CustomModal>
-        {rowSelectionModel.length > 0 && (
-          <Button variant="outlined" color="error" className="mb-2" onClick={onDeleteRowClick}>
-            Delete
-          </Button>
-        )}
         <TableData
           columns={columns}
           listData={listData}
           loading={loading}
           rowSelectionModel={rowSelectionModel}
-          handleRowSelection={handleRowSelection}
+          // handleRowSelection={handleRowSelection}
           handlePaginationModelChange={handlePaginationModelChange}
           onFilterChange={onFilterChange}
           pagination={pagination}

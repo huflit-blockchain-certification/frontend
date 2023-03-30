@@ -14,7 +14,7 @@ export interface TableProps {
   listData: Array<any>
   loading: boolean
   rowSelectionModel: GridRowSelectionModel
-  handleRowSelection: (rowSelectionModel: GridRowSelectionModel) => void
+  handleRowSelection?: (rowSelectionModel: GridRowSelectionModel) => void
   handlePaginationModelChange: (paginationModel: GridPaginationModel) => void
   onFilterChange: (filterModel: GridFilterModel) => void
   pagination: GridPaginationModel

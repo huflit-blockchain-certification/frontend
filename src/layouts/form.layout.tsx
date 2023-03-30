@@ -10,6 +10,7 @@ interface FormProps {
   className?: string
   goBack?: boolean
   loading?: boolean
+  options?: any
 }
 
 export function FormHeader({
@@ -17,6 +18,7 @@ export function FormHeader({
   customActions,
   onSubmit,
   disableHeader,
+  options,
   className,
   goBack,
   loading,
@@ -32,7 +34,12 @@ export function FormHeader({
                 {customActions ? (
                   customActions
                 ) : (
-                  <Button variant="outlined" style={{ marginLeft: 'auto' }} type="submit">
+                  <Button
+                    variant="outlined"
+                    style={{ marginLeft: 'auto' }}
+                    type="submit"
+                    disabled={options?.disabled && true}
+                  >
                     Lưu
                   </Button>
                 )}

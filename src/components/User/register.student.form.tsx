@@ -11,33 +11,37 @@ import { useCookies } from 'react-cookie'
 import { Select } from '@/components/common/Form/Select/select.component'
 import { DatePicker } from '@/components/common/Form/DatePicker/datepicker.component'
 import { countries } from '@/static/countries'
-import { registerStudentSchema } from '@/validation/User/register.student.user.validation'
+import {
+  editStudentSchema,
+  registerStudentSchema,
+} from '@/validation/User/register.student.user.validation'
 import { User } from 'models/User/register.user.model'
 import { RefInput } from '../common/Form/RefInput/ref.input.component'
 import { detailUserStudent } from '@/pages/api/User/detail.user.api'
 import { editUserStudent } from '@/pages/api/User/edit.user.api'
-import { successMessage } from '../common/Toast/response.toast.component'
 import { FormProps } from 'models'
 import { genderOptions } from '@/static/gender'
+import { commonSubmissionHandler } from '@/pages/api/common.api'
 
-function RegisterStudentForm({ recordId, setOpen }: FormProps) {
+function RegisterStudentForm({ recordId, setOpen, afterActions }: FormProps) {
   const [cookies] = useCookies(['access_token'])
   const [loading, setLoading] = useState(false)
 
   const { control, handleSubmit, reset, setValue, watch } = useForm<User>({
-    resolver: yupResolver(registerStudentSchema),
+    resolver: yupResolver(recordId ? editStudentSchema : registerStudentSchema),
     defaultValues: registerUserStudentDefaultForm,
   })
   const onSubmit = async (data: User) => {
-    setLoading(true)
-    if (recordId) {
-      await editUserStudent(recordId, data, cookies.access_token)
-      return setOpen(false)
-    }
-    await registerStudents([data], cookies.access_token)
-    setOpen(false)
-    setLoading(false)
-    successMessage('Created')
+    commonSubmissionHandler({
+      afterActions,
+      createRequest: registerStudents,
+      editRequest: editUserStudent,
+      formData: data,
+      setLoading,
+      setOpen,
+      token: cookies.access_token,
+      recordId,
+    })
   }
 
   useEffect(() => {

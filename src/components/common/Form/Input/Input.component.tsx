@@ -2,7 +2,7 @@ import React from 'react'
 import { useController, Control, Controller } from 'react-hook-form'
 import { TextField } from '@mui/material'
 
-interface DatePickerProps {
+interface InputProps {
   name: string
   control: Control<any>
   label?: string
@@ -24,7 +24,7 @@ export function Input({
   disabled,
   onChangeOverried,
   ...rest
-}: DatePickerProps) {
+}: InputProps) {
   const {
     field: { value, onChange, ref },
     fieldState: { error },
