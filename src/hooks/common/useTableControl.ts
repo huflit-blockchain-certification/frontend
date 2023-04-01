@@ -1,4 +1,5 @@
 import { Toast } from '@/components/common/Toast/response.component'
+import { ERROR_MESSAGE } from '@/constants'
 import { GridFilterModel, GridPaginationModel, GridRowSelectionModel } from '@mui/x-data-grid'
 import { useCallback, useEffect, useState } from 'react'
 
@@ -7,11 +8,8 @@ interface useTableControlProps {
   listingApi: (page: number, keyword: string, accessToken: string) => Promise<any>
   deleteApi: (row: any, accessToken: string) => Promise<[]>
 }
-export function useStudentTableControl({
-  accessToken,
-  listingApi,
-  deleteApi,
-}: useTableControlProps) {
+
+export function useTableControl({ accessToken, listingApi, deleteApi }: useTableControlProps) {
   const [recordId, setRecordId] = useState()
   const [open, setOpen] = useState(false)
   const [listData, setListData] = useState<any>({})
@@ -39,17 +37,17 @@ export function useStudentTableControl({
       await Promise.all(rowSelectionModel.map((row) => deleteApi(row, accessToken)))
       setListData(listData.filter((item: string | number) => rowSelectionModel.includes(item)))
     } catch (err: any) {
-      Toast.fire({ title: 'Something went wrong', icon: 'error' })
+      Toast.fire({ title: ERROR_MESSAGE, icon: 'error' })
     }
   }
 
   const crudOperation = {
     create: (response: any) => {
-      if (!response) return
+      if (!response || !response?.data?.data) return
       setListData([...listData, response.data.data])
     },
     edit: (response: any) => {
-      if (!response) return
+      if (!response || !response?.data?.data) return
       setListData(
         listData.map((item: any) => {
           if (item?.id === response?.id) {
@@ -68,7 +66,7 @@ export function useStudentTableControl({
         const keyword = queryOptions?.filterModel?.quickFilterValues?.[0]
         const listData = await listingApi(pagination.page, keyword, accessToken)
         if (!listData) {
-          throw new Error('Something went wrong')
+          throw new Error(ERROR_MESSAGE)
         }
         setListData(listData.data.data)
         setPagination({

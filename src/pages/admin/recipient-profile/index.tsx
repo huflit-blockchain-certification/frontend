@@ -1,64 +1,61 @@
-import TableData from '@/components/common/Form/Table/table.component'
 import { AdminLayout, TableLayout } from '@/layouts'
-import { GridColDef, GridValueGetterParams } from '@mui/x-data-grid'
-import React, { useEffect, useState } from 'react'
+import Box from '@mui/material/Box'
+import { useTableControl } from '@/hooks/common/useTableControl'
+import { useCookies } from 'react-cookie'
+import React from 'react'
+import { CustomModal } from '@/components/common/Modal/modal.component'
+import { deleteUniversities } from '@/pages/api/User/delete.user.api'
+import { listUniversitys } from '@/pages/api/User/list.user'
+import TableData from '@/components/common/Form/Table/table.component'
+import useStudentsColumns from '@/hooks/User/useStudentColumns'
+import RegisterUniversityForm from '@/components/User/register.university.form'
+import { afterActions } from '@/utils/afterActions.util'
+import { PLUGIN_NAMES } from '@/constants'
 
-export interface RecipentProfileProps {}
+export default function RecipientProfilePage() {
+  const [cookies] = useCookies(['access_token'])
 
-export default function RecipentProfilePage(props: RecipentProfileProps) {
-  const [data, setData] = useState([])
-  const [loading, setLoading] = useState(false)
-
-  useEffect(() => {
-    ;(async () => {
-      setLoading(true)
-      const res = await fetch(`https://js-post-api.herokuapp.com/api/posts?_page=1`)
-      const data = await res.json()
-      setData(data.data)
-      setLoading(false)
-    })()
-  }, [])
-  const columns: GridColDef[] = [
-    { field: 'id', headerName: 'ID', width: 90 },
-    {
-      field: 'firstName',
-      headerName: 'First name',
-      width: 150,
-      editable: true,
-    },
-    {
-      field: 'lastName',
-      headerName: 'Last name',
-      width: 150,
-      editable: true,
-    },
-    {
-      field: 'age',
-      headerName: 'Age',
-      type: 'number',
-      width: 110,
-      editable: true,
-    },
-    {
-      field: 'fullName',
-      headerName: 'Full name',
-      description: 'This column has a value getter and is not sortable.',
-      sortable: false,
-      width: 160,
-      valueGetter: (params: GridValueGetterParams) =>
-        `${params.row.firstName || ''} ${params.row.lastName || ''}`,
-    },
-  ]
+  const {
+    listData,
+    pagination,
+    loading,
+    rowSelectionModel,
+    onFilterChange,
+    handlePaginationModelChange,
+    open,
+    recordId,
+    setRecordId,
+    setOpen,
+    crudOperation,
+  } = useTableControl({
+    accessToken: cookies.access_token,
+    listingApi: listUniversitys,
+    deleteApi: deleteUniversities,
+  })
+  const { columns } = useStudentsColumns({ setOpen, setRecordId })
 
   return (
-    <>
-      {!loading && (
-        <TableLayout title="Hồ sơ người nhận" slug="recipient-profile">
-          <TableData columns={columns} rows={data} />
-        </TableLayout>
-      )}
-    </>
+    <TableLayout title={PLUGIN_NAMES.RECIPIENT_PROFILE} onCreateClick={() => setOpen(true)}>
+      <Box sx={{ height: 700, width: '100%' }}>
+        <CustomModal beforeClose={() => setRecordId(undefined)} open={open} setOpen={setOpen}>
+          <RegisterUniversityForm
+            recordId={recordId}
+            setOpen={setOpen}
+            afterActions={afterActions(crudOperation)}
+          />
+        </CustomModal>
+        <TableData
+          columns={columns}
+          listData={listData}
+          loading={loading}
+          rowSelectionModel={rowSelectionModel}
+          handlePaginationModelChange={handlePaginationModelChange}
+          onFilterChange={onFilterChange}
+          pagination={pagination}
+        />
+      </Box>
+    </TableLayout>
   )
 }
 
-RecipentProfilePage.Layout = AdminLayout
+RecipientProfilePage.Layout = AdminLayout

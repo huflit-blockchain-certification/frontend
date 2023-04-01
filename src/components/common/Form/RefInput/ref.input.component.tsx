@@ -53,7 +53,7 @@ export function RefInput({
           onChange={(e: any) => {
             onChangeOverried ? onChangeOverried() : onChange(e.target.value)
           }}
-          // disabled={disable}
+          disabled={true}
           ref={ref}
           placeholder={placeholder ?? ''}
           helperText={error && error.message}

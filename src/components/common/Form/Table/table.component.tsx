@@ -8,6 +8,7 @@ import {
   GridRowSelectionModel,
   GridToolbar,
 } from '@mui/x-data-grid'
+import { Button } from '@mui/material'
 
 export interface TableProps {
   columns: GridColDef<any>[]
@@ -17,6 +18,7 @@ export interface TableProps {
   handleRowSelection?: (rowSelectionModel: GridRowSelectionModel) => void
   handlePaginationModelChange: (paginationModel: GridPaginationModel) => void
   onFilterChange: (filterModel: GridFilterModel) => void
+  onDeleteRowClick?: () => void
   pagination: GridPaginationModel
 }
 
@@ -29,11 +31,17 @@ export default function TableData({
   handlePaginationModelChange,
   onFilterChange,
   pagination,
+  onDeleteRowClick,
   ...rest
 }: TableProps) {
   return (
     <div className="flex flex-col gap-3">
       <Box sx={{ height: 400, width: '100%' }}>
+        {rowSelectionModel.length > 0 && onDeleteRowClick && (
+          <Button variant="outlined" color="error" className="mb-2" onClick={onDeleteRowClick}>
+            Delete
+          </Button>
+        )}
         <DataGrid
           rows={listData ?? []}
           columns={columns}

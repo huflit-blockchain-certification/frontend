@@ -1,6 +1,6 @@
 import { HiPencil } from 'react-icons/hi'
 import * as React from 'react'
-import { dateFormat } from '@/utils/formatter'
+import { dateFormat } from '@/utils/formatter.util'
 
 interface ColumnsProps {
   open?: boolean

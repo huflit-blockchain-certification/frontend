@@ -1,15 +1,17 @@
 import { AdminLayout, TableLayout } from '@/layouts'
 import Box from '@mui/material/Box'
-import { useStudentTableControl } from '@/hooks/common/useTableControl'
+import { useTableControl } from '@/hooks/common/useTableControl'
 import { useCookies } from 'react-cookie'
 import React from 'react'
 import { CustomModal } from '@/components/common/Modal/modal.component'
-import { Button } from '@mui/material'
 import { deleteStudents } from '@/pages/api/User/delete.user.api'
 import { listStudents } from '@/pages/api/User/list.user'
 import TableData from '@/components/common/Form/Table/table.component'
 import useStudentsColumns from '@/hooks/User/useStudentColumns'
 import RegisterStudentForm from '@/components/User/register.student.form'
+import { registerStudents } from '@/pages/api/User/register.user.api'
+import { afterActions } from '@/utils/afterActions.util'
+import { PLUGIN_NAMES } from '@/constants'
 export interface UserTablePageProps {}
 
 export default function StudentUserListPage({}: any) {
@@ -29,28 +31,41 @@ export default function StudentUserListPage({}: any) {
     setRecordId,
     setOpen,
     crudOperation,
-  } = useStudentTableControl({
+  } = useTableControl({
     accessToken: cookies.access_token,
     listingApi: listStudents,
     deleteApi: deleteStudents,
   })
   const { columns } = useStudentsColumns({ setOpen, setRecordId })
 
+  const requestAfterConfirmCSV = async (data: any[]) => {
+    if (!data?.length) return
+    const mappedData = data.map((record) => {
+      const roles = record?.roles
+      if (roles && !Array.isArray(roles)) {
+        record.roles = [roles]
+      }
+      return record
+    })
+    const response = await registerStudents(mappedData, cookies.access_token)
+    return response
+  }
+
   return (
-    <TableLayout title="Tài khoản" onCreateClick={() => setOpen(true)}>
+    <TableLayout
+      title={PLUGIN_NAMES.USERS}
+      onCreateClick={() => setOpen(true)}
+      enableCSV
+      requestAfterConfirmCSV={requestAfterConfirmCSV}
+    >
       <Box sx={{ height: 700, width: '100%' }}>
         <CustomModal beforeClose={() => setRecordId(undefined)} open={open} setOpen={setOpen}>
           <RegisterStudentForm
             recordId={recordId}
             setOpen={setOpen}
-            afterActions={{ create: crudOperation.create, edit: crudOperation.edit }}
+            afterActions={afterActions(crudOperation)}
           />
         </CustomModal>
-        {rowSelectionModel.length > 0 && (
-          <Button variant="outlined" color="error" className="mb-2" onClick={onDeleteRowClick}>
-            Delete
-          </Button>
-        )}
         <TableData
           columns={columns}
           listData={listData}
@@ -60,6 +75,7 @@ export default function StudentUserListPage({}: any) {
           handlePaginationModelChange={handlePaginationModelChange}
           onFilterChange={onFilterChange}
           pagination={pagination}
+          onDeleteRowClick={onDeleteRowClick}
         />
       </Box>
     </TableLayout>

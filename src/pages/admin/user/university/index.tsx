@@ -1,6 +1,6 @@
 import { AdminLayout, TableLayout } from '@/layouts'
 import Box from '@mui/material/Box'
-import { useStudentTableControl } from '@/hooks/common/useTableControl'
+import { useTableControl } from '@/hooks/common/useTableControl'
 import { useCookies } from 'react-cookie'
 import React from 'react'
 import { CustomModal } from '@/components/common/Modal/modal.component'
@@ -9,6 +9,8 @@ import { listUniversitys } from '@/pages/api/User/list.user'
 import TableData from '@/components/common/Form/Table/table.component'
 import useStudentsColumns from '@/hooks/User/useStudentColumns'
 import RegisterUniversityForm from '@/components/User/register.university.form'
+import { afterActions } from '@/utils/afterActions.util'
+import { PLUGIN_NAMES } from '@/constants'
 export interface UserTablePageProps {}
 
 export default function UniversityUserListPage({}: any) {
@@ -26,7 +28,7 @@ export default function UniversityUserListPage({}: any) {
     setRecordId,
     setOpen,
     crudOperation,
-  } = useStudentTableControl({
+  } = useTableControl({
     accessToken: cookies.access_token,
     listingApi: listUniversitys,
     deleteApi: deleteUniversities,
@@ -34,13 +36,13 @@ export default function UniversityUserListPage({}: any) {
   const { columns } = useStudentsColumns({ setOpen, setRecordId })
 
   return (
-    <TableLayout title="Tài khoản" onCreateClick={() => setOpen(true)}>
+    <TableLayout title={PLUGIN_NAMES.USERS} onCreateClick={() => setOpen(true)}>
       <Box sx={{ height: 700, width: '100%' }}>
         <CustomModal beforeClose={() => setRecordId(undefined)} open={open} setOpen={setOpen}>
           <RegisterUniversityForm
             recordId={recordId}
             setOpen={setOpen}
-            afterActions={{ create: crudOperation.create, edit: crudOperation.edit }}
+            afterActions={afterActions(crudOperation)}
           />
         </CustomModal>
         <TableData
@@ -48,7 +50,6 @@ export default function UniversityUserListPage({}: any) {
           listData={listData}
           loading={loading}
           rowSelectionModel={rowSelectionModel}
-          // handleRowSelection={handleRowSelection}
           handlePaginationModelChange={handlePaginationModelChange}
           onFilterChange={onFilterChange}
           pagination={pagination}

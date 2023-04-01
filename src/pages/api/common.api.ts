@@ -27,7 +27,7 @@ export const commonSubmissionHandler = async ({
     if (!response) return
     setOpen(false)
     afterActions.edit(response)
-    successMessage('Updated')
+    successMessage('Cập nhật')
     return setOpen(false)
   }
   const response = await createRequest(formData, token)
@@ -35,5 +35,5 @@ export const commonSubmissionHandler = async ({
   setOpen(false)
   setLoading(false)
   afterActions.create(response)
-  successMessage('Created')
+  successMessage('Tạo')
 }
