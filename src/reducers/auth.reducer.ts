@@ -1,4 +1,4 @@
-import { SET_ACCESS_TOKEN } from '@/constants'
+import { SET_ACCESS_TOKEN } from '@/constants/'
 
 const initialState = {
   accessToken: '',

@@ -8,7 +8,7 @@ import TableData from '@/components/common/Form/Table/table.component'
 import useStudentsColumns from '@/hooks/User/useStudentColumns'
 import RegisterUniversityForm from '@/components/Form/User/register.university.form'
 import { afterActions } from '@/utils/afterActions.util'
-import { PLUGIN_NAMES } from '@/constants'
+import { PLUGIN_NAMES } from '@/constants/'
 import { UniversityApi } from '@/pages/api/university.api'
 
 export default function RecipientProfilePage() {

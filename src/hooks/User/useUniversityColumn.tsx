@@ -7,7 +7,7 @@ interface ColumnsProps {
   setRecordId: any
 }
 
-export default function useStudentsColumns({ open, setOpen, setRecordId }: ColumnsProps) {
+export default function useUniversityColumns({ open, setOpen, setRecordId }: ColumnsProps) {
   const columns: any = [
     { field: '_id', headerName: 'ID', width: 250 },
     {

@@ -8,7 +8,7 @@ import TableData from '@/components/common/Form/Table/table.component'
 import useStudentsColumns from '@/hooks/User/useStudentColumns'
 import RegisterStudentForm from '@/components/Form/User/register.student.form'
 import { afterActions } from '@/utils/afterActions.util'
-import { PLUGIN_NAMES } from '@/constants'
+import { PLUGIN_NAMES } from '@/constants/'
 import { mapUserData } from '@/utils/mapData.util'
 import { StudentApi } from '@/pages/api/User/student.api'
 export interface UserTablePageProps {}

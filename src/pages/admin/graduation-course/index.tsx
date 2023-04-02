@@ -5,11 +5,11 @@ import { useCookies } from 'react-cookie'
 import React from 'react'
 import { CustomModal } from '@/components/common/Modal/modal.component'
 import TableData from '@/components/common/Form/Table/table.component'
-import useStudentsColumns from '@/hooks/User/useStudentColumns'
 import { afterActions } from '@/utils/afterActions.util'
-import { PLUGIN_NAMES } from '@/constants'
-import { GraduationCourseApi } from '@/pages/api/Graduation-Course/graduation-course.api'
+import { PLUGIN_NAMES } from '@/constants/'
 import GraduationCourseForm from '@/components/Form/Graduation-Course/graduation-course.form'
+import useGraduationCourseColumn from '@/hooks/User/useGraduationCourseColumn'
+import { GraduationYearApi } from '@/pages/api/Graduation-Year/graduation-year.api'
 
 export default function CertTypeListPage() {
   const [cookies] = useCookies(['access_token'])
@@ -28,10 +28,10 @@ export default function CertTypeListPage() {
     crudOperation,
   } = useTableControl({
     accessToken: cookies.access_token,
-    listingApi: GraduationCourseApi.listGraduationCourse,
-    deleteApi: GraduationCourseApi.deleteGraduationCourse,
+    listingApi: GraduationYearApi.listGraduationYear,
+    deleteApi: GraduationYearApi.deleteGraduationYear,
   })
-  const { columns } = useStudentsColumns({ setOpen, setRecordId })
+  const { columns } = useGraduationCourseColumn({ setOpen, setRecordId })
 
   return (
     <TableLayout title={PLUGIN_NAMES.GRADUAUATION_COURSE.NAME} onCreateClick={() => setOpen(true)}>

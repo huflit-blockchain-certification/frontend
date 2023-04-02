@@ -12,14 +12,15 @@ import { GraduationCourseApi } from '@/pages/api/Graduation-Course/graduation-co
 import { GraduationCourse } from 'models/GraduationCourse'
 import { DatePicker } from '@/components/common/Form/DatePicker/datepicker.component'
 import { graduationCourseSchema } from '@/validation/Graduation-Course/graduation-course.validation'
+import { graduationCourseDefaultForm } from '@/default/graduation-course.default'
 
 function GraduationCourseForm({ recordId, setOpen, afterActions }: FormProps) {
   const [cookies] = useCookies(['access_token'])
   const [loading, setLoading] = useState(false)
 
-  const { control, handleSubmit, reset, watch } = useForm<GraduationCourse>({
+  const { control, handleSubmit, reset } = useForm<GraduationCourse>({
     resolver: yupResolver(graduationCourseSchema),
-    defaultValues: certTypeDefaultForm,
+    defaultValues: graduationCourseDefaultForm,
   })
   const onSubmit = async (data: GraduationCourse) => {
     commonSubmissionHandler({

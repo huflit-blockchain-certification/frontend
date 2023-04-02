@@ -10,6 +10,7 @@ const PLUGIN_NAMES = {
   RECIPIENT_PROFILE: { NAME: 'Hồ sô người nhận', SLUG: '/recipient-profile' },
   CERT_TYPE: { NAME: 'Bằng cấp', SLUG: '/cert-type' },
   GRADUAUATION_COURSE: { NAME: 'Khóa tốt nghiệp', SLUG: '/graduation-course' },
+  GRADUAUATION_YEAR: { NAME: 'Năm tốt nghiệp', SLUG: '/graduation-year' },
 }
 //Redux
 

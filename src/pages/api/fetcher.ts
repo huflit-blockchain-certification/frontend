@@ -1,4 +1,4 @@
-import { API_URL, API_KEY } from '@/constants'
+import { API_URL, API_KEY } from '@/constants/'
 
 interface IFetcher {
   method: string

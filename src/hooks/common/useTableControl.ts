@@ -1,5 +1,5 @@
 import { Toast } from '@/components/common/Toast/response.component'
-import { ERROR_MESSAGE } from '@/constants'
+import { ERROR_MESSAGE } from '@/constants/'
 import { GridFilterModel, GridPaginationModel, GridRowSelectionModel } from '@mui/x-data-grid'
 import { useCallback, useEffect, useState } from 'react'
 
@@ -43,8 +43,13 @@ export function useTableControl({ accessToken, listingApi, deleteApi }: useTable
 
   const crudOperation = {
     create: (response: any) => {
-      if (!response || !response?.data?.data) return
-      setListData([...listData, response.data.data])
+      const responeData = response?.data?.data
+      if (!response || !responeData) return
+      if (Array.isArray(responeData)) {
+        setListData([...listData, ...responeData])
+      } else {
+        setListData([...listData, responeData])
+      }
     },
     edit: (response: any) => {
       if (!response || !response?.data?.data) return
@@ -64,8 +69,7 @@ export function useTableControl({ accessToken, listingApi, deleteApi }: useTable
       try {
         setLoading(true)
         const keyword = queryOptions?.filterModel?.quickFilterValues?.[0]
-        let listData
-        listData = await listingApi(pagination.page, accessToken, keyword)
+        const listData = await listingApi(pagination.page, accessToken, keyword)
         if (!listData) {
           throw new Error(ERROR_MESSAGE)
         }

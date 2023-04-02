@@ -1,7 +1,13 @@
-import { PLUGIN_NAMES } from '@/constants'
+import { PLUGIN_NAMES } from '@/constants/'
 import Link from 'next/link'
 import * as React from 'react'
-import { HiChartPie, HiUser, HiOutlineDocument } from 'react-icons/hi'
+import {
+  HiOutlineChartPie,
+  HiOutlineUserCircle,
+  HiOutlineIdentification,
+  HiOutlineCalendar,
+  HiOutlineBookOpen,
+} from 'react-icons/hi'
 export interface AdminSideBar {}
 
 export default function AdminSideBar(props: AdminSideBar) {
@@ -16,7 +22,7 @@ export default function AdminSideBar(props: AdminSideBar) {
           <ul className="space-y-2">
             <li>
               <div className="flex gap-3 items-center">
-                <HiChartPie />
+                <HiOutlineChartPie size={20} />
                 <Link
                   className="flex items-center p-2 text-base font-normal text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700"
                   href="/admin"
@@ -27,7 +33,7 @@ export default function AdminSideBar(props: AdminSideBar) {
             </li>
             <li>
               <div className="flex gap-3 items-center">
-                <HiUser />
+                <HiOutlineUserCircle size={20} />
                 <Link
                   className="flex items-center p-2 text-base font-normal text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700"
                   href="/admin/user"
@@ -38,7 +44,7 @@ export default function AdminSideBar(props: AdminSideBar) {
             </li>
             <li>
               <div className="flex gap-3 items-center">
-                <HiOutlineDocument />
+                <HiOutlineIdentification size={20} />
                 <Link
                   className="flex items-center p-2 text-base font-normal text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700"
                   href="/admin/recipient-profile"
@@ -49,7 +55,7 @@ export default function AdminSideBar(props: AdminSideBar) {
             </li>
             <li>
               <div className="flex gap-3 items-center">
-                <HiOutlineDocument />
+                <HiOutlineBookOpen size={20} />
                 <Link
                   className="flex items-center p-2 text-base font-normal text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700"
                   href="/admin/cert-type"
@@ -60,12 +66,23 @@ export default function AdminSideBar(props: AdminSideBar) {
             </li>
             <li>
               <div className="flex gap-3 items-center">
-                <HiOutlineDocument />
+                <HiOutlineCalendar size={20} />
                 <Link
                   className="flex items-center p-2 text-base font-normal text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700"
                   href="/admin/graduation-course"
                 >
                   {PLUGIN_NAMES.GRADUAUATION_COURSE.NAME}
+                </Link>
+              </div>
+            </li>
+            <li>
+              <div className="flex gap-3 items-center">
+                <HiOutlineCalendar size={20} />
+                <Link
+                  className="flex items-center p-2 text-base font-normal text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700"
+                  href="/admin/graduation-year"
+                >
+                  {PLUGIN_NAMES.GRADUAUATION_YEAR.NAME}
                 </Link>
               </div>
             </li>

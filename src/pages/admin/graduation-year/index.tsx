@@ -5,13 +5,13 @@ import { useCookies } from 'react-cookie'
 import React from 'react'
 import { CustomModal } from '@/components/common/Modal/modal.component'
 import TableData from '@/components/common/Form/Table/table.component'
-import RegisterUniversityForm from '@/components/Form/User/register.university.form'
 import { afterActions } from '@/utils/afterActions.util'
 import { PLUGIN_NAMES } from '@/constants/'
-import { mapUserData } from '@/utils/mapData.util'
-import { UniversityApi } from '@/pages/api/User/university.api'
-import useUniversityColumns from '@/hooks/User/useUniversityColumn'
-export default function UniversityUserListPage() {
+import useGraduationYearColumn from '@/hooks/User/useGraduationYearColum'
+import { GraduationYearApi } from '@/pages/api/Graduation-Year/graduation-year.api'
+import GraduationYearForm from '@/components/Form/Graduation-Year/graduation-year.form'
+
+export default function CertTypeListPage() {
   const [cookies] = useCookies(['access_token'])
 
   const {
@@ -28,23 +28,16 @@ export default function UniversityUserListPage() {
     crudOperation,
   } = useTableControl({
     accessToken: cookies.access_token,
-    listingApi: UniversityApi.listUniversitys,
-    deleteApi: UniversityApi.deleteUniversities,
+    listingApi: GraduationYearApi.listGraduationYear,
+    deleteApi: GraduationYearApi.detailGraduationYear,
   })
-  const { columns } = useUniversityColumns({ setOpen, setRecordId })
+  const { columns } = useGraduationYearColumn({ setOpen, setRecordId })
 
   return (
-    <TableLayout
-      title={PLUGIN_NAMES.USERS.NAME}
-      onCreateClick={() => setOpen(true)}
-      enableCSV
-      requestAfterConfirmCSV={(data) =>
-        mapUserData(data, UniversityApi.registerUniversities, cookies.access_token)
-      }
-    >
+    <TableLayout title={PLUGIN_NAMES.GRADUAUATION_COURSE.NAME} onCreateClick={() => setOpen(true)}>
       <Box sx={{ height: 700, width: '100%' }}>
         <CustomModal beforeClose={() => setRecordId(undefined)} open={open} setOpen={setOpen}>
-          <RegisterUniversityForm
+          <GraduationYearForm
             recordId={recordId}
             setOpen={setOpen}
             afterActions={afterActions(crudOperation)}
@@ -64,4 +57,4 @@ export default function UniversityUserListPage() {
   )
 }
 
-UniversityUserListPage.Layout = AdminLayout
+CertTypeListPage.Layout = AdminLayout

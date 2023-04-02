@@ -5,11 +5,11 @@ import { useCookies } from 'react-cookie'
 import React from 'react'
 import { CustomModal } from '@/components/common/Modal/modal.component'
 import TableData from '@/components/common/Form/Table/table.component'
-import useStudentsColumns from '@/hooks/User/useStudentColumns'
 import { afterActions } from '@/utils/afterActions.util'
-import { PLUGIN_NAMES } from '@/constants'
+import { PLUGIN_NAMES } from '@/constants/'
 import CertTypeForm from '@/components/Form/Cert-Type/cert-type.form'
 import { CertTypeApi } from '@/pages/api/Cert-Type/cert-type.api'
+import useCertTypeColumns from '@/hooks/User/useCertTypeColumn'
 
 export default function CertTypeListPage() {
   const [cookies] = useCookies(['access_token'])
@@ -31,7 +31,7 @@ export default function CertTypeListPage() {
     listingApi: CertTypeApi.listCertType,
     deleteApi: CertTypeApi.deleteCertType,
   })
-  const { columns } = useStudentsColumns({ setOpen, setRecordId })
+  const { columns } = useCertTypeColumns({ setOpen, setRecordId })
 
   return (
     <TableLayout title={PLUGIN_NAMES.CERT_TYPE.NAME} onCreateClick={() => setOpen(true)}>
