@@ -6,7 +6,6 @@ import { yupResolver } from '@hookform/resolvers/yup'
 import Radio from '@/components/common/Form/Radio/radio.component'
 import { registerUserStudentDefaultForm } from '@/default/student.register.default'
 import _ from 'lodash'
-import { registerStudents } from '@/pages/api/User/register.user.api'
 import { useCookies } from 'react-cookie'
 import { Select } from '@/components/common/Form/Select/select.component'
 import { DatePicker } from '@/components/common/Form/DatePicker/datepicker.component'
@@ -15,13 +14,12 @@ import {
   editStudentSchema,
   registerStudentSchema,
 } from '@/validation/User/register.student.user.validation'
-import { User } from 'models/User/register.user.model'
-import { RefInput } from '../common/Form/RefInput/ref.input.component'
-import { detailUserStudent } from '@/pages/api/User/detail.user.api'
-import { editUserStudent } from '@/pages/api/User/edit.user.api'
+import { User } from 'models/User'
+import { RefInput } from '../../common/Form/RefInput/ref.input.component'
 import { FormProps } from 'models'
 import { genderOptions } from '@/static/gender'
 import { commonSubmissionHandler } from '@/pages/api/common.api'
+import { StudentApi } from '@/pages/api/User/student.api'
 
 function RegisterStudentForm({ recordId, setOpen, afterActions }: FormProps) {
   const [cookies] = useCookies(['access_token'])
@@ -34,8 +32,8 @@ function RegisterStudentForm({ recordId, setOpen, afterActions }: FormProps) {
   const onSubmit = async (data: User) => {
     commonSubmissionHandler({
       afterActions,
-      createRequest: registerStudents,
-      editRequest: editUserStudent,
+      createRequest: StudentApi.registerStudents,
+      editRequest: StudentApi.editUserStudent,
       formData: [data],
       setLoading,
       setOpen,
@@ -48,7 +46,7 @@ function RegisterStudentForm({ recordId, setOpen, afterActions }: FormProps) {
     ;(async () => {
       if (!recordId) return
       setLoading(true)
-      const user = await detailUserStudent(recordId, cookies.access_token)
+      const user = await StudentApi.detailUserStudent(recordId, cookies.access_token)
       if (!user) return
       const response = _.omit(user.data.data, [
         'identity',

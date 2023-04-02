@@ -6,12 +6,12 @@ import { loginSchema } from '@/validation/User/login.user.validation'
 import { yupResolver } from '@hookform/resolvers/yup'
 import * as React from 'react'
 import { useForm } from 'react-hook-form'
-import { login } from './api/User/login.user.api'
 import { useRouter } from 'next/router'
 import { LoadingIndicator } from '@/components/common/LoadingIndicator/loadingIndicator.component'
 import Button from '@mui/material/Button'
 import { useCookies } from 'react-cookie'
 import { LoginnedPage } from '@/components/common/Auth/loggied.component'
+import { AuthApi } from './api/Auth/auth.api'
 export interface LoginProps {}
 
 export default function LoginPage(props: LoginProps) {
@@ -28,7 +28,7 @@ export default function LoginPage(props: LoginProps) {
   })
 
   const onSubmit = (data: RefreshTokenDTO) => {
-    login(data, async (record) => {
+    AuthApi.login(data, async (record) => {
       if (!record) return
       const { accessToken, refreshToken } = record.data.tokens
       setCookie('access_token', accessToken)

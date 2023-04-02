@@ -3,8 +3,8 @@ import { useCookies } from 'react-cookie'
 import { useRouter } from 'next/router'
 import jwt_decode, { JwtPayload } from 'jwt-decode'
 import moment from 'moment'
-import { refreshToken } from '@/pages/api/User/refresh.user.api'
 import { Toast } from '@/components/common/Toast/response.component'
+import { AuthApi } from '@/pages/api/Auth/auth.api'
 
 export interface useAuthProps {}
 
@@ -31,7 +31,7 @@ export function useAuth() {
       const stillValid = moment(exp).unix() < moment().unix()
       if (!stillValid) {
         console.log('Refresh token ...')
-        return await refreshToken()
+        return await AuthApi.refreshToken()
       }
       setAccessToken(accessToken)
     })()

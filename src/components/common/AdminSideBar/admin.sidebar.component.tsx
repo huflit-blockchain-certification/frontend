@@ -1,11 +1,10 @@
+import { PLUGIN_NAMES } from '@/constants'
 import Link from 'next/link'
-import { useRouter } from 'next/router'
 import * as React from 'react'
-import { HiChartPie, HiUser, HiOutlineDocument, HiOutlineDocumentText } from 'react-icons/hi'
+import { HiChartPie, HiUser, HiOutlineDocument } from 'react-icons/hi'
 export interface AdminSideBar {}
 
 export default function AdminSideBar(props: AdminSideBar) {
-  const router = useRouter()
   return (
     <div className="w-fit border-r-2 border-gray-100 h-screen">
       <aside
@@ -22,7 +21,7 @@ export default function AdminSideBar(props: AdminSideBar) {
                   className="flex items-center p-2 text-base font-normal text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700"
                   href="/admin"
                 >
-                  Tổng quan
+                  {PLUGIN_NAMES.OVERVIEW.NAME}
                 </Link>
               </div>
             </li>
@@ -33,7 +32,7 @@ export default function AdminSideBar(props: AdminSideBar) {
                   className="flex items-center p-2 text-base font-normal text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700"
                   href="/admin/user"
                 >
-                  Tài khoản
+                  {PLUGIN_NAMES.USERS.NAME}
                 </Link>
               </div>
             </li>
@@ -44,7 +43,29 @@ export default function AdminSideBar(props: AdminSideBar) {
                   className="flex items-center p-2 text-base font-normal text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700"
                   href="/admin/recipient-profile"
                 >
-                  Hồ sơ người nhận
+                  {PLUGIN_NAMES.RECIPIENT_PROFILE.NAME}
+                </Link>
+              </div>
+            </li>
+            <li>
+              <div className="flex gap-3 items-center">
+                <HiOutlineDocument />
+                <Link
+                  className="flex items-center p-2 text-base font-normal text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700"
+                  href="/admin/cert-type"
+                >
+                  {PLUGIN_NAMES.CERT_TYPE.NAME}
+                </Link>
+              </div>
+            </li>
+            <li>
+              <div className="flex gap-3 items-center">
+                <HiOutlineDocument />
+                <Link
+                  className="flex items-center p-2 text-base font-normal text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700"
+                  href="/admin/graduation-course"
+                >
+                  {PLUGIN_NAMES.GRADUAUATION_COURSE.NAME}
                 </Link>
               </div>
             </li>

@@ -2,14 +2,14 @@ import { AuthProps } from 'models'
 import { useRouter } from 'next/router'
 import { useEffect } from 'react'
 import { useCookies } from 'react-cookie'
-import { logout } from './api/User/logout.user.api'
+import { AuthApi } from './api/Auth/auth.api'
 
 function LogoutPage({ accessToken }: AuthProps) {
   const router = useRouter()
   const [cookies, setCookie, removeCookie] = useCookies()
   useEffect(() => {
     ;(async () => {
-      await logout(accessToken)
+      await AuthApi.logout(accessToken)
       removeCookie('access_token')
       removeCookie('refresh_token')
       router.push('/')

@@ -5,7 +5,7 @@ import { useCallback, useEffect, useState } from 'react'
 
 interface useTableControlProps {
   accessToken: string
-  listingApi: (page: number, keyword: string, accessToken: string) => Promise<any>
+  listingApi: (page: number, accessToken: string, keyword?: string) => Promise<any>
   deleteApi: (row: any, accessToken: string) => Promise<[]>
 }
 
@@ -64,7 +64,8 @@ export function useTableControl({ accessToken, listingApi, deleteApi }: useTable
       try {
         setLoading(true)
         const keyword = queryOptions?.filterModel?.quickFilterValues?.[0]
-        const listData = await listingApi(pagination.page, keyword, accessToken)
+        let listData
+        listData = await listingApi(pagination.page, accessToken, keyword)
         if (!listData) {
           throw new Error(ERROR_MESSAGE)
         }

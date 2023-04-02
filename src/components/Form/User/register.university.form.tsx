@@ -8,15 +8,13 @@ import { registerDTO } from '@/DTO/User/register.dto.user'
 import Radio from '@/components/common/Form/Radio/radio.component'
 import { registerUserUniversityDefaultForm } from '@/default/university.register.default'
 import _ from 'lodash'
-import { registerUniversities } from '@/pages/api/User/register.user.api'
 import { useCookies } from 'react-cookie'
 import { FormProps } from 'models'
-import { editUserUniversity } from '@/pages/api/User/edit.user.api'
-import { RefInput } from '../common/Form/RefInput/ref.input.component'
-import { User } from 'models/User/register.user.model'
-import { detailUserUniversity } from '@/pages/api/User/detail.user.api'
+import { RefInput } from '../../common/Form/RefInput/ref.input.component'
+import { User } from 'models/User'
 import { genderOptions } from '@/static/gender'
 import { commonSubmissionHandler } from '@/pages/api/common.api'
+import { UniversityApi } from '@/pages/api/university.api'
 
 function RegisterUniversityForm({ recordId, setOpen, afterActions }: FormProps) {
   const [cookies] = useCookies(['access_token'])
@@ -30,8 +28,8 @@ function RegisterUniversityForm({ recordId, setOpen, afterActions }: FormProps) 
   const onSubmit = async (data: registerDTO) => {
     commonSubmissionHandler({
       afterActions,
-      createRequest: registerUniversities,
-      editRequest: editUserUniversity,
+      createRequest: UniversityApi.registerUniversities,
+      editRequest: UniversityApi.editUserUniversity,
       formData: data,
       setLoading,
       setOpen,
@@ -43,7 +41,7 @@ function RegisterUniversityForm({ recordId, setOpen, afterActions }: FormProps) 
     ;(async () => {
       if (!recordId) return
       setLoading(true)
-      const user = await detailUserUniversity(recordId, cookies.access_token)
+      const user = await UniversityApi.detailUserUniversity(recordId, cookies.access_token)
       if (!user) return
       const response = _.omit(user.data.data, [
         'identity',

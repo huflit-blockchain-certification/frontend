@@ -4,16 +4,15 @@ import { useTableControl } from '@/hooks/common/useTableControl'
 import { useCookies } from 'react-cookie'
 import React from 'react'
 import { CustomModal } from '@/components/common/Modal/modal.component'
-import { deleteUniversities } from '@/pages/api/User/delete.user.api'
-import { listUniversitys } from '@/pages/api/User/list.user'
 import TableData from '@/components/common/Form/Table/table.component'
 import useStudentsColumns from '@/hooks/User/useStudentColumns'
-import RegisterUniversityForm from '@/components/User/register.university.form'
+import RegisterUniversityForm from '@/components/Form/User/register.university.form'
 import { afterActions } from '@/utils/afterActions.util'
 import { PLUGIN_NAMES } from '@/constants'
-export interface UserTablePageProps {}
+import { mapUserData } from '@/utils/mapData.util'
+import { UniversityApi } from '@/pages/api/university.api'
 
-export default function UniversityUserListPage({}: any) {
+export default function UniversityUserListPage() {
   const [cookies] = useCookies(['access_token'])
 
   const {
@@ -30,13 +29,20 @@ export default function UniversityUserListPage({}: any) {
     crudOperation,
   } = useTableControl({
     accessToken: cookies.access_token,
-    listingApi: listUniversitys,
-    deleteApi: deleteUniversities,
+    listingApi: UniversityApi.listUniversitys,
+    deleteApi: UniversityApi.deleteUniversities,
   })
   const { columns } = useStudentsColumns({ setOpen, setRecordId })
 
   return (
-    <TableLayout title={PLUGIN_NAMES.USERS} onCreateClick={() => setOpen(true)}>
+    <TableLayout
+      title={PLUGIN_NAMES.USERS.NAME}
+      onCreateClick={() => setOpen(true)}
+      enableCSV
+      requestAfterConfirmCSV={(data) =>
+        mapUserData(data, UniversityApi.registerUniversities, cookies.access_token)
+      }
+    >
       <Box sx={{ height: 700, width: '100%' }}>
         <CustomModal beforeClose={() => setRecordId(undefined)} open={open} setOpen={setOpen}>
           <RegisterUniversityForm

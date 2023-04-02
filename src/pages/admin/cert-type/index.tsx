@@ -6,12 +6,12 @@ import React from 'react'
 import { CustomModal } from '@/components/common/Modal/modal.component'
 import TableData from '@/components/common/Form/Table/table.component'
 import useStudentsColumns from '@/hooks/User/useStudentColumns'
-import RegisterUniversityForm from '@/components/Form/User/register.university.form'
 import { afterActions } from '@/utils/afterActions.util'
 import { PLUGIN_NAMES } from '@/constants'
-import { UniversityApi } from '@/pages/api/university.api'
+import CertTypeForm from '@/components/Form/Cert-Type/cert-type.form'
+import { CertTypeApi } from '@/pages/api/Cert-Type/cert-type.api'
 
-export default function RecipientProfilePage() {
+export default function CertTypeListPage() {
   const [cookies] = useCookies(['access_token'])
 
   const {
@@ -28,16 +28,16 @@ export default function RecipientProfilePage() {
     crudOperation,
   } = useTableControl({
     accessToken: cookies.access_token,
-    listingApi: UniversityApi.listUniversitys,
-    deleteApi: UniversityApi.deleteUniversities,
+    listingApi: CertTypeApi.listCertType,
+    deleteApi: CertTypeApi.deleteCertType,
   })
   const { columns } = useStudentsColumns({ setOpen, setRecordId })
 
   return (
-    <TableLayout title={PLUGIN_NAMES.RECIPIENT_PROFILE.NAME} onCreateClick={() => setOpen(true)}>
+    <TableLayout title={PLUGIN_NAMES.CERT_TYPE.NAME} onCreateClick={() => setOpen(true)}>
       <Box sx={{ height: 700, width: '100%' }}>
         <CustomModal beforeClose={() => setRecordId(undefined)} open={open} setOpen={setOpen}>
-          <RegisterUniversityForm
+          <CertTypeForm
             recordId={recordId}
             setOpen={setOpen}
             afterActions={afterActions(crudOperation)}
@@ -57,4 +57,4 @@ export default function RecipientProfilePage() {
   )
 }
 
-RecipientProfilePage.Layout = AdminLayout
+CertTypeListPage.Layout = AdminLayout

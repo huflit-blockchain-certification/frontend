@@ -1,3 +1,3 @@
-import { User } from 'models/User/register.user.model'
+import { User } from 'models/User'
 
 export interface registerDTO {}

@@ -4,14 +4,13 @@ import { useTableControl } from '@/hooks/common/useTableControl'
 import { useCookies } from 'react-cookie'
 import React from 'react'
 import { CustomModal } from '@/components/common/Modal/modal.component'
-import { deleteStudents } from '@/pages/api/User/delete.user.api'
-import { listStudents } from '@/pages/api/User/list.user'
 import TableData from '@/components/common/Form/Table/table.component'
 import useStudentsColumns from '@/hooks/User/useStudentColumns'
-import RegisterStudentForm from '@/components/User/register.student.form'
-import { registerStudents } from '@/pages/api/User/register.user.api'
+import RegisterStudentForm from '@/components/Form/User/register.student.form'
 import { afterActions } from '@/utils/afterActions.util'
 import { PLUGIN_NAMES } from '@/constants'
+import { mapUserData } from '@/utils/mapData.util'
+import { StudentApi } from '@/pages/api/User/student.api'
 export interface UserTablePageProps {}
 
 export default function StudentUserListPage({}: any) {
@@ -33,30 +32,19 @@ export default function StudentUserListPage({}: any) {
     crudOperation,
   } = useTableControl({
     accessToken: cookies.access_token,
-    listingApi: listStudents,
-    deleteApi: deleteStudents,
+    listingApi: StudentApi.listStudents,
+    deleteApi: StudentApi.deleteStudents,
   })
   const { columns } = useStudentsColumns({ setOpen, setRecordId })
 
-  const requestAfterConfirmCSV = async (data: any[]) => {
-    if (!data?.length) return
-    const mappedData = data.map((record) => {
-      const roles = record?.roles
-      if (roles && !Array.isArray(roles)) {
-        record.roles = [roles]
-      }
-      return record
-    })
-    const response = await registerStudents(mappedData, cookies.access_token)
-    return response
-  }
-
   return (
     <TableLayout
-      title={PLUGIN_NAMES.USERS}
+      title={PLUGIN_NAMES.USERS.NAME}
       onCreateClick={() => setOpen(true)}
       enableCSV
-      requestAfterConfirmCSV={requestAfterConfirmCSV}
+      requestAfterConfirmCSV={(data) =>
+        mapUserData(data, StudentApi.registerStudents, cookies.access_token)
+      }
     >
       <Box sx={{ height: 700, width: '100%' }}>
         <CustomModal beforeClose={() => setRecordId(undefined)} open={open} setOpen={setOpen}>
