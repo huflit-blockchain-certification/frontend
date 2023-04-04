@@ -1,9 +1,10 @@
 import { errorMessage, successMessage } from '@/components/common/Toast/response.toast.component'
 import { fetcher } from '../fetcher'
 import { registerDTO } from '@/DTO/User/register.dto.user'
+import { CreateParams, DeleteParams, DetailParams, EditParams, ListParams } from 'models'
 
 const StudentApi = {
-  deleteStudents: async (id: number | string, accessToken: string) => {
+  deleteStudents: async ({ id, accessToken }: DeleteParams) => {
     try {
       const record = await fetcher({
         method: 'DELETE',
@@ -15,7 +16,7 @@ const StudentApi = {
       throw new Error(err.message)
     }
   },
-  detailUserStudent: async (id: string | number, accessToken: string) => {
+  detailUserStudent: async ({ id, accessToken }: DetailParams) => {
     try {
       const record = await fetcher({
         method: 'GET',
@@ -29,7 +30,7 @@ const StudentApi = {
       errorMessage()
     }
   },
-  editUserStudent: async (id: string | number, data: any, accessToken: string) => {
+  editUserStudent: async ({ id, data, accessToken }: EditParams) => {
     try {
       const record = await fetcher({
         method: 'PATCH',
@@ -44,7 +45,7 @@ const StudentApi = {
       errorMessage()
     }
   },
-  listStudents: async (page: number, accessToken: string, keyword: string | undefined) => {
+  listStudents: async ({ page, accessToken, keyword }: ListParams) => {
     try {
       if (keyword) {
         return await fetcher({
@@ -63,7 +64,7 @@ const StudentApi = {
       errorMessage()
     }
   },
-  registerStudents: async (data: registerDTO, accessToken: string) => {
+  registerStudents: async ({ data, accessToken }: CreateParams) => {
     try {
       const record = await fetcher({
         method: 'POST',

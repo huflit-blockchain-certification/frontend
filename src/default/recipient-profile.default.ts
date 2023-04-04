@@ -1,0 +1,17 @@
+export const recipientProfileDefaultForm = {
+  iU: '',
+  iSt: '',
+  departmentName: '',
+  studentName: '',
+  universityName: '',
+  dateOfBirth: '',
+  year: '2023',
+  nameCourse: '',
+  major: 'CNTT',
+  placeOfBirth: 'TPHCM',
+  nation: 'Vietnam',
+  ranking: '',
+  formOfTraining: '',
+  CGPA: '',
+  gender: '',
+}

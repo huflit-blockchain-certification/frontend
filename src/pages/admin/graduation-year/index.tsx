@@ -7,7 +7,7 @@ import { CustomModal } from '@/components/common/Modal/modal.component'
 import TableData from '@/components/common/Form/Table/table.component'
 import { afterActions } from '@/utils/afterActions.util'
 import { PLUGIN_NAMES } from '@/constants/'
-import useGraduationYearColumn from '@/hooks/User/useGraduationYearColum'
+import useGraduationYearColumn from '@/hooks/useColumn/useGraduationYearColum'
 import { GraduationYearApi } from '@/pages/api/Graduation-Year/graduation-year.api'
 import GraduationYearForm from '@/components/Form/Graduation-Year/graduation-year.form'
 

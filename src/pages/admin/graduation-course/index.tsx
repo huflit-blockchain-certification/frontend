@@ -8,7 +8,7 @@ import TableData from '@/components/common/Form/Table/table.component'
 import { afterActions } from '@/utils/afterActions.util'
 import { PLUGIN_NAMES } from '@/constants/'
 import GraduationCourseForm from '@/components/Form/Graduation-Course/graduation-course.form'
-import useGraduationCourseColumn from '@/hooks/User/useGraduationCourseColumn'
+import useGraduationCourseColumn from '@/hooks/useColumn/useGraduationCourseColumn'
 import { GraduationYearApi } from '@/pages/api/Graduation-Year/graduation-year.api'
 
 export default function CertTypeListPage() {

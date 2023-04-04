@@ -46,7 +46,10 @@ function RegisterStudentForm({ recordId, setOpen, afterActions }: FormProps) {
     ;(async () => {
       if (!recordId) return
       setLoading(true)
-      const user = await StudentApi.detailUserStudent(recordId, cookies.access_token)
+      const user = await StudentApi.detailUserStudent({
+        id: recordId,
+        accessToken: cookies.access_token,
+      })
       if (!user) return
       const response = _.omit(user.data.data, [
         'identity',

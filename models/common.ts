@@ -21,4 +21,35 @@ export interface FormProps {
   recordId: number | string | undefined | any
   setOpen: any
   afterActions: CRUDInterface
+  idParam: string | string[] | undefined
+}
+
+export interface ListParams {
+  page: number
+  accessToken: string
+  keyword?: string
+  idParam?: string | string[] | undefined
+}
+
+export interface CreateParams {
+  data: any
+  accessToken: string
+  idParam?: string | string[] | undefined
+}
+export interface EditParams {
+  id: any
+  data: any
+  accessToken: string
+  idParam?: string | string[] | undefined
+}
+export interface DeleteParams {
+  id: any
+  accessToken: string
+  idParam?: string | string[] | undefined
+}
+
+export interface DetailParams {
+  id: any
+  accessToken: string
+  idParam?: string | string[] | undefined
 }

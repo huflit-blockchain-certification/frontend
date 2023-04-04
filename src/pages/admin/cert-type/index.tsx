@@ -9,7 +9,7 @@ import { afterActions } from '@/utils/afterActions.util'
 import { PLUGIN_NAMES } from '@/constants/'
 import CertTypeForm from '@/components/Form/Cert-Type/cert-type.form'
 import { CertTypeApi } from '@/pages/api/Cert-Type/cert-type.api'
-import useCertTypeColumns from '@/hooks/User/useCertTypeColumn'
+import useCertTypeColumns from '@/hooks/useColumn/useCertTypeColumn'
 
 export default function CertTypeListPage() {
   const [cookies] = useCookies(['access_token'])

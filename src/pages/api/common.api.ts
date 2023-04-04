@@ -1,13 +1,14 @@
 import { successMessage } from '@/components/common/Toast/response.toast.component'
-import { CRUDInterface } from 'models'
+import { CRUDInterface, CreateParams, EditParams } from 'models'
 
 interface FormSubmissionModel {
   formData: any
   setLoading: (state: boolean) => void
   setOpen: (state: boolean) => void
   recordId?: string | number
-  createRequest: (data: any, accessToken: string) => Promise<any>
-  editRequest: (id: string | number, data: any, accessToken: string) => Promise<any>
+  createRequest: ({ data, accessToken }: CreateParams) => Promise<any>
+  editRequest?: ({ id, data, accessToken }: EditParams) => Promise<any>
+  idParam?: string | string[] | undefined
   afterActions: CRUDInterface
   token: string
 }
@@ -20,17 +21,24 @@ export const commonSubmissionHandler = async ({
   setOpen,
   recordId,
   token,
+  idParam,
 }: FormSubmissionModel) => {
   setLoading(true)
-  if (recordId) {
-    const response = await editRequest(recordId, formData, token)
+  if (recordId && editRequest) {
+    const response = await editRequest({
+      id: recordId,
+      data: formData,
+      accessToken: token,
+      idParam,
+    })
     if (!response) return
     setOpen(false)
     afterActions.edit(response)
     successMessage('Cập nhật')
     return setOpen(false)
   }
-  const response = await createRequest(formData, token)
+  if (!createRequest) return
+  const response = await createRequest({ data: formData, accessToken: token, idParam })
   if (!response) return setOpen(false)
   setOpen(false)
   setLoading(false)

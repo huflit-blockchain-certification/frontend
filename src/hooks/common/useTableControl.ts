@@ -1,15 +1,25 @@
 import { Toast } from '@/components/common/Toast/response.component'
 import { ERROR_MESSAGE } from '@/constants/'
 import { GridFilterModel, GridPaginationModel, GridRowSelectionModel } from '@mui/x-data-grid'
+import { DeleteParams, ListParams } from 'models'
+import { useRouter } from 'next/router'
 import { useCallback, useEffect, useState } from 'react'
 
 interface useTableControlProps {
   accessToken: string
-  listingApi: (page: number, accessToken: string, keyword?: string) => Promise<any>
-  deleteApi: (row: any, accessToken: string) => Promise<[]>
+  listingApi: ({ page, accessToken, keyword, idParam }: ListParams) => Promise<any>
+  deleteApi: ({ id, accessToken, idParam }: DeleteParams) => Promise<[]>
+  idKey?: string
 }
 
-export function useTableControl({ accessToken, listingApi, deleteApi }: useTableControlProps) {
+export function useTableControl({
+  accessToken,
+  listingApi,
+  deleteApi,
+  idKey,
+}: useTableControlProps) {
+  const router = useRouter()
+  const idParam = idKey && router.query[idKey]
   const [recordId, setRecordId] = useState()
   const [open, setOpen] = useState(false)
   const [listData, setListData] = useState<any>({})
@@ -31,10 +41,13 @@ export function useTableControl({ accessToken, listingApi, deleteApi }: useTable
     },
     [setPagination]
   )
+  console.log()
 
   const onDeleteRowClick = async () => {
     try {
-      await Promise.all(rowSelectionModel.map((row) => deleteApi(row, accessToken)))
+      await Promise.all(
+        rowSelectionModel.map((row) => deleteApi({ id: row, accessToken, idParam }))
+      )
       setListData(listData.filter((item: string | number) => rowSelectionModel.includes(item)))
     } catch (err: any) {
       Toast.fire({ title: ERROR_MESSAGE, icon: 'error' })
@@ -69,7 +82,7 @@ export function useTableControl({ accessToken, listingApi, deleteApi }: useTable
       try {
         setLoading(true)
         const keyword = queryOptions?.filterModel?.quickFilterValues?.[0]
-        const listData = await listingApi(pagination.page, accessToken, keyword)
+        const listData = await listingApi({ page: pagination.page, accessToken, keyword, idParam })
         if (!listData) {
           throw new Error(ERROR_MESSAGE)
         }
@@ -83,7 +96,7 @@ export function useTableControl({ accessToken, listingApi, deleteApi }: useTable
         Toast.fire({ title: err.message, icon: 'error' })
       }
     })()
-  }, [accessToken, pagination?.page, queryOptions, listingApi])
+  }, [accessToken, pagination?.page, queryOptions, listingApi, idParam])
   return {
     listData,
     setListData,
@@ -100,5 +113,6 @@ export function useTableControl({ accessToken, listingApi, deleteApi }: useTable
     recordId,
     setRecordId,
     crudOperation,
+    idParam,
   }
 }

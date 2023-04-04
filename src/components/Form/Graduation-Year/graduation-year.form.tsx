@@ -37,10 +37,10 @@ function GraduationYearForm({ recordId, setOpen, afterActions }: FormProps) {
     ;(async () => {
       if (!recordId) return
       setLoading(true)
-      const graduationCourse = await GraduationYearApi.detailGraduationYear(
-        recordId,
-        cookies.access_token
-      )
+      const graduationCourse = await GraduationYearApi.detailGraduationYear({
+        id: recordId,
+        accessToken: cookies.access_token,
+      })
       if (!graduationCourse) return
       reset(graduationCourse.data.data)
       setLoading(false)

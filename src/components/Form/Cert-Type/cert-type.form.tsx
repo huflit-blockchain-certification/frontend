@@ -7,7 +7,7 @@ import Radio from '@/components/common/Form/Radio/radio.component'
 import _ from 'lodash'
 import { useCookies } from 'react-cookie'
 import { CertType, FormProps } from 'models'
-import { certTypeOptions } from '@/static/gender'
+import { certTypeOptions } from '@/static/certType'
 import { commonSubmissionHandler } from '@/pages/api/common.api'
 import { CertTypeSchema } from '@/validation/Cert-type/create.cert-type.validation'
 import { CertTypeApi } from '@/pages/api/Cert-Type/cert-type.api'
@@ -39,7 +39,10 @@ function CertTypeForm({ recordId, setOpen, afterActions }: FormProps) {
     ;(async () => {
       if (!recordId) return
       setLoading(true)
-      const certType = await CertTypeApi.detailCertType(recordId, cookies.access_token)
+      const certType = await CertTypeApi.detailCertType({
+        id: recordId,
+        accessToken: cookies.access_token,
+      })
       if (!certType) return
       reset(certType.data.data)
       setLoading(false)

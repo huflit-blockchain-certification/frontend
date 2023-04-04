@@ -5,13 +5,14 @@ import { useCookies } from 'react-cookie'
 import React from 'react'
 import { CustomModal } from '@/components/common/Modal/modal.component'
 import TableData from '@/components/common/Form/Table/table.component'
-import RegisterUniversityForm from '@/components/Form/User/register.university.form'
+import useStudentsColumns from '@/hooks/useColumn/useStudentColumns'
 import { afterActions } from '@/utils/afterActions.util'
 import { PLUGIN_NAMES } from '@/constants/'
-import { mapUserData } from '@/utils/mapData.util'
-import { UniversityApi } from '@/pages/api/User/university.api'
-import useUniversityColumns from '@/hooks/useColumn/useUniversityColumn'
-export default function UniversityUserListPage() {
+import { RecipientProfileApi } from '@/pages/api/Recipient-Profile/recipient-profle.api'
+import RecipientProfileForm from '@/components/Form/Recipient-Profile/recipient-profile.form'
+
+export default function RecipientProfilePage() {
+  const idKey = 'identity'
   const [cookies] = useCookies(['access_token'])
 
   const {
@@ -26,28 +27,24 @@ export default function UniversityUserListPage() {
     setRecordId,
     setOpen,
     crudOperation,
+    idParam,
   } = useTableControl({
     accessToken: cookies.access_token,
-    listingApi: UniversityApi.listUniversitys,
-    deleteApi: UniversityApi.deleteUniversities,
+    listingApi: RecipientProfileApi.listRecipientProfile,
+    deleteApi: RecipientProfileApi.deleteRecipientProfile,
+    idKey,
   })
-  const { columns } = useUniversityColumns({ setOpen, setRecordId })
+  const { columns } = useStudentsColumns({ setOpen, setRecordId })
 
   return (
-    <TableLayout
-      title={PLUGIN_NAMES.USERS.NAME}
-      onCreateClick={() => setOpen(true)}
-      enableCSV
-      requestAfterConfirmCSV={(data) =>
-        mapUserData(data, UniversityApi.registerUniversities, cookies.access_token)
-      }
-    >
+    <TableLayout title={PLUGIN_NAMES.RECIPIENT_PROFILE.NAME} onCreateClick={() => setOpen(true)}>
       <Box sx={{ height: 700, width: '100%' }}>
         <CustomModal beforeClose={() => setRecordId(undefined)} open={open} setOpen={setOpen}>
-          <RegisterUniversityForm
+          <RecipientProfileForm
             recordId={recordId}
             setOpen={setOpen}
             afterActions={afterActions(crudOperation)}
+            idParam={idParam}
           />
         </CustomModal>
         <TableData
@@ -64,4 +61,4 @@ export default function UniversityUserListPage() {
   )
 }
 
-UniversityUserListPage.Layout = AdminLayout
+RecipientProfilePage.Layout = AdminLayout

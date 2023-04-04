@@ -4,9 +4,4 @@ const genderOptions = [
   { value: 'OTHER', label: 'Khác' },
 ]
 
-const certTypeOptions = [
-  { value: 'DIPLOMA', label: 'Bằng cấp' },
-  { value: 'CERTIFICATE', label: 'Chứng chỉ' },
-]
-
-export { genderOptions, certTypeOptions }
+export { genderOptions }

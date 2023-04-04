@@ -1,9 +1,9 @@
-import { registerDTO } from '@/DTO/User/register.dto.user'
 import { fetcher } from '../fetcher'
 import { errorMessage, successMessage } from '@/components/common/Toast/response.toast.component'
+import { CreateParams, DeleteParams, DetailParams, EditParams, ListParams } from 'models'
 
 const CertTypeApi = {
-  createCertType: async (data: registerDTO, accessToken: string) => {
+  createCertType: async ({ data, accessToken }: CreateParams) => {
     try {
       const record = await fetcher({
         method: 'POST',
@@ -17,7 +17,7 @@ const CertTypeApi = {
       errorMessage(err.message)
     }
   },
-  deleteCertType: async (id: number | string, accessToken: string) => {
+  deleteCertType: async ({ id, accessToken }: DeleteParams) => {
     try {
       const record = await fetcher({
         method: 'DELETE',
@@ -29,7 +29,7 @@ const CertTypeApi = {
       throw new Error(err.message)
     }
   },
-  detailCertType: async (id: string | number, accessToken: string) => {
+  detailCertType: async ({ id, accessToken }: DetailParams) => {
     try {
       const record = await fetcher({
         method: 'GET',
@@ -43,7 +43,7 @@ const CertTypeApi = {
       errorMessage()
     }
   },
-  editCertType: async (id: string | number, data: any, accessToken: string) => {
+  editCertType: async ({ id, data, accessToken }: EditParams) => {
     try {
       const record = await fetcher({
         method: 'PATCH',
@@ -58,7 +58,8 @@ const CertTypeApi = {
       errorMessage()
     }
   },
-  listCertType: async (page: number, accessToken: string) => {
+  listCertType: async ({ page, accessToken }: ListParams) => {
+    console.log(accessToken)
     try {
       const record = await fetcher({
         method: 'GET',
