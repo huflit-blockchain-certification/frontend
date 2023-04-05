@@ -1,7 +1,6 @@
-import { registerDTO } from '@/DTO/User/register.dto.user'
 import moment from 'moment'
 
-const registerUserStudentDefaultForm: registerDTO = {
+const registerUserStudentDefaultForm: any = {
   name: '',
   address: '',
   dateOfBirth: moment('01-01-2001').toDate(),

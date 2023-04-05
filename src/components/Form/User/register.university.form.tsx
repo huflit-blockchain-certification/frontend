@@ -4,7 +4,6 @@ import React, { useEffect, useState } from 'react'
 import { useForm } from 'react-hook-form'
 import { yupResolver } from '@hookform/resolvers/yup'
 import { registerUniversitySchema } from '@/validation/User/register.university.user.validation'
-import { registerDTO } from '@/DTO/User/register.dto.user'
 import Radio from '@/components/common/Form/Radio/radio.component'
 import { registerUserUniversityDefaultForm } from '@/default/university.register.default'
 import _ from 'lodash'
@@ -25,7 +24,7 @@ function RegisterUniversityForm({ recordId, setOpen, afterActions }: FormProps) 
     resolver: yupResolver(registerUniversitySchema),
   })
 
-  const onSubmit = async (data: registerDTO) => {
+  const onSubmit = async (data: any) => {
     commonSubmissionHandler({
       afterActions,
       createRequest: UniversityApi.registerUniversities,

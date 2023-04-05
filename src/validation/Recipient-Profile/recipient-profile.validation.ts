@@ -1,21 +1,21 @@
 import * as yup from 'yup'
 
 const RecipientProfileSchema = yup.object().shape({
-  iU: yup.string().required('University is required'),
-  iSt: yup.string().required('Student is required'),
-  departmentName: yup.string().required('Department is required'),
-  studentName: yup.string().required('Student is required'),
-  universityName: yup.string().required('University is required'),
-  dateOfBirth: yup.string().required('Date of Birth is required'),
-  year: yup.string().required('Year is required'),
-  nameCourse: yup.string().required('Course is required'),
-  major: yup.string().required('Major is required'),
-  placeOfBirth: yup.string().required('Place of Birth is required'),
-  nation: yup.string().required('Nation is required'),
-  ranking: yup.string().required('Ranking is required'),
-  formOfTraining: yup.string().required('Form of Training is required'),
-  CGPA: yup.number().required('CGPA is required'),
-  gender: yup.string().required('Gender is required'),
+  iU: yup.string().required('Trường đại học không được để trống'),
+  iSt: yup.string().required('Học sinh không được để trống'),
+  departmentName: yup.string().required('Khoa không được để trống'),
+  studentName: yup.string().required('Tên học sinh không được để trống'),
+  universityName: yup.string().required('Tên trường đại học không được để trống'),
+  dateOfBirth: yup.string().required('Ngày sinh không được để trống'),
+  year: yup.string().required('Năm tốt nghiệp không được để trống'),
+  nameCourse: yup.string().required('Tên khóa không được để trống'),
+  major: yup.string().required('Ngành không được để trống'),
+  placeOfBirth: yup.string().required('Nơi sinh không được để trống'),
+  nation: yup.string().required('Dân tộc không được để trống'),
+  ranking: yup.string().required('Xếp loại không được để trống'),
+  formOfTraining: yup.string().required('Hình thức đào tạo không được để trống'),
+  CGPA: yup.number().required('CGPA không được để trống'),
+  gender: yup.string().required('Giới tình không được để trống'),
 })
 
 export { RecipientProfileSchema }

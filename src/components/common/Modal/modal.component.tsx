@@ -1,6 +1,6 @@
 import React, { ReactNode } from 'react'
 import Box from '@mui/material/Box'
-import Modal from '@mui/material/Modal'
+import { Modal as CustomModal } from '@mui/material/'
 
 const style = {
   position: 'absolute' as 'absolute',
@@ -10,10 +10,12 @@ const style = {
   minWidth: 400,
   width: 700,
   minHeight: 600,
+  maxHeight: 800,
   bgcolor: 'background.paper',
   border: '2px solid #000',
   boxShadow: 24,
   p: 4,
+  overflowY: 'scroll',
 }
 
 interface CustomModalProps {
@@ -23,7 +25,7 @@ interface CustomModalProps {
   children: ReactNode
 }
 
-export function CustomModal({ children, open, setOpen, beforeClose }: CustomModalProps) {
+export function Modal({ children, open, setOpen, beforeClose }: CustomModalProps) {
   const handleClose = () => {
     beforeClose()
     setOpen(false)
@@ -31,14 +33,14 @@ export function CustomModal({ children, open, setOpen, beforeClose }: CustomModa
 
   return (
     <div>
-      <Modal
+      <CustomModal
         open={open}
         onClose={handleClose}
         aria-labelledby="modal-modal-title"
         aria-describedby="modal-modal-description"
       >
         <Box sx={style}>{children}</Box>
-      </Modal>
+      </CustomModal>
     </div>
   )
 }

@@ -1,6 +1,5 @@
 import { errorMessage, successMessage } from '@/components/common/Toast/response.toast.component'
 import { fetcher } from '../fetcher'
-import { registerDTO } from '@/DTO/User/register.dto.user'
 import { CreateParams, DeleteParams, DetailParams, EditParams, ListParams } from 'models'
 
 const StudentApi = {

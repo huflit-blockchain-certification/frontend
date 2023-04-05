@@ -7,7 +7,6 @@ import _ from 'lodash'
 import { useCookies } from 'react-cookie'
 import { FormProps } from 'models'
 import { commonSubmissionHandler } from '@/pages/api/common.api'
-import { certTypeDefaultForm } from '@/default/cert-type.default'
 import { GraduationCourseApi } from '@/pages/api/Graduation-Course/graduation-course.api'
 import { GraduationCourse } from 'models/GraduationCourse'
 import { DatePicker } from '@/components/common/Form/DatePicker/datepicker.component'
@@ -44,7 +43,7 @@ function GraduationCourseForm({ recordId, setOpen, afterActions }: FormProps) {
         accessToken: cookies.access_token,
       })
       if (!graduationCourse) return
-      reset(graduationCourse.data.data)
+      reset(_.omit(graduationCourse.data.detail, ['_id', 'createdAt', 'updatedAt']))
       setLoading(false)
     })()
   }, [recordId])

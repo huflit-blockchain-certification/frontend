@@ -2,7 +2,6 @@ import { AdminLayout, FormHeader, FormLayout } from '@/layouts'
 import React, { useEffect, useState } from 'react'
 import { useForm } from 'react-hook-form'
 import { yupResolver } from '@hookform/resolvers/yup'
-import { registerDTO } from '@/DTO/User/register.dto.user'
 import _ from 'lodash'
 import { useCookies } from 'react-cookie'
 import { FormProps } from 'models'
@@ -19,6 +18,9 @@ import Radio from '@/components/common/Form/Radio/radio.component'
 import { genderOptions } from '@/static/gender'
 import { rankingOptions } from '@/static/ranking'
 import { formOfTrainingOptions } from '@/static/formOfTraining'
+import { majorOptions } from '@/static/major'
+import { departmentOptions } from '@/static/department'
+import useGraduationCourse from '@/hooks/common/useGraduationCourse'
 
 function RecipientProfileForm({ recordId, setOpen, afterActions, idParam }: FormProps) {
   const [cookies] = useCookies(['access_token'])
@@ -29,7 +31,7 @@ function RecipientProfileForm({ recordId, setOpen, afterActions, idParam }: Form
     resolver: yupResolver(RecipientProfileSchema),
   })
 
-  const onSubmit = async (data: registerDTO) => {
+  const onSubmit = async (data: any) => {
     commonSubmissionHandler({
       afterActions,
       createRequest: RecipientProfileApi.createRecipientProfile,
@@ -40,6 +42,7 @@ function RecipientProfileForm({ recordId, setOpen, afterActions, idParam }: Form
       recordId,
     })
   }
+  const { graduationCourses } = useGraduationCourse({ options: true })
   useEffect(() => {
     ;(async () => {
       if (!recordId) return
@@ -63,23 +66,40 @@ function RecipientProfileForm({ recordId, setOpen, afterActions, idParam }: Form
     >
       <div className="w-full">
         <FormLayout className="relative">
-          <Select control={control} name="departmentName" label="Khoa" options={[]} />
+          <Radio control={control} name="gender" label="Giới tính" options={genderOptions} />
+          <Select
+            control={control}
+            name="departmentName"
+            label="Khoa"
+            options={departmentOptions}
+          />
           <Input control={control} name="studentName" label="Tên học sinh" />
           <Input control={control} name="universityName" label="Trường đại học" />
           <DatePicker control={control} name="dateOfBirth" label="Ngày sinh" />
-          <Input control={control} name="nameCourse" label="Khóa tốt nghiệp" />
-          <Select control={control} name="major" label="Ngành" options={[]} />
+          <Select
+            control={control}
+            name="nameCourse"
+            label="Khóa tốt nghiệp"
+            options={graduationCourses}
+          />
+          <Select control={control} name="major" label="Ngành" options={majorOptions} />
           <Input control={control} name="placeOfBirth" label="Nơi sinh" />
           <Input control={control} name="nation" label="Dân tộc" />
           <Select control={control} name="ranking" label="Xếp loại" options={rankingOptions} />
+          <DatePicker
+            control={control}
+            name="year"
+            label="Năm tốt nghiệp"
+            format="YYYY"
+            views={['year']}
+          />
           <Select
             control={control}
-            name="formOfTraning"
+            name="formOfTraining"
             label="Loại rèn luyện"
             options={formOfTrainingOptions}
           />
           <Input control={control} name="CGPA" label="CGPA" type="number" />
-          <Radio control={control} name="gender" label="Giới tính" options={genderOptions} />
         </FormLayout>
       </div>
     </FormHeader>

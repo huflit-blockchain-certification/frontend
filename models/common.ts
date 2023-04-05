@@ -21,11 +21,12 @@ export interface FormProps {
   recordId: number | string | undefined | any
   setOpen: any
   afterActions: CRUDInterface
-  idParam: string | string[] | undefined
+  idParam?: string | string[] | undefined
 }
 
 export interface ListParams {
   page: number
+  pageSize?: number
   accessToken: string
   keyword?: string
   idParam?: string | string[] | undefined

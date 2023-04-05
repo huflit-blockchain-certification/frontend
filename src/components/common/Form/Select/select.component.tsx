@@ -1,4 +1,4 @@
-import { MenuItem } from '@mui/material'
+import { FormControl, FormHelperText, InputLabel, MenuItem } from '@mui/material'
 import { Select as SelectField } from '@mui/material'
 import * as React from 'react'
 import { useController, Control, Controller } from 'react-hook-form'
@@ -42,25 +42,29 @@ export function Select({
         name={name}
         control={control}
         render={({ field }) => (
-          <SelectField
-            {...field}
-            value={value}
-            defaultValue={defaultValue}
-            label={label}
-            onChange={(e) => (handleChange ? handleChange : onChange(e.target.value))}
-            error={error && true}
-            fullWidth={fullWidth && true}
-            ref={ref}
-            placeholder={placeholder ?? ''}
-            MenuProps={{ PaperProps: { sx: { maxHeight: 350 } } }}
-          >
-            {options &&
-              options.map((option, index) => (
-                <MenuItem key={index} value={optionValue ? option[optionValue] : option?.value}>
-                  {optionLabel ? option[optionLabel] : option.label}
-                </MenuItem>
-              ))}
-          </SelectField>
+          <FormControl fullWidth>
+            <InputLabel>{label}</InputLabel>
+            <SelectField
+              {...field}
+              value={value}
+              defaultValue={defaultValue}
+              label={label}
+              onChange={(e) => (handleChange ? handleChange : onChange(e.target.value))}
+              error={error && true}
+              fullWidth={fullWidth && true}
+              ref={ref}
+              placeholder={placeholder ?? ''}
+              MenuProps={{ PaperProps: { sx: { maxHeight: 350 } } }}
+            >
+              {options &&
+                options.map((option, index) => (
+                  <MenuItem key={index} value={optionValue ? option[optionValue] : option?.value}>
+                    {optionLabel ? option[optionLabel] : option.label}
+                  </MenuItem>
+                ))}
+            </SelectField>
+            <FormHelperText style={{ color: '#d32f2f' }}>{error?.message}</FormHelperText>
+          </FormControl>
         )}
       ></Controller>
     </>

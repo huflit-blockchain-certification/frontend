@@ -46,7 +46,7 @@ const CertTypeApi = {
   editCertType: async ({ id, data, accessToken }: EditParams) => {
     try {
       const record = await fetcher({
-        method: 'PATCH',
+        method: 'PUT',
         url: `/certTypes/${id}`,
         accessToken,
         body: data,

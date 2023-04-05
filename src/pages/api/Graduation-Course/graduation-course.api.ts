@@ -2,7 +2,7 @@ import { fetcher } from '../fetcher'
 import { errorMessage, successMessage } from '@/components/common/Toast/response.toast.component'
 import { CreateParams, DeleteParams, DetailParams, EditParams, ListParams } from 'models'
 
-const GraduationCourseApi = {
+const GraduationCourseApi: any = {
   createGraduationCourse: async ({ data, accessToken }: CreateParams) => {
     try {
       const record = await fetcher({
@@ -46,7 +46,7 @@ const GraduationCourseApi = {
   editGraduationCourse: async ({ id, data, accessToken }: EditParams) => {
     try {
       const record = await fetcher({
-        method: 'PATCH',
+        method: 'PUT',
         url: `/graduationCourses/${id}`,
         accessToken,
         body: data,
@@ -58,11 +58,11 @@ const GraduationCourseApi = {
       errorMessage()
     }
   },
-  listGraduationCourse: async ({ page, accessToken }: ListParams) => {
+  listGraduationCourse: async ({ page, pageSize, accessToken }: ListParams) => {
     try {
       const record = await fetcher({
         method: 'GET',
-        url: `/graduationCourses?page=${page}&limit=10`,
+        url: `/graduationCourses?page=${page}&limit=${pageSize || 10}`,
         accessToken,
       })
       return record

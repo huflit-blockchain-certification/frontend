@@ -3,7 +3,7 @@ import Box from '@mui/material/Box'
 import { useTableControl } from '@/hooks/common/useTableControl'
 import { useCookies } from 'react-cookie'
 import React from 'react'
-import { CustomModal } from '@/components/common/Modal/modal.component'
+import { Modal } from '@/components/common/Modal/modal.component'
 import TableData from '@/components/common/Form/Table/table.component'
 import useStudentsColumns from '@/hooks/useColumn/useStudentColumns'
 import { afterActions } from '@/utils/afterActions.util'
@@ -39,14 +39,14 @@ export default function RecipientProfilePage() {
   return (
     <TableLayout title={PLUGIN_NAMES.RECIPIENT_PROFILE.NAME} onCreateClick={() => setOpen(true)}>
       <Box sx={{ height: 700, width: '100%' }}>
-        <CustomModal beforeClose={() => setRecordId(undefined)} open={open} setOpen={setOpen}>
+        <Modal beforeClose={() => setRecordId(undefined)} open={open} setOpen={setOpen}>
           <RecipientProfileForm
             recordId={recordId}
             setOpen={setOpen}
             afterActions={afterActions(crudOperation)}
             idParam={idParam}
           />
-        </CustomModal>
+        </Modal>
         <TableData
           columns={columns}
           listData={listData}

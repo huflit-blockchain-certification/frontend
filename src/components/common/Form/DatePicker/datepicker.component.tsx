@@ -13,6 +13,8 @@ interface DatePickerProps {
   required?: boolean
   type?: string
   fullWidth?: boolean
+  format?: string
+  views?: any[]
 }
 
 export function DatePicker({
@@ -22,6 +24,8 @@ export function DatePicker({
   placeholder,
   required,
   fullWidth,
+  format,
+  views,
   ...rest
 }: DatePickerProps) {
   const {
@@ -37,9 +41,10 @@ export function DatePicker({
         <LocalizationProvider dateAdapter={AdapterMoment}>
           <DatePickField
             {...field}
+            views={views && views}
             label={label}
             value={moment(value)}
-            format="DD-MM-YYYY"
+            format={format ? format : 'DD-MM-YYYY'}
             onChange={(e) => {
               onChange(e)
             }}

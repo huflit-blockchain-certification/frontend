@@ -46,7 +46,7 @@ const GraduationYearApi = {
   editGraduationYear: async ({ id, data, accessToken }: EditParams) => {
     try {
       const record = await fetcher({
-        method: 'PATCH',
+        method: 'PUT',
         url: `/graduationYears/${id}`,
         accessToken,
         body: data,

@@ -3,7 +3,7 @@ import Box from '@mui/material/Box'
 import { useTableControl } from '@/hooks/common/useTableControl'
 import { useCookies } from 'react-cookie'
 import React from 'react'
-import { CustomModal } from '@/components/common/Modal/modal.component'
+import { Modal } from '@/components/common/Modal/modal.component'
 import TableData from '@/components/common/Form/Table/table.component'
 import { afterActions } from '@/utils/afterActions.util'
 import { PLUGIN_NAMES } from '@/constants/'
@@ -36,13 +36,13 @@ export default function CertTypeListPage() {
   return (
     <TableLayout title={PLUGIN_NAMES.GRADUAUATION_COURSE.NAME} onCreateClick={() => setOpen(true)}>
       <Box sx={{ height: 700, width: '100%' }}>
-        <CustomModal beforeClose={() => setRecordId(undefined)} open={open} setOpen={setOpen}>
+        <Modal beforeClose={() => setRecordId(undefined)} open={open} setOpen={setOpen}>
           <GraduationYearForm
             recordId={recordId}
             setOpen={setOpen}
             afterActions={afterActions(crudOperation)}
           />
-        </CustomModal>
+        </Modal>
         <TableData
           columns={columns}
           listData={listData}

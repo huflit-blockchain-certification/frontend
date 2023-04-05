@@ -1,6 +1,4 @@
-import { registerDTO } from '@/DTO/User/register.dto.user'
-
-const registerUserUniversityDefaultForm: registerDTO = {
+const registerUserUniversityDefaultForm: any = {
   name: '',
   address: '',
   email: '',

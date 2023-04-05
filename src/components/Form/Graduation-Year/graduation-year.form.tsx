@@ -1,4 +1,3 @@
-import { Input } from '@/components/common/Form/Input/Input.component'
 import { AdminLayout, FormHeader, FormLayout } from '@/layouts'
 import React, { useEffect, useState } from 'react'
 import { useForm } from 'react-hook-form'
@@ -11,6 +10,8 @@ import { GraduationYearApi } from '@/pages/api/Graduation-Year/graduation-year.a
 import { GraduationYear } from 'models/GraduationYear'
 import { graduationYearDefaultForm } from '@/default/graduation-year.default'
 import { graduationYearSchema } from '@/validation/Graduation-Year/graduation-year.validation'
+import { DatePicker } from '@/components/common/Form/DatePicker/datepicker.component'
+import moment from 'moment'
 
 function GraduationYearForm({ recordId, setOpen, afterActions }: FormProps) {
   const [cookies] = useCookies(['access_token'])
@@ -25,7 +26,7 @@ function GraduationYearForm({ recordId, setOpen, afterActions }: FormProps) {
       afterActions,
       createRequest: GraduationYearApi.createGraduationYear,
       editRequest: GraduationYearApi.editGraduationYear,
-      formData: data,
+      formData: { ...data, year: data?.year && moment(data?.year).format('YYYY') },
       setLoading,
       setOpen,
       token: cookies.access_token,
@@ -42,7 +43,7 @@ function GraduationYearForm({ recordId, setOpen, afterActions }: FormProps) {
         accessToken: cookies.access_token,
       })
       if (!graduationCourse) return
-      reset(graduationCourse.data.data)
+      reset(_.omit(graduationCourse.data.detail, ['_id', 'createdAt', 'updatedAt']))
       setLoading(false)
     })()
   }, [recordId])
@@ -51,7 +52,14 @@ function GraduationYearForm({ recordId, setOpen, afterActions }: FormProps) {
     <FormHeader onSubmit={handleSubmit(onSubmit)} loading={loading}>
       <div className="w-full">
         <FormLayout className="relative">
-          <Input name="year" label="Năm" control={control} required />
+          <DatePicker
+            name="year"
+            label="Năm tốt nghiệp"
+            control={control}
+            required
+            format="YYYY"
+            views={['year']}
+          />
         </FormLayout>
       </div>
     </FormHeader>

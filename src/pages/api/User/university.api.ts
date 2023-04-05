@@ -1,5 +1,4 @@
 import { errorMessage, successMessage } from '@/components/common/Toast/response.toast.component'
-import { registerDTO } from '@/DTO/User/register.dto.user'
 import { fetcher } from '../fetcher'
 import { CreateParams, DeleteParams, DetailParams, EditParams, ListParams } from 'models'
 

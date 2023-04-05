@@ -44,7 +44,7 @@ function CertTypeForm({ recordId, setOpen, afterActions }: FormProps) {
         accessToken: cookies.access_token,
       })
       if (!certType) return
-      reset(certType.data.data)
+      reset(_.omit(certType.data.detail, ['_id', 'createdAt', 'updatedAt']))
       setLoading(false)
     })()
   }, [recordId])

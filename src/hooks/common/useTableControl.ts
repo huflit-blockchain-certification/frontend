@@ -68,7 +68,7 @@ export function useTableControl({
       if (!response || !response?.data?.data) return
       setListData(
         listData.map((item: any) => {
-          if (item?.id === response?.id) {
+          if (item?.id === response.data.data.id) {
             item = response.data.data
           }
           return item
