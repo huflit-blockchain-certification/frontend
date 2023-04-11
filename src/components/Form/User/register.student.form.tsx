@@ -72,15 +72,7 @@ function RegisterStudentForm({ recordId, setOpen, afterActions }: FormProps) {
         <FormLayout className="relative">
           <Input name="phone" label="Số điện thoại" control={control} required />
           <Radio label="Giới tính" name="gender" control={control} options={genderOptions} />
-          <Select
-            options={countries}
-            optionLabel="en_short_name"
-            optionValue="en_short_name"
-            name="nation"
-            label="Quốc tịch"
-            control={control}
-            required
-          />
+          <Input name="nation" label="Dân tộc" control={control} required />
           <DatePicker name="dateOfBirth" label="Ngày sinh" control={control} required />
           <Input name="address" label="Địa chỉ" control={control} required />
           {!recordId && (

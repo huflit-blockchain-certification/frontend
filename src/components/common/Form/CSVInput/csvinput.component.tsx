@@ -5,9 +5,10 @@ import { Toast } from '../../Toast/response.component'
 
 export interface CSVInputProps {
   requestAfterConfirmCSV?: (data: any[]) => Promise<any>
+  titleCSV?: string
 }
 
-export function CSVInput({ requestAfterConfirmCSV }: CSVInputProps) {
+export function CSVInput({ requestAfterConfirmCSV, titleCSV }: CSVInputProps) {
   const handleCSV = (event: React.ChangeEvent<HTMLInputElement>): void => {
     const file = event.target.files?.[0]
     if (!file) return
@@ -24,6 +25,7 @@ export function CSVInput({ requestAfterConfirmCSV }: CSVInputProps) {
         confirmButtonText: 'Yes',
       })
 
+      console.log(data)
       if (confirmResult.isConfirmed) {
         if (!data?.length) return
         if (!requestAfterConfirmCSV) return
@@ -42,7 +44,7 @@ export function CSVInput({ requestAfterConfirmCSV }: CSVInputProps) {
         focus:ring-green-300 font-medium rounded-lg text-sm px-5 py-2.5 dark:bg-green-600 
         dark:hover:bg-green-700 dark:focus:ring-green-800"
       >
-        Excel
+        {titleCSV || 'Excel'}
         <input
           id="csv"
           type="file"

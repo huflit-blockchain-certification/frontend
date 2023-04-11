@@ -5,15 +5,16 @@ import { yupResolver } from '@hookform/resolvers/yup'
 import _ from 'lodash'
 import { useCookies } from 'react-cookie'
 import { FormProps } from 'models'
-import { User } from 'models/User'
 import { commonSubmissionHandler } from '@/pages/api/common.api'
 import { RecipientProfileApi } from '@/pages/api/Recipient-Profile/recipient-profle.api'
-import { RecipientProfileSchema } from '@/validation/Recipient-Profile/recipient-profile.validation'
+import {
+  EditRecipientProfileSchema,
+  RecipientProfileSchema,
+} from '@/validation/Recipient-Profile/recipient-profile.validation'
 import { recipientProfileDefaultForm } from '@/default/recipient-profile.default'
 import { Select } from '@/components/common/Form/Select/select.component'
 import { Input } from '@/components/common/Form/Input/Input.component'
 import { DatePicker } from '@/components/common/Form/DatePicker/datepicker.component'
-import { countries } from '@/static/countries'
 import Radio from '@/components/common/Form/Radio/radio.component'
 import { genderOptions } from '@/static/gender'
 import { rankingOptions } from '@/static/ranking'
@@ -21,23 +22,30 @@ import { formOfTrainingOptions } from '@/static/formOfTraining'
 import { majorOptions } from '@/static/major'
 import { departmentOptions } from '@/static/department'
 import useGraduationCourse from '@/hooks/common/useGraduationCourse'
-
+import { RecipientProfile } from 'models/RecipientProfile'
+import moment from 'moment'
 function RecipientProfileForm({ recordId, setOpen, afterActions, idParam }: FormProps) {
   const [cookies] = useCookies(['access_token'])
   const [loading, setLoading] = useState(false)
-
-  const { control, handleSubmit, reset, setValue, watch } = useForm<User>({
+  const user = JSON.parse(localStorage.getItem('user') || '')
+  const { control, handleSubmit, reset } = useForm<RecipientProfile>({
     defaultValues: recipientProfileDefaultForm,
-    resolver: yupResolver(RecipientProfileSchema),
+    resolver: yupResolver(!recordId ? RecipientProfileSchema : EditRecipientProfileSchema),
   })
-
   const onSubmit = async (data: any) => {
+    if (data?.dateOfBirth) {
+      data.dateOfBirth = moment(
+        new Date(moment(data.dateOfBirth).format('YYYY-MM-DD'))
+      ).toISOString()
+    }
     commonSubmissionHandler({
       afterActions,
       createRequest: RecipientProfileApi.createRecipientProfile,
-      formData: data,
+      editRequest: RecipientProfileApi.editRecipientProfile,
+      formData: [data],
       setLoading,
       setOpen,
+      idParam,
       token: cookies.access_token,
       recordId,
     })
@@ -50,41 +58,61 @@ function RecipientProfileForm({ recordId, setOpen, afterActions, idParam }: Form
       const recipientProfile = await RecipientProfileApi.detailRecipientProfile({
         id: recordId,
         accessToken: cookies.access_token,
+        idParam,
       })
       if (!recipientProfile) return
       const response = recipientProfile.data.data
-      reset(response)
+      reset(
+        _.pick(response, [
+          'year',
+          'nameCourse',
+          'major',
+          'ranking',
+          'formOfTraining',
+          'CGPA',
+          'departmentName',
+        ])
+      )
       setLoading(false)
     })()
-  }, [])
+  }, [idParam, recordId, reset, cookies.access_token])
 
   return (
-    <FormHeader
-      onSubmit={handleSubmit(onSubmit)}
-      loading={loading}
-      options={recordId && { disabled: true }}
-    >
+    <FormHeader onSubmit={handleSubmit(onSubmit)} loading={loading}>
       <div className="w-full">
         <FormLayout className="relative">
-          <Radio control={control} name="gender" label="Giới tính" options={genderOptions} />
+          {!recordId && (
+            <>
+              <Input control={control} name="id" label="Mã hồ sơ" />
+              <Radio control={control} name="gender" label="Giới tính" options={genderOptions} />
+              <Input control={control} name="studentName" label="Tên học sinh" />
+              <Input control={control} name="iSt" label="Mã học sinh" />
+              <Input
+                control={control}
+                name="iU"
+                label="Mã tài khoản đại học"
+                defaultValue={user?.userName}
+                disabled
+              />
+              <Input control={control} name="universityName" label="Trường đại học" />
+              <DatePicker control={control} name="dateOfBirth" label="Ngày sinh" />
+              <Input control={control} name="placeOfBirth" label="Nơi sinh" />
+              <Input control={control} name="nation" label="Dân tộc" />
+            </>
+          )}
           <Select
             control={control}
             name="departmentName"
             label="Khoa"
             options={departmentOptions}
           />
-          <Input control={control} name="studentName" label="Tên học sinh" />
-          <Input control={control} name="universityName" label="Trường đại học" />
-          <DatePicker control={control} name="dateOfBirth" label="Ngày sinh" />
+          <Select control={control} name="major" label="Ngành" options={majorOptions} />
           <Select
             control={control}
             name="nameCourse"
             label="Khóa tốt nghiệp"
             options={graduationCourses}
           />
-          <Select control={control} name="major" label="Ngành" options={majorOptions} />
-          <Input control={control} name="placeOfBirth" label="Nơi sinh" />
-          <Input control={control} name="nation" label="Dân tộc" />
           <Select control={control} name="ranking" label="Xếp loại" options={rankingOptions} />
           <DatePicker
             control={control}
@@ -96,7 +124,7 @@ function RecipientProfileForm({ recordId, setOpen, afterActions, idParam }: Form
           <Select
             control={control}
             name="formOfTraining"
-            label="Loại rèn luyện"
+            label="Hình thức đào tạo"
             options={formOfTrainingOptions}
           />
           <Input control={control} name="CGPA" label="CGPA" type="number" />

@@ -3,23 +3,20 @@ import React from 'react'
 import Button from '@mui/material/Button'
 import { GoBack } from '@/components/common/Goback/goback.component'
 import { CSVInput } from '@/components/common/Form/CSVInput/csvinput.component'
+interface CSV {
+  enableCSV?: boolean
+  requestAfterConfirmCSV?: (data: any[]) => Promise<any>
+  titleCSV?: string
+}
 interface TableLayoutProps {
   children: React.ReactNode
   title?: string
   slug?: string
   onCreateClick?: () => void
-  enableCSV?: boolean
-  requestAfterConfirmCSV?: (data: any[]) => Promise<any>
+  csv?: CSV[]
 }
 
-export function TableLayout({
-  title,
-  children,
-  slug,
-  onCreateClick,
-  enableCSV,
-  requestAfterConfirmCSV,
-}: TableLayoutProps) {
+export function TableLayout({ title, children, slug, onCreateClick, csv }: TableLayoutProps) {
   const router = useRouter()
   return (
     <>
@@ -29,7 +26,18 @@ export function TableLayout({
           <div className="text-2xl font-bold">{title?.toUpperCase() || ''}</div>
         </div>
         <div className="ml-auto flex gap-3 h-9">
-          {enableCSV && <CSVInput requestAfterConfirmCSV={requestAfterConfirmCSV} />}
+          {csv &&
+            csv.length > 0 &&
+            csv.map((c, index) => {
+              if (!c.enableCSV) return
+              return (
+                <CSVInput
+                  titleCSV={c?.titleCSV}
+                  requestAfterConfirmCSV={c.requestAfterConfirmCSV}
+                  key={index}
+                />
+              )
+            })}
           <Button
             variant="outlined"
             onClick={() => (onCreateClick ? onCreateClick() : router.push(`/admin/${slug}/create`))}

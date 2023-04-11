@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 import { useController, Control, Controller } from 'react-hook-form'
 import { TextField } from '@mui/material'
 
@@ -11,6 +11,7 @@ interface InputProps {
   type?: string
   fullWidth?: boolean
   disabled?: boolean
+  defaultValue?: string
   onChangeOverried?: () => void
 }
 
@@ -22,6 +23,7 @@ export function Input({
   required,
   fullWidth,
   disabled,
+  defaultValue,
   onChangeOverried,
   ...rest
 }: InputProps) {
@@ -29,6 +31,11 @@ export function Input({
     field: { value, onChange, ref },
     fieldState: { error },
   } = useController({ name, control })
+
+  useEffect(() => {
+    if (!defaultValue) return
+    onChange(defaultValue)
+  }, [defaultValue, onChange])
 
   return (
     <Controller

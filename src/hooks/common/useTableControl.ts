@@ -41,7 +41,6 @@ export function useTableControl({
     },
     [setPagination]
   )
-  console.log()
 
   const onDeleteRowClick = async () => {
     try {
@@ -76,7 +75,6 @@ export function useTableControl({
       )
     },
   }
-
   useEffect(() => {
     ;(async () => {
       try {

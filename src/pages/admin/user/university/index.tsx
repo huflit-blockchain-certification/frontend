@@ -37,10 +37,13 @@ export default function UniversityUserListPage() {
     <TableLayout
       title={PLUGIN_NAMES.USERS.NAME}
       onCreateClick={() => setOpen(true)}
-      enableCSV
-      requestAfterConfirmCSV={(data) =>
-        mapUserData(data, UniversityApi.registerUniversities, cookies.access_token)
-      }
+      csv={[
+        {
+          enableCSV: true,
+          requestAfterConfirmCSV: (data) =>
+            mapUserData(data, UniversityApi.registerUniversities, cookies.access_token),
+        },
+      ]}
     >
       <Box sx={{ height: 700, width: '100%' }}>
         <Modal beforeClose={() => setRecordId(undefined)} open={open} setOpen={setOpen}>

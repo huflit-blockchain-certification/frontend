@@ -1,4 +1,5 @@
 export interface RecipientProfile {
+  id: string
   iU: string
   iSt: string
   departmentName: string

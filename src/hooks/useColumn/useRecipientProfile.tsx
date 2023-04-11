@@ -8,25 +8,44 @@ interface ColumnsProps {
   setRecordId: any
 }
 
-export default function useStudentsColumns({ open, setOpen, setRecordId }: ColumnsProps) {
+export default function useRecipientProfile({ open, setOpen, setRecordId }: ColumnsProps) {
   const columns: any = [
     { field: '_id', headerName: 'ID', width: 250 },
+    // { field: 'id', headerName: 'Mã hồ sơ', width: 150 },
     {
-      field: 'identity',
-      headerName: 'CMND',
+      field: 'iU',
+      headerName: 'Mã học sinh',
       width: 150,
     },
     {
-      field: 'name',
-      headerName: 'Tên',
-      width: 200,
+      field: 'studentName',
+      headerName: 'Tên học sinh',
+      width: 150,
     },
     {
-      field: 'email',
-      headerName: 'Email',
-      width: 200,
+      field: 'gender',
+      headerName: 'Giới tính',
+      width: 150,
     },
-    { field: 'gender', headerName: 'Giới tính' },
+    {
+      field: 'ranking',
+      headerName: 'Xếp loại',
+      width: 150,
+    },
+    {
+      field: 'iU',
+      headerName: 'Mã trường',
+      width: 150,
+    },
+    {
+      field: 'universityName',
+      headerName: 'Trường',
+      width: 150,
+    },
+    { field: 'nameCourse', headerName: 'Khóa', width: 150 },
+    { field: 'year', headerName: 'Năm tốt nghiệp', width: 150 },
+    { field: 'departmentName', headerName: 'Khoa', width: 150 },
+    { field: 'major', headerName: 'Ngành', width: 150 },
     {
       field: 'nation',
       headerName: 'Dân tộc',

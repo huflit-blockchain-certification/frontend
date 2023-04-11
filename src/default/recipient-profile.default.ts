@@ -1,4 +1,5 @@
 export const recipientProfileDefaultForm = {
+  id: '',
   iU: '',
   iSt: '',
   departmentName: '',

@@ -22,7 +22,7 @@ export default function useGraduationCourse({ options }: useGraduationCourseProp
       if (options) {
         return setGraduationCourses(
           graduationCourses.data.data.map((course: any) => {
-            return { value: course.id, label: course.name }
+            return { value: course.name, label: course.name }
           })
         )
       }
