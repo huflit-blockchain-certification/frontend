@@ -70,7 +70,7 @@ const RecipientProfileApi = {
       errorMessage(err.message)
     }
   },
-  createIdNumber: async ({ data, accessToken, idParam }: CreateParams) => {
+  createIDNumber: async ({ data, accessToken, idParam }: CreateParams) => {
     try {
       const record = await fetcher({
         method: 'POST',
