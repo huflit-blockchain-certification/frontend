@@ -18,7 +18,7 @@ export interface CRUDInterface {
   edit: (response: any) => void
 }
 export interface FormProps {
-  recordId: number | string | undefined | any
+  recordId?: number | string | undefined | any
   setOpen: any
   afterActions: CRUDInterface
   idParam?: string | string[] | undefined

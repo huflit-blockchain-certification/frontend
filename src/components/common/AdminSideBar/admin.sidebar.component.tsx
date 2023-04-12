@@ -7,7 +7,7 @@ import {
   HiOutlineIdentification,
   HiOutlineCalendar,
   HiOutlineBookOpen,
-  HiOutlineDocument,
+  HiOutlineQrcode,
 } from 'react-icons/hi'
 export interface AdminSideBar {}
 
@@ -78,12 +78,12 @@ export default function AdminSideBar(props: AdminSideBar) {
             </li>
             <li>
               <div className="flex gap-3 items-center">
-                <HiOutlineDocument size={20} />
+                <HiOutlineQrcode size={20} />
                 <Link
                   className="flex items-center p-2 text-base font-normal text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700"
                   href="/admin/dac"
                 >
-                  {PLUGIN_NAMES.GRADUAUATION_YEAR.NAME}
+                  {PLUGIN_NAMES.DAC.NAME}
                 </Link>
               </div>
             </li>

@@ -12,7 +12,7 @@ import { IDNumber } from 'models/IDNumber'
 import { IDNumberSchema } from '@/validation/Recipient-Profile/id-number.validation'
 import { IDNumberDefault } from '@/default/id-number.default'
 
-function RegistrationNumberForm({ recordId, setOpen, afterActions }: FormProps) {
+function IDNumberForm({ setOpen, afterActions }: FormProps) {
   const [cookies] = useCookies(['access_token'])
   const [loading, setLoading] = useState(false)
 
@@ -28,7 +28,6 @@ function RegistrationNumberForm({ recordId, setOpen, afterActions }: FormProps) 
       setLoading,
       setOpen,
       token: cookies.access_token,
-      recordId,
     })
   }
 
@@ -44,5 +43,5 @@ function RegistrationNumberForm({ recordId, setOpen, afterActions }: FormProps) 
   )
 }
 
-RegistrationNumberForm.Layout = AdminLayout
-export default RegistrationNumberForm
+IDNumberForm.Layout = AdminLayout
+export default IDNumberForm

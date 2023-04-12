@@ -11,6 +11,8 @@ import { PLUGIN_NAMES } from '@/constants/'
 import { RecipientProfileApi } from '@/pages/api/Recipient-Profile/recipient-profle.api'
 import RecipientProfileForm from '@/components/Form/Recipient-Profile/recipient-profile.form'
 import useRecipientProfile from '@/hooks/useColumn/useRecipientProfile'
+import RegistrationNumberModal from '@/hooks/Recipient-Profile/RegistrationNumberModal'
+import IDNumberModal from '@/hooks/Recipient-Profile/IDNumberModal'
 
 export default function RecipientProfilePage() {
   const idKey = 'identity'
@@ -41,6 +43,12 @@ export default function RecipientProfilePage() {
     <TableLayout
       title={PLUGIN_NAMES.RECIPIENT_PROFILE.NAME}
       onCreateClick={() => setOpen(true)}
+      additionalButtons={
+        <>
+          <IDNumberModal idParam={idParam} crudOperation={crudOperation} />
+          <RegistrationNumberModal idParam={idParam} crudOperation={crudOperation} />
+        </>
+      }
       csv={[
         {
           enableCSV: true,
@@ -66,7 +74,7 @@ export default function RecipientProfilePage() {
           enableCSV: true,
           titleCSV: 'Nhập số vào sổ',
           requestAfterConfirmCSV: async (data) =>
-            await RecipientProfileApi.createIdNumber({
+            await RecipientProfileApi.createIDNumber({
               data,
               accessToken: cookies.access_token,
               idParam,

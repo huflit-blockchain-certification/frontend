@@ -8,16 +8,16 @@ import { FormProps } from 'models'
 import { commonSubmissionHandler } from '@/pages/api/common.api'
 import { RegistrationNumber } from 'models/RegistrationNumber'
 import { registrationNumberDefault } from '@/default/registration-number.default'
-import { registerUniversitySchema } from '@/validation/User/register.university.user.validation'
 import { RecipientProfileApi } from '@/pages/api/Recipient-Profile/recipient-profle.api'
 import { Input } from '@/components/common/Form/Input/Input.component'
+import { registrationNumberSchema } from '@/validation/Recipient-Profile/registration-number.validation'
 
-function RegistrationNumberForm({ recordId, setOpen, afterActions }: FormProps) {
+function RegistrationNumberForm({ setOpen, afterActions }: FormProps) {
   const [cookies] = useCookies(['access_token'])
   const [loading, setLoading] = useState(false)
 
   const { control, handleSubmit } = useForm<RegistrationNumber>({
-    resolver: yupResolver(registerUniversitySchema),
+    resolver: yupResolver(registrationNumberSchema),
     defaultValues: registrationNumberDefault,
   })
   const onSubmit = async (data: RegistrationNumber) => {
@@ -28,7 +28,6 @@ function RegistrationNumberForm({ recordId, setOpen, afterActions }: FormProps) 
       setLoading,
       setOpen,
       token: cookies.access_token,
-      recordId,
     })
   }
 

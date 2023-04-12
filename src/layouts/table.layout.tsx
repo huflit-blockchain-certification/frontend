@@ -14,9 +14,17 @@ interface TableLayoutProps {
   slug?: string
   onCreateClick?: () => void
   csv?: CSV[]
+  additionalButtons?: React.ReactNode
 }
 
-export function TableLayout({ title, children, slug, onCreateClick, csv }: TableLayoutProps) {
+export function TableLayout({
+  title,
+  children,
+  slug,
+  onCreateClick,
+  csv,
+  additionalButtons,
+}: TableLayoutProps) {
   const router = useRouter()
   return (
     <>
@@ -38,6 +46,8 @@ export function TableLayout({ title, children, slug, onCreateClick, csv }: Table
                 />
               )
             })}
+
+          {additionalButtons && additionalButtons}
           <Button
             variant="outlined"
             onClick={() => (onCreateClick ? onCreateClick() : router.push(`/admin/${slug}/create`))}
