@@ -1,6 +1,7 @@
 import { RefreshTokenDTO } from '@/DTO/User/login.dto.user'
 import { errorMessage, successMessage } from '@/components/common/Toast/response.toast.component'
 import { fetcher } from '../fetcher'
+import { Toast } from '@/components/common/Toast/response.component'
 
 const AuthApi = {
   login: async (data: RefreshTokenDTO, actions: (action: any) => void) => {
@@ -14,8 +15,8 @@ const AuthApi = {
       successMessage('Đăng nhập')
       return record
     } catch (err: any) {
+      Toast.fire({ title: err.message, icon: 'error' })
       console.log(err.message)
-      errorMessage()
     }
   },
   logout: async (accessToken: string) => {

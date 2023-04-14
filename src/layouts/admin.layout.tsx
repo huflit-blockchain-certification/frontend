@@ -7,16 +7,16 @@ import { Auth } from '@/components/common/Auth/auth.component'
 import { useAuth } from '@/hooks/common/useAuth'
 
 export function AdminLayout({ children }: LayoutProps) {
-  useAuth()
+  const { user } = useAuth()
 
   return (
     <Auth>
       <Menu />
-      <div className="grid grid-cols-12">
-        <div className="col-span-2">
-          <AdminSideBar />
+      <div className="flex">
+        <div>
+          <AdminSideBar user={user} />
         </div>
-        <div className="col-span-10">
+        <div className="flex-1">
           <main className="p-5">{children}</main>
         </div>
       </div>

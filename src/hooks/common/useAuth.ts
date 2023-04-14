@@ -5,13 +5,19 @@ import jwt_decode, { JwtPayload } from 'jwt-decode'
 import moment from 'moment'
 import { Toast } from '@/components/common/Toast/response.component'
 import { AuthApi } from '@/pages/api/Auth/auth.api'
-
+import _ from 'lodash'
+import { AdminUser } from 'models'
 export interface useAuthProps {}
 
 export function useAuth() {
   const router = useRouter()
   const [cookies] = useCookies(['access_token'])
   const [accessToken, setAccessToken] = useState<JwtPayload>()
+  const [user, setUser] = useState<AdminUser>()
+  useEffect(() => {
+    const userInfo = typeof window !== undefined && JSON.parse(localStorage.getItem('user') || '')
+    setUser(userInfo)
+  }, [])
 
   useEffect(() => {
     ;(async () => {
@@ -36,5 +42,5 @@ export function useAuth() {
       setAccessToken(accessToken)
     })()
   }, [])
-  return { accessToken }
+  return { accessToken, user }
 }

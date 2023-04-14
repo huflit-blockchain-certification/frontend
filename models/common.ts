@@ -65,3 +65,8 @@ export interface Verify {
   accessToken: string
   data: any
 }
+export interface AdminUser {
+  roles: string[]
+  userName: string
+  _id: string
+}

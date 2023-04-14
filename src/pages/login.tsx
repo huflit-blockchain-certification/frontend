@@ -10,7 +10,7 @@ import { useRouter } from 'next/router'
 import { LoadingIndicator } from '@/components/common/LoadingIndicator/loadingIndicator.component'
 import Button from '@mui/material/Button'
 import { useCookies } from 'react-cookie'
-import { LoginnedPage } from '@/components/common/Auth/loggied.component'
+import { LoginnedPage } from '@/components/common/Auth/loggined.component'
 import { AuthApi } from './api/Auth/auth.api'
 export interface LoginProps {}
 
@@ -49,7 +49,14 @@ export default function LoginPage(props: LoginProps) {
               <div className="text-center font-semibold text-2xl">{APP_NAME}</div>
               <div className="flex flex-col gap-3">
                 <Input label="Tên đăng nhập" name="userName" control={control} required fullWidth />
-                <Input label="Mật khẩu " name="password" control={control} required fullWidth />
+                <Input
+                  label="Mật khẩu "
+                  name="password"
+                  control={control}
+                  required
+                  fullWidth
+                  type="password"
+                />
               </div>
               <div className="m-auto">
                 <Button type="submit" variant="outlined">

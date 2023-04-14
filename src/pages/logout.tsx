@@ -9,8 +9,8 @@ function LogoutPage() {
   useEffect(() => {
     ;(async () => {
       if (!cookies.access_token) return
-      const logout = await AuthApi.logout(cookies.access_token)
-      if (!logout) return router.push('/')
+      // const logout = await AuthApi.logout(cookies.access_token)
+      // if (!logout) return router.push('/')
       removeCookie('access_token')
       removeCookie('refresh_token')
       router.push('/')
