@@ -1,3 +1,4 @@
+import { useAuth } from '@/hooks/common/useAuth'
 import { AdminLayout } from '@/layouts'
 import Link from 'next/link'
 import * as React from 'react'
@@ -5,7 +6,7 @@ import * as React from 'react'
 export interface RecipientProfilePageProps {}
 
 export default function RecipientPage(props: RecipientProfilePageProps) {
-  const user = JSON.parse(localStorage.getItem('user') || '')
+  const { user } = useAuth()
   return (
     <div>
       <div className="text-2xl font-bold">Chọn trường đại học</div>

@@ -24,10 +24,11 @@ import { departmentOptions } from '@/static/department'
 import useGraduationCourse from '@/hooks/common/useGraduationCourse'
 import { RecipientProfile } from 'models/RecipientProfile'
 import moment from 'moment'
+import { useAuth } from '@/hooks/common/useAuth'
 function RecipientProfileForm({ recordId, setOpen, afterActions, idParam }: FormProps) {
   const [cookies] = useCookies(['access_token'])
   const [loading, setLoading] = useState(false)
-  const user = JSON.parse(localStorage.getItem('user') || '')
+  const { user } = useAuth()
   const { control, handleSubmit, reset } = useForm<RecipientProfile>({
     defaultValues: recipientProfileDefaultForm,
     resolver: yupResolver(!recordId ? RecipientProfileSchema : EditRecipientProfileSchema),
