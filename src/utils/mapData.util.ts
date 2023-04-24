@@ -1,4 +1,4 @@
-const mapUserData = async (data: any[], requestFn: any, cookies: any) => {
+const mapUserData = async (data: any[], requestFn: any, cookies: string) => {
   if (!data?.length) return
   const mappedData = data.map((record) => {
     const roles = record?.roles
@@ -7,7 +7,7 @@ const mapUserData = async (data: any[], requestFn: any, cookies: any) => {
     }
     return record
   })
-  const response = await requestFn(mappedData, cookies.access_token)
+  const response = await requestFn({ data: mappedData, accessToken: cookies })
   return response
 }
 

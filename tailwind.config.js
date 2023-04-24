@@ -12,4 +12,10 @@ module.exports = {
     extend: {},
   },
   plugins: [],
+  theme: {
+    container: {
+      center: true,
+      padding: '2rem',
+    },
+  },
 }

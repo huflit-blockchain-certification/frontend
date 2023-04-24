@@ -29,7 +29,7 @@ function RegisterUniversityForm({ recordId, setOpen, afterActions }: FormProps) 
       afterActions,
       createRequest: UniversityApi.registerUniversities,
       editRequest: UniversityApi.editUserUniversity,
-      formData: data,
+      formData: [data],
       setLoading,
       setOpen,
       token: cookies.access_token,
@@ -69,7 +69,13 @@ function RegisterUniversityForm({ recordId, setOpen, afterActions }: FormProps) 
       <div className="w-full">
         <FormLayout className="relative">
           <Input name="phone" label="Số điện thoại" control={control} required />
-          <Radio label="Giới tính" name="gender" control={control} options={genderOptions} />
+          <Radio
+            label="Giới tính"
+            name="gender"
+            control={control}
+            options={genderOptions}
+            disabled
+          />
           <Input name="address" label="Địa chỉ" control={control} required />
           <Input name="name" label="Tên" control={control} required />
           <Input name="identity" label="CMND" control={control} required />

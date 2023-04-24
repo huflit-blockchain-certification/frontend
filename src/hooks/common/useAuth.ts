@@ -42,5 +42,5 @@ export function useAuth() {
       setAccessToken(accessToken)
     })()
   }, [])
-  return { accessToken, user }
+  return { accessToken, user, roles: user?.roles }
 }
