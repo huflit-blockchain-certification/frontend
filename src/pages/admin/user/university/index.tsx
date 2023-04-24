@@ -7,10 +7,12 @@ import { Modal } from '@/components/common/Modal/modal.component'
 import TableData from '@/components/common/Form/Table/table.component'
 import RegisterUniversityForm from '@/components/Form/User/register.university.form'
 import { afterActions } from '@/utils/afterActions.util'
-import { PLUGIN_NAMES } from '@/constants/'
+import { DOET_ROLE, PLUGIN_NAMES } from '@/constants/'
 import { mapUserData } from '@/utils/mapData.util'
 import { UniversityApi } from '@/pages/api/User/university.api'
 import useUniversityColumns from '@/hooks/useColumn/useUniversityColumn'
+import { isAllowAccess } from '@/utils/permissionChecker.util'
+import { useAuth } from '@/hooks/common/useAuth'
 export default function UniversityUserListPage() {
   const [cookies] = useCookies(['access_token'])
 
@@ -32,14 +34,18 @@ export default function UniversityUserListPage() {
     deleteApi: UniversityApi.deleteUniversities,
   })
   const { columns } = useUniversityColumns({ setOpen, setRecordId })
+  const { roles } = useAuth()
 
   return (
     <TableLayout
       title={PLUGIN_NAMES.USERS.NAME}
       onCreateClick={() => setOpen(true)}
+      disabledOptions={{
+        disableMainBtn: !isAllowAccess([DOET_ROLE], roles),
+      }}
       csv={[
         {
-          enableCSV: true,
+          enableCSV: isAllowAccess([DOET_ROLE], roles),
           requestAfterConfirmCSV: (data) =>
             mapUserData(data, UniversityApi.registerUniversities, cookies.access_token),
         },

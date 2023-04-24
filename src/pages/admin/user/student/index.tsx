@@ -8,9 +8,11 @@ import TableData from '@/components/common/Form/Table/table.component'
 import useStudentsColumns from '@/hooks/useColumn/useStudentColumns'
 import RegisterStudentForm from '@/components/Form/User/register.student.form'
 import { afterActions } from '@/utils/afterActions.util'
-import { PLUGIN_NAMES } from '@/constants/'
+import { PLUGIN_NAMES, STUDENT_ROLE, UNIVERSITY_ROLE } from '@/constants/'
 import { mapUserData } from '@/utils/mapData.util'
 import { StudentApi } from '@/pages/api/User/student.api'
+import { isAllowAccess } from '@/utils/permissionChecker.util'
+import { useAuth } from '@/hooks/common/useAuth'
 export interface UserTablePageProps {}
 
 export default function StudentUserListPage({}: any) {
@@ -36,14 +38,17 @@ export default function StudentUserListPage({}: any) {
     deleteApi: StudentApi.deleteStudents,
   })
   const { columns } = useStudentsColumns({ setOpen, setRecordId })
-
+  const { roles } = useAuth()
   return (
     <TableLayout
+      disabledOptions={{
+        disableMainBtn: !isAllowAccess([UNIVERSITY_ROLE], roles),
+      }}
       title={PLUGIN_NAMES.USERS.NAME}
       onCreateClick={() => setOpen(true)}
       csv={[
         {
-          enableCSV: true,
+          enableCSV: isAllowAccess([UNIVERSITY_ROLE], roles),
           requestAfterConfirmCSV: (data) =>
             mapUserData(data, StudentApi.registerStudents, cookies.access_token),
         },

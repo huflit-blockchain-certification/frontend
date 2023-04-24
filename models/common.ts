@@ -70,3 +70,10 @@ export interface AdminUser {
   userName: string
   _id: string
 }
+
+export interface PluginNames {
+  name: string
+  icon: any
+  slug: string
+  roles: string[]
+}

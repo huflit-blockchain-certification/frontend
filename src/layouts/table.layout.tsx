@@ -8,6 +8,9 @@ interface CSV {
   requestAfterConfirmCSV?: (data: any[]) => Promise<any>
   titleCSV?: string
 }
+interface DisabledOptions {
+  disableMainBtn?: boolean
+}
 interface TableLayoutProps {
   children: React.ReactNode
   title?: string
@@ -15,6 +18,7 @@ interface TableLayoutProps {
   onCreateClick?: () => void
   csv?: CSV[]
   additionalButtons?: React.ReactNode
+  disabledOptions?: DisabledOptions
 }
 
 export function TableLayout({
@@ -24,6 +28,7 @@ export function TableLayout({
   onCreateClick,
   csv,
   additionalButtons,
+  disabledOptions,
 }: TableLayoutProps) {
   const router = useRouter()
   return (
@@ -48,12 +53,16 @@ export function TableLayout({
             })}
 
           {additionalButtons && additionalButtons}
-          <Button
-            variant="outlined"
-            onClick={() => (onCreateClick ? onCreateClick() : router.push(`/admin/${slug}/create`))}
-          >
-            Tạo
-          </Button>
+          {!disabledOptions?.disableMainBtn && (
+            <Button
+              variant="outlined"
+              onClick={() =>
+                onCreateClick ? onCreateClick() : router.push(`/admin/${slug}/create`)
+              }
+            >
+              Tạo
+            </Button>
+          )}
         </div>
       </div>
       {children}

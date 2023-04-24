@@ -7,9 +7,7 @@ import Radio from '@/components/common/Form/Radio/radio.component'
 import { registerUserStudentDefaultForm } from '@/default/student.register.default'
 import _ from 'lodash'
 import { useCookies } from 'react-cookie'
-import { Select } from '@/components/common/Form/Select/select.component'
 import { DatePicker } from '@/components/common/Form/DatePicker/datepicker.component'
-import { countries } from '@/static/countries'
 import {
   editStudentSchema,
   registerStudentSchema,

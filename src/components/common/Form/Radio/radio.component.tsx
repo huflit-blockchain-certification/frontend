@@ -13,6 +13,7 @@ export interface RadioProps {
   options?: any[]
   handleChange?: (event: any) => void
   defaultValue?: any
+  disabled?: boolean
 }
 
 export default function Radio({
@@ -22,6 +23,7 @@ export default function Radio({
   required,
   label,
   handleChange,
+  disabled,
   ...rest
 }: RadioProps) {
   const {
@@ -44,6 +46,7 @@ export default function Radio({
           {options &&
             options.map(({ label, value }, index) => (
               <FormControlLabel
+                disabled={disabled}
                 key={index}
                 value={value}
                 label={label}

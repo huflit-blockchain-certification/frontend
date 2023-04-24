@@ -1,3 +1,3 @@
-const APP_NAME = 'Huflit Blockchain Certificate'
+const APP_NAME = 'BLOCKCHAIN CERTIFICATE'
 
 export { APP_NAME }

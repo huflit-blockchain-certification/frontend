@@ -27,7 +27,7 @@ export function Menu(props: Navbar) {
   const id = open ? 'simple-popover' : undefined
 
   return (
-    <nav className="px-2 bg-white border-gray-200 dark:bg-gray-900 dark:border-gray-700">
+    <nav className="px-2 bg-white border-gray-200 dark:bg-gray-900 dark:border-gray-700 shadow">
       <div className="container flex flex-wrap items-center justify-between mx-auto">
         <Link
           href="/"
@@ -91,6 +91,9 @@ export function Menu(props: Navbar) {
                   }}
                 >
                   <div className="flex flex-col w-32 p-3 cursor-pointer">
+                    {/* <CheckPermissions requireRoles={[STUDENT_ROLE]}> */}
+                    <Link href="/info">Thông tin</Link>
+                    {/* </CheckPermissions> */}
                     <Link href="/admin">Quản lý</Link>
                     <Link href="/logout">Đăng xuất</Link>
                   </div>
