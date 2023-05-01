@@ -30,6 +30,7 @@ export interface ListParams {
   accessToken: string
   keyword?: string
   idParam?: string | string[] | undefined
+  extraParams?: any
 }
 
 export interface CreateParams {

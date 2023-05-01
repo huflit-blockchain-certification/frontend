@@ -20,19 +20,19 @@ export default function useGraduationCourseColumn({ open, setOpen, setRecordId }
       field: 'startDate',
       headerName: 'Ngày bắt đầu',
       width: 100,
-      renderCell: (params: any) => <div>{dateFormat(params?.startDate)}</div>,
+      renderCell: (params: any) => <div>{dateFormat(params?.value)}</div>,
     },
     {
       field: 'endDate',
       headerName: 'Ngày kết thúc',
       width: 100,
-      renderCell: (params: any) => <div>{dateFormat(params?.endDate)}</div>,
+      renderCell: (params: any) => <div>{dateFormat(params?.value)}</div>,
     },
     {
       field: 'createdAt',
       headerName: 'Ngày tạo',
       width: 100,
-      renderCell: (params: any) => <div>{dateFormat(params?.createdAt)}</div>,
+      renderCell: (params: any) => <div>{dateFormat(params?.value)}</div>,
     },
     {
       headerName: 'Tùy chỉnh',

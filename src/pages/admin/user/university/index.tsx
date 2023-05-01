@@ -31,7 +31,6 @@ export default function UniversityUserListPage() {
   } = useTableControl({
     accessToken: cookies.access_token,
     listingApi: UniversityApi.listUniversitys,
-    deleteApi: UniversityApi.deleteUniversities,
   })
   const { columns } = useUniversityColumns({ setOpen, setRecordId })
   const { roles } = useAuth()

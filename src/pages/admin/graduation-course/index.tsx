@@ -21,6 +21,8 @@ export default function CertTypeListPage() {
     rowSelectionModel,
     onFilterChange,
     handlePaginationModelChange,
+    handleRowSelection,
+    onDeleteRowClick,
     open,
     recordId,
     setRecordId,
@@ -48,9 +50,11 @@ export default function CertTypeListPage() {
           listData={listData}
           loading={loading}
           rowSelectionModel={rowSelectionModel}
+          handleRowSelection={handleRowSelection}
           handlePaginationModelChange={handlePaginationModelChange}
           onFilterChange={onFilterChange}
           pagination={pagination}
+          onDeleteRowClick={onDeleteRowClick}
         />
       </Box>
     </TableLayout>

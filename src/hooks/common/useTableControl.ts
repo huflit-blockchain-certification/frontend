@@ -1,14 +1,19 @@
 import { Toast } from '@/components/common/Toast/response.component'
 import { ERROR_MESSAGE } from '@/constants/'
 import { GridFilterModel, GridPaginationModel, GridRowSelectionModel } from '@mui/x-data-grid'
-import { DeleteParams, ListParams } from 'models'
+import { CRUDInterface, DeleteParams, EditParams, ListParams } from 'models'
 import { useRouter } from 'next/router'
 import { useCallback, useEffect, useState } from 'react'
 
+interface ExtraInfo {
+  extraParams: Object
+}
 interface useTableControlProps {
   accessToken: string
-  listingApi: ({ page, accessToken, keyword, idParam }: ListParams) => Promise<any>
-  deleteApi: ({ id, accessToken, idParam }: DeleteParams) => Promise<[]>
+  listingApi: ({ page, accessToken, keyword, idParam, extraParams: {} }: ListParams) => Promise<any>
+  deleteApi?: ({ id, accessToken, idParam }: DeleteParams) => Promise<[]>
+  issueApi?: ({ id, accessToken, idParam }: EditParams) => Promise<[]>
+  extraInfo?: ExtraInfo
   idKey?: string
 }
 
@@ -17,12 +22,13 @@ export function useTableControl({
   listingApi,
   deleteApi,
   idKey,
+  extraInfo,
 }: useTableControlProps) {
   const router = useRouter()
   const idParam = idKey && router.query[idKey]
   const [recordId, setRecordId] = useState()
   const [open, setOpen] = useState(false)
-  const [listData, setListData] = useState<any>({})
+  const [listData, setListData] = useState<any>([])
   const [pagination, setPagination] = useState<GridPaginationModel>({ page: 1, pageSize: 10 })
   const [loading, setLoading] = useState(false)
   const [rowSelectionModel, setRowSelectionModel] = useState<GridRowSelectionModel>([])
@@ -43,6 +49,7 @@ export function useTableControl({
   )
 
   const onDeleteRowClick = async () => {
+    if (!deleteApi) return
     try {
       await Promise.all(
         rowSelectionModel.map((row) => deleteApi({ id: row, accessToken, idParam }))
@@ -53,7 +60,7 @@ export function useTableControl({
     }
   }
 
-  const crudOperation = {
+  const crudOperation: CRUDInterface = {
     create: (response: any) => {
       const responeData = response?.data?.data
       if (!response || !responeData) return
@@ -67,7 +74,7 @@ export function useTableControl({
       if (!response || !response?.data?.data) return
       setListData(
         listData.map((item: any) => {
-          if (item?.id === response.data.data.id) {
+          if (item?._id === response.data.data._id) {
             item = response.data.data
           }
           return item
@@ -75,14 +82,21 @@ export function useTableControl({
       )
     },
   }
+
   useEffect(() => {
     ;(async () => {
       try {
         setLoading(true)
         const keyword = queryOptions?.filterModel?.quickFilterValues?.[0]
-        const listData = await listingApi({ page: pagination.page, accessToken, keyword, idParam })
+        const listData = await listingApi({
+          page: pagination.page,
+          accessToken,
+          keyword,
+          idParam,
+          extraParams: extraInfo && { ...extraInfo.extraParams },
+        })
         if (!listData) {
-          throw new Error(ERROR_MESSAGE)
+          return
         }
         setListData(listData.data.data)
         setPagination({
@@ -94,7 +108,7 @@ export function useTableControl({
         Toast.fire({ title: err.message, icon: 'error' })
       }
     })()
-  }, [accessToken, pagination?.page, queryOptions, listingApi, idParam])
+  }, [accessToken, pagination?.page, queryOptions, listingApi, idParam, JSON.stringify(extraInfo)])
   return {
     listData,
     setListData,

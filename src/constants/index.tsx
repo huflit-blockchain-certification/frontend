@@ -102,6 +102,8 @@ const defaultPlugins: PluginNames[] = [
   //   roles: PLUGIN_NAMES.DAC.ROLES,
   // },
 ]
+const dateUpTo6Y = new Date(Date.now() - 1000 * 60 * 60 * 24 * 365 * 6) // go back by 6 years
+const dateMinimum100Y = new Date(Date.now() - 1000 * 60 * 60 * 24 * 365 * 100) // go back by 100 years
 
 const SET_ACCESS_TOKEN = 'SET_ACCESS_TOKEN'
 export {
@@ -117,4 +119,6 @@ export {
   STUDENT_ROLE,
   DOET_ROLE,
   defaultPlugins,
+  dateUpTo6Y,
+  dateMinimum100Y,
 }

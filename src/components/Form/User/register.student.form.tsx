@@ -32,7 +32,7 @@ function RegisterStudentForm({ recordId, setOpen, afterActions }: FormProps) {
       afterActions,
       createRequest: StudentApi.registerStudents,
       editRequest: StudentApi.editUserStudent,
-      formData: [data],
+      formData: !recordId ? [data] : data,
       setLoading,
       setOpen,
       token: cookies.access_token,

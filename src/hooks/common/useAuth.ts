@@ -26,7 +26,7 @@ export function useAuth() {
       if (!accessToken) {
         router.push('/')
         Toast.fire({
-          title: "You don't have permission to access this page",
+          title: 'Không có quyền truy cập',
           icon: 'warning',
         })
         return
@@ -41,6 +41,6 @@ export function useAuth() {
       }
       setAccessToken(accessToken)
     })()
-  }, [])
+  }, [cookies?.access_token, router])
   return { accessToken, user, roles: user?.roles }
 }

@@ -5,10 +5,10 @@ import { LayoutProps } from 'models/'
 
 export function MainLayout({ children }: LayoutProps) {
   return (
-    <>
+    <div className="flex flex-col min-h-screen">
       <Menu />
       <main className="pb-8">{children}</main>
       <Footer />
-    </>
+    </div>
   )
 }

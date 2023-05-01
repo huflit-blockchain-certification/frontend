@@ -1,5 +1,7 @@
+import generator from '@/utils/generator'
+
 export const recipientProfileDefaultForm = {
-  id: '',
+  id: `DAC${generator.generateRandomString(6)}`,
   iU: '',
   iSt: '',
   departmentName: '',
@@ -9,7 +11,7 @@ export const recipientProfileDefaultForm = {
   year: '2023',
   nameCourse: '',
   major: '',
-  placeOfBirth: 'TPHCM',
+  placeOfBirth: '',
   nation: 'Kinh',
   ranking: '',
   formOfTraining: '',

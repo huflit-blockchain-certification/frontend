@@ -3,18 +3,6 @@ import { fetcher } from '../fetcher'
 import { CreateParams, DeleteParams, DetailParams, EditParams, ListParams } from 'models'
 
 const UniversityApi = {
-  deleteUniversities: async ({ id, accessToken }: DeleteParams) => {
-    try {
-      const record = await fetcher({
-        method: 'DELETE',
-        url: `/users/universities/${id}`,
-        accessToken,
-      })
-      return record
-    } catch (err: any) {
-      throw new Error(err.message)
-    }
-  },
   detailUserUniversity: async ({ id, accessToken }: DetailParams) => {
     try {
       const record = await fetcher({

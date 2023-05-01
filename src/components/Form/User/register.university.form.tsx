@@ -45,21 +45,12 @@ function RegisterUniversityForm({ recordId, setOpen, afterActions }: FormProps) 
         accessToken: cookies.access_token,
       })
       if (!user) return
-      const response = _.omit(user.data.data, [
-        'identity',
-        'name',
-        '_id',
-        'idUser',
-        'email',
-        'createdBy',
-        'createdAt',
-        'updatedAt',
-      ])
+      const response = _.omit(user.data.data, ['_id', 'createdBy', 'createdAt', 'updatedAt'])
+      response.userName = response.idUser.userName
       reset(response)
       setLoading(false)
     })()
-  }, [])
-
+  }, [recordId])
   return (
     <FormHeader
       onSubmit={handleSubmit(onSubmit)}
@@ -88,7 +79,9 @@ function RegisterUniversityForm({ recordId, setOpen, afterActions }: FormProps) 
             setValue={setValue}
           />
           <Input name="email" label="Email" control={control} required />
-          <Input name="password" label="Mật khẩu" control={control} type="password" required />
+          {!recordId && (
+            <Input name="password" label="Mật khẩu" control={control} type="password" required />
+          )}
         </FormLayout>
       </div>
     </FormHeader>

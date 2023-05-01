@@ -5,19 +5,21 @@ import { useCookies } from 'react-cookie'
 import React from 'react'
 import { Modal } from '@/components/common/Modal/modal.component'
 import TableData from '@/components/common/Form/Table/table.component'
-import useStudentsColumns from '@/hooks/useColumn/useStudentColumns'
 import { afterActions } from '@/utils/afterActions.util'
 import { PLUGIN_NAMES } from '@/constants/'
 import { RecipientProfileApi } from '@/pages/api/Recipient-Profile/recipient-profle.api'
 import RecipientProfileForm from '@/components/Form/Recipient-Profile/recipient-profile.form'
-import useRecipientProfile from '@/hooks/useColumn/useRecipientProfile'
-import RegistrationNumberModal from '@/hooks/Recipient-Profile/RegistrationNumberModal'
-import IDNumberModal from '@/hooks/Recipient-Profile/IDNumberModal'
+import useRecipientProfileColumn from '@/hooks/useColumn/useRecipientProfileColumn'
+import IssueModal from '@/components/Form/IssueModal/issue-modal.component'
+import { useForm } from 'react-hook-form'
+import { Select } from '@/components/common/Form/Select/select.component'
 
 export default function RecipientProfilePage() {
   const idKey = 'identity'
   const [cookies] = useCookies(['access_token'])
-
+  const { control, watch } = useForm({
+    defaultValues: { idNumber: false, registrationNumber: false },
+  })
   const {
     listData,
     pagination,
@@ -28,6 +30,8 @@ export default function RecipientProfilePage() {
     open,
     recordId,
     setRecordId,
+    onDeleteRowClick,
+    handleRowSelection,
     setOpen,
     crudOperation,
     idParam,
@@ -35,20 +39,22 @@ export default function RecipientProfilePage() {
     accessToken: cookies.access_token,
     listingApi: RecipientProfileApi.listRecipientProfile,
     deleteApi: RecipientProfileApi.deleteRecipientProfile,
+    extraInfo: {
+      extraParams: watch(),
+    },
     idKey,
   })
-  const { columns } = useRecipientProfile({ setOpen, setRecordId })
+  const { columns } = useRecipientProfileColumn({
+    setOpen,
+    setRecordId,
+    idParam,
+    crudOperation,
+  })
 
   return (
     <TableLayout
       title={PLUGIN_NAMES.RECIPIENT_PROFILE.NAME}
       onCreateClick={() => setOpen(true)}
-      additionalButtons={
-        <>
-          <IDNumberModal idParam={idParam} crudOperation={crudOperation} />
-          <RegistrationNumberModal idParam={idParam} crudOperation={crudOperation} />
-        </>
-      }
       csv={[
         {
           enableCSV: true,
@@ -91,14 +97,45 @@ export default function RecipientProfilePage() {
             idParam={idParam}
           />
         </Modal>
+        <div className="flex gap-2 w-1/2">
+          <Select
+            control={control}
+            defaultValue={false}
+            label="Số vào sổ"
+            name="idNumber"
+            options={[
+              { value: true, label: 'Đã nhập' },
+              { value: false, label: 'Chưa nhập' },
+            ]}
+          />
+          <Select
+            control={control}
+            defaultValue={false}
+            label="Số hiệu"
+            name="registrationNumber"
+            options={[
+              { value: true, label: 'Đã nhập' },
+              { value: false, label: 'Chưa nhập' },
+            ]}
+          />
+        </div>
         <TableData
           columns={columns}
           listData={listData}
           loading={loading}
           rowSelectionModel={rowSelectionModel}
+          handleRowSelection={handleRowSelection}
           handlePaginationModelChange={handlePaginationModelChange}
           onFilterChange={onFilterChange}
           pagination={pagination}
+          onDeleteRowClick={onDeleteRowClick}
+          IssueModal={
+            <IssueModal
+              rowSelectionModel={rowSelectionModel}
+              accessToken={cookies.access_token}
+              idParam={idParam}
+            />
+          }
         />
       </Box>
     </TableLayout>

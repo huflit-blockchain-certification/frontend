@@ -2,13 +2,22 @@ import CheckPermissions from '@/components/common/Auth/check-permissions'
 import { UNIVERSITY_ROLE } from '@/constants'
 import { useAuth } from '@/hooks/common/useAuth'
 import { AdminLayout } from '@/layouts'
+import { isAllowAccess } from '@/utils/permissionChecker.util'
 import Link from 'next/link'
-import * as React from 'react'
+import { useRouter } from 'next/router'
+import React, { useEffect } from 'react'
 
 export interface RecipientProfilePageProps {}
 
 export default function RecipientPage(props: RecipientProfilePageProps) {
-  const { user } = useAuth()
+  const { user, roles } = useAuth()
+  const router = useRouter()
+  useEffect(() => {
+    if (!Array.isArray(roles)) return
+    if (isAllowAccess([UNIVERSITY_ROLE], roles)) {
+      router.push(`/admin/recipient-profile/${user?.userName}`)
+    }
+  }, [user?.userName, roles, router])
   return (
     <div>
       <div className="text-2xl font-bold">Chọn đơn vị giáo dục</div>

@@ -31,7 +31,7 @@ export default function useCertTypeColumns({ open, setOpen, setRecordId }: Colum
       field: 'createdAt',
       headerName: 'Ngày tạo',
       width: 100,
-      renderCell: (params: any) => <div>{dateFormat(params?.createdAt)}</div>,
+      renderCell: (params: any) => <div>{dateFormat(params?.value)}</div>,
     },
     {
       headerName: 'Tùy chỉnh',

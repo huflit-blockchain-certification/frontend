@@ -1,6 +1,6 @@
 import { errorMessage } from '@/components/common/Toast/response.toast.component'
 import { fetcher } from '../fetcher'
-import { GenerateProof, ListParams, Verify } from 'models'
+import { CreateParams, GenerateProof, ListParams, Verify } from 'models'
 
 const DacApi = {
   listAllDacByUni: async ({ page, accessToken, idParam }: ListParams) => {
@@ -32,6 +32,19 @@ const DacApi = {
       return await fetcher({
         method: 'GET',
         url: `/dac/student/generateProof/${idParam}?sharedField=${sharedField}`,
+        accessToken,
+      })
+    } catch (err: any) {
+      console.log(err.message)
+      errorMessage()
+    }
+  },
+  issue: async ({ accessToken, data, idParam }: CreateParams) => {
+    try {
+      return await fetcher({
+        body: data,
+        method: 'PATCH',
+        url: `/dac/manage/${idParam}/issue`,
         accessToken,
       })
     } catch (err: any) {

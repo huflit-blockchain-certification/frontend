@@ -1,8 +1,16 @@
 import * as yup from 'yup'
 
 export const registerUniversitySchema = yup.object().shape({
-  name: yup.string().required('Tên không được để trống'),
-  phone: yup.string().required('Số điện thoại không được để trống'),
+  name: yup
+    .string()
+    .required('Tên không được để trống')
+    .min(3)
+    .max(50)
+    .matches(/^[a-zA-Z ]+$/),
+  phone: yup
+    .string()
+    .required('Số điện thoại không được để trống')
+    .matches(/^[0-9]{10}$/, 'Số điện thoại không hợp lệ'),
   email: yup.string().email('Không đúng định dạng email').required('Email không được để trống'),
   gender: yup.string().required('Giới tính không được để trống'),
   address: yup.string().required('Địa chỉ không được để trống'),
@@ -10,7 +18,13 @@ export const registerUniversitySchema = yup.object().shape({
     .string()
     .matches(/^[0-9]{12}$/, 'CMND phải có 12 số')
     .required('CMND không được để trống'),
-  userName: yup.string().required('Tên tài khoản không được để trông'),
+  userName: yup
+    .string()
+    .oneOf([yup.ref('identity')], 'Tên tài khoản không khớp với CMND')
+    .min(9)
+    .max(12)
+    .required('Tên tài khoản không được để trông')
+    .matches(/^[0-9]+$/),
   password: yup
     .string()
     .required('Mật khẩu không được để trống')
