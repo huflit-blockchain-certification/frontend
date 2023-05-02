@@ -23,24 +23,22 @@ import { majorOptions } from '@/static/major'
 import { departmentOptions } from '@/static/department'
 import useGraduationCourse from '@/hooks/common/useGraduationCourse'
 import { RecipientProfile } from 'models/RecipientProfile'
-import moment from 'moment'
 import { useAuth } from '@/hooks/common/useAuth'
 import { isAllowAccess } from '@/utils/permissionChecker.util'
 import { DOET_ROLE } from '@/constants'
+import moment from 'moment'
 
 function RecipientProfileForm({ recordId, setOpen, afterActions, idParam }: FormProps) {
   const [cookies] = useCookies(['access_token'])
   const [loading, setLoading] = useState(false)
   const { user, roles } = useAuth()
-  const { control, handleSubmit, reset, watch } = useForm<RecipientProfile>({
+  const { control, handleSubmit, reset } = useForm<RecipientProfile>({
     defaultValues: recipientProfileDefaultForm,
-    resolver: yupResolver(!recordId ? RecipientProfileSchema : EditRecipientProfileSchema),
+    // resolver: yupResolver(!recordId ? RecipientProfileSchema : EditRecipientProfileSchema),
   })
   const onSubmit = async (data: any) => {
     if (data?.dateOfBirth) {
-      data.dateOfBirth = moment(
-        new Date(moment(data.dateOfBirth).format('YYYY-MM-DD'))
-      ).toISOString()
+      data.dateOfBirth = new Date(moment(data?.dateOfBirth).format('YYYY-MM-DD'))
     }
     commonSubmissionHandler({
       afterActions,

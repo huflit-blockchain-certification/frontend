@@ -25,7 +25,8 @@ export function useAuth() {
       try {
         //if dont have token
         const accessToken = cookies?.access_token
-        if (!accessToken) {
+        if (!accessToken) return
+        if (!accessToken && router.pathname.includes('admin')) {
           router.push('/')
           Toast.fire({
             title: 'Không có quyền truy cập',

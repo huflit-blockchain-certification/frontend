@@ -42,7 +42,7 @@ export default function IssueModal({
         idCertificate: selectedCert,
       }
       const response = await DacApi.issue({ data: issueData, accessToken, idParam })
-      afterIssue(response)
+      await afterIssue(response)
     } catch (err: any) {
       Toast.fire({ title: ERROR_MESSAGE, icon: 'error' })
     }

@@ -28,19 +28,19 @@ export default function LoginPage(props: LoginProps) {
     defaultValues: { userName: '', password: '' },
   })
 
-  const onSubmit = (data: RefreshTokenDTO) => {
-    AuthApi.login(data, async (record) => {
-      try {
+  const onSubmit = async (data: RefreshTokenDTO) => {
+    try {
+      await AuthApi.login(data, async (record) => {
         if (!record) return
         const { accessToken, refreshToken } = record.data.tokens
         setCookie('access_token', accessToken)
         setCookie('refresh_token', refreshToken)
         localStorage.setItem('user', JSON.stringify(record.data.userData))
         router.push('/')
-      } catch (err: any) {
-        errorMessage(err.message)
-      }
-    })
+      })
+    } catch (err: any) {
+      errorMessage(err.message)
+    }
   }
 
   if (isSubmitting) return <LoadingIndicator />

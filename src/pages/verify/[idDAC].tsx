@@ -17,6 +17,15 @@ export default function VerifyPage({}: VerifyPageProps) {
   const [cookies] = useCookies(['access_token'])
   const { disclosedDAC } = useDisclosedDAC({ setLoading, sharedField })
   const [verified, setVerified] = useState<boolean | undefined>()
+  const extraFields =
+    sharedField &&
+    sharedField
+      ?.toString()
+      ?.split(',')
+      .reduce((obj: any, key) => {
+        obj[key] = true
+        return obj
+      }, {})
   useEffect(() => {
     ;(async () => {
       try {
@@ -58,7 +67,11 @@ export default function VerifyPage({}: VerifyPageProps) {
           <div className="font-bold text-2xl"> Xác thực thành công</div>
         </div>
         <hr className="h-px my-8 bg-gray-200 border-0 dark:bg-gray-700" />
-        <DACDetail DAC={disclosedDAC?.data?.data?.disclosedData} extraFields={sharedField} />
+        <DACDetail
+          DAC={disclosedDAC?.data?.data?.disclosedData}
+          extraFields={extraFields}
+          pdfOptions={{ enable: true }}
+        />
       </div>
     )
   }

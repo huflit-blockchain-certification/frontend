@@ -25,7 +25,7 @@ export const commonSubmissionHandler = async ({
 }: FormSubmissionModel) => {
   try {
     setLoading(true)
-    if (recordId && editRequest) {
+    if (editRequest) {
       const response = await editRequest({
         id: recordId,
         data: formData,

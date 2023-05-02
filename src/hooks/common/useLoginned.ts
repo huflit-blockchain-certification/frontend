@@ -13,8 +13,7 @@ export default function useLoggined() {
     const path = router.pathname
     if (accessToken) {
       router.back()
-      Toast.fire({ title: 'You have loggined alreay', icon: 'error' })
       return
     }
-  }, [])
+  }, [router, cookies.access_token])
 }

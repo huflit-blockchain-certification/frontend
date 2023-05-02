@@ -141,10 +141,10 @@ export default function RecipientProfilePage() {
               idParam={idParam}
               afterIssue={(response: any) => {
                 try {
-                  setOpen(false)
                   setListData(
                     listData.filter((item: string | number) => response?.data?.data.includes(item))
                   )
+                  setOpen(false)
                 } catch (err) {
                   errorMessage()
                 }

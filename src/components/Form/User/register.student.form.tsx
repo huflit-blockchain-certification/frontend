@@ -18,6 +18,7 @@ import { FormProps } from 'models'
 import { genderOptions } from '@/static/gender'
 import { commonSubmissionHandler } from '@/pages/api/common.api'
 import { StudentApi } from '@/pages/api/User/student.api'
+import moment from 'moment'
 
 function RegisterStudentForm({ recordId, setOpen, afterActions }: FormProps) {
   const [cookies] = useCookies(['access_token'])
@@ -28,6 +29,9 @@ function RegisterStudentForm({ recordId, setOpen, afterActions }: FormProps) {
     defaultValues: registerUserStudentDefaultForm,
   })
   const onSubmit = async (data: User) => {
+    if (data?.dateOfBirth) {
+      data.dateOfBirth = new Date(moment(data?.dateOfBirth).format('YYYY-MM-DD'))
+    }
     commonSubmissionHandler({
       afterActions,
       createRequest: StudentApi.registerStudents,

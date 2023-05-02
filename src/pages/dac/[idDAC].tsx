@@ -82,7 +82,6 @@ export function DACDetail({
     const element = pdfArea.current
     const canvas = await html2canvas(element)
     const data = canvas.toDataURL('image/png')
-
     const pdf = new jsPDF()
     const imgProperties = pdf.getImageProperties(data)
     const pdfWidth = pdf.internal.pageSize.getWidth()
