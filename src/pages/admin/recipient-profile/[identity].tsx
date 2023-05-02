@@ -6,22 +6,27 @@ import React from 'react'
 import { Modal } from '@/components/common/Modal/modal.component'
 import TableData from '@/components/common/Form/Table/table.component'
 import { afterActions } from '@/utils/afterActions.util'
-import { PLUGIN_NAMES } from '@/constants/'
+import { DOET_ROLE, PLUGIN_NAMES, UNIVERSITY_ROLE } from '@/constants/'
 import { RecipientProfileApi } from '@/pages/api/Recipient-Profile/recipient-profle.api'
 import RecipientProfileForm from '@/components/Form/Recipient-Profile/recipient-profile.form'
 import useRecipientProfileColumn from '@/hooks/useColumn/useRecipientProfileColumn'
 import IssueModal from '@/components/Form/IssueModal/issue-modal.component'
 import { useForm } from 'react-hook-form'
 import { Select } from '@/components/common/Form/Select/select.component'
+import { isAllowAccess } from '@/utils/permissionChecker.util'
+import { useAuth } from '@/hooks/common/useAuth'
+import { errorMessage } from '@/components/common/Toast/response.toast.component'
 
 export default function RecipientProfilePage() {
   const idKey = 'identity'
   const [cookies] = useCookies(['access_token'])
+  const { roles } = useAuth()
   const { control, watch } = useForm({
     defaultValues: { idNumber: false, registrationNumber: false },
   })
   const {
     listData,
+    setListData,
     pagination,
     loading,
     rowSelectionModel,
@@ -67,7 +72,7 @@ export default function RecipientProfilePage() {
             }),
         },
         {
-          enableCSV: true,
+          enableCSV: isAllowAccess([DOET_ROLE], roles),
           titleCSV: 'Nhập số hiệu',
           requestAfterConfirmCSV: async (data) =>
             await RecipientProfileApi.createRegistrationNumber({
@@ -77,7 +82,7 @@ export default function RecipientProfilePage() {
             }),
         },
         {
-          enableCSV: true,
+          enableCSV: isAllowAccess([UNIVERSITY_ROLE], roles),
           titleCSV: 'Nhập số vào sổ',
           requestAfterConfirmCSV: async (data) =>
             await RecipientProfileApi.createIDNumber({
@@ -134,6 +139,16 @@ export default function RecipientProfilePage() {
               rowSelectionModel={rowSelectionModel}
               accessToken={cookies.access_token}
               idParam={idParam}
+              afterIssue={(response: any) => {
+                try {
+                  setOpen(false)
+                  setListData(
+                    listData.filter((item: string | number) => response?.data?.data.includes(item))
+                  )
+                } catch (err) {
+                  errorMessage()
+                }
+              }}
             />
           }
         />

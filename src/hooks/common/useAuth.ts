@@ -7,6 +7,7 @@ import { Toast } from '@/components/common/Toast/response.component'
 import { AuthApi } from '@/pages/api/Auth/auth.api'
 import _ from 'lodash'
 import { AdminUser } from 'models'
+import { errorMessage } from '@/components/common/Toast/response.toast.component'
 export interface useAuthProps {}
 
 export function useAuth() {
@@ -21,25 +22,29 @@ export function useAuth() {
 
   useEffect(() => {
     ;(async () => {
-      //if dont have token
-      const accessToken = cookies?.access_token
-      if (!accessToken) {
-        router.push('/')
-        Toast.fire({
-          title: 'Không có quyền truy cập',
-          icon: 'warning',
-        })
-        return
+      try {
+        //if dont have token
+        const accessToken = cookies?.access_token
+        if (!accessToken) {
+          router.push('/')
+          Toast.fire({
+            title: 'Không có quyền truy cập',
+            icon: 'warning',
+          })
+          return
+        }
+        const decodedToken = jwt_decode<JwtPayload>(accessToken)
+        const exp = decodedToken?.exp
+        // if exp
+        const stillValid = moment(exp).unix() < moment().unix()
+        if (!stillValid) {
+          console.log('Refresh token ...')
+          return await AuthApi.refreshToken()
+        }
+        setAccessToken(accessToken)
+      } catch (err) {
+        errorMessage()
       }
-      const decodedToken = jwt_decode<JwtPayload>(accessToken)
-      const exp = decodedToken?.exp
-      // if exp
-      const stillValid = moment(exp).unix() < moment().unix()
-      if (!stillValid) {
-        console.log('Refresh token ...')
-        return await AuthApi.refreshToken()
-      }
-      setAccessToken(accessToken)
     })()
   }, [cookies?.access_token, router])
   return { accessToken, user, roles: user?.roles }

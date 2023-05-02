@@ -61,7 +61,7 @@ export default function useRecipientProfileColumn({
     },
     {
       field: 'registrationNum',
-      headerName: 'Số vào sổ',
+      headerName: 'Số hiệu',
       renderCell(params: any) {
         return (
           <>

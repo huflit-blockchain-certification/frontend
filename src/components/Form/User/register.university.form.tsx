@@ -14,6 +14,7 @@ import { User } from 'models/User'
 import { genderOptions } from '@/static/gender'
 import { commonSubmissionHandler } from '@/pages/api/common.api'
 import { UniversityApi } from '@/pages/api/User/university.api'
+import { errorMessage } from '@/components/common/Toast/response.toast.component'
 
 function RegisterUniversityForm({ recordId, setOpen, afterActions }: FormProps) {
   const [cookies] = useCookies(['access_token'])
@@ -38,17 +39,21 @@ function RegisterUniversityForm({ recordId, setOpen, afterActions }: FormProps) 
   }
   useEffect(() => {
     ;(async () => {
-      if (!recordId) return
-      setLoading(true)
-      const user = await UniversityApi.detailUserUniversity({
-        id: recordId,
-        accessToken: cookies.access_token,
-      })
-      if (!user) return
-      const response = _.omit(user.data.data, ['_id', 'createdBy', 'createdAt', 'updatedAt'])
-      response.userName = response.idUser.userName
-      reset(response)
-      setLoading(false)
+      try {
+        if (!recordId) return
+        setLoading(true)
+        const user = await UniversityApi.detailUserUniversity({
+          id: recordId,
+          accessToken: cookies.access_token,
+        })
+        if (!user) return
+        const response = _.omit(user.data.data, ['_id', 'createdBy', 'createdAt', 'updatedAt'])
+        response.userName = response.idUser.userName
+        reset(response)
+        setLoading(false)
+      } catch (err) {
+        errorMessage()
+      }
     })()
   }, [recordId])
   return (

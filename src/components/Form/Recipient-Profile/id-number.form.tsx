@@ -30,7 +30,7 @@ function IDNumberForm({ setOpen, afterActions, recordId, idParam }: FormProps) {
     commonSubmissionHandler({
       idParam,
       afterActions,
-      createRequest: RecipientProfileApi.createIDNumber,
+      editRequest: RecipientProfileApi.createIDNumber,
       formData: [data],
       setLoading,
       setOpen,

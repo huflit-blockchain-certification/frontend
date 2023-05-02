@@ -38,7 +38,7 @@ export default function InfoPage(props: infoPageProps) {
                 return (
                   <CardCertificate
                     key={dac.id}
-                    id={dac.id}
+                    id={dac._id}
                     nameTypeCertificate={dac.nameTypeCertificate}
                     dateOfIssuing={dac.nameOfIssuing}
                     dispensingStatus={dac.dispensingStatus}

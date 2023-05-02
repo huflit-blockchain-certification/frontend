@@ -1,4 +1,4 @@
-import { errorMessage, successMessage } from '@/components/common/Toast/response.toast.component'
+import { successMessage } from '@/components/common/Toast/response.toast.component'
 import { fetcher } from '../fetcher'
 import { CreateParams, DeleteParams, DetailParams, EditParams, ListParams } from 'models'
 
@@ -13,8 +13,7 @@ const UniversityApi = {
 
       return record
     } catch (err: any) {
-      console.log(err.message)
-      errorMessage()
+      throw new Error(err.message)
     }
   },
   editUserUniversity: async ({ id, data, accessToken }: EditParams) => {
@@ -28,8 +27,7 @@ const UniversityApi = {
       successMessage()
       return record
     } catch (err: any) {
-      console.log(err.message)
-      errorMessage()
+      throw new Error(err.message)
     }
   },
   listUniversitys: async ({ page, accessToken, keyword }: ListParams) => {
@@ -47,8 +45,7 @@ const UniversityApi = {
         accessToken,
       })
     } catch (err: any) {
-      console.log(err.message)
-      errorMessage()
+      throw new Error(err.message)
     }
   },
   registerUniversities: async ({ data, accessToken }: CreateParams) => {
@@ -61,8 +58,7 @@ const UniversityApi = {
       })
       return record
     } catch (err: any) {
-      console.log(err.message)
-      errorMessage(err.message)
+      throw new Error(err.message)
     }
   },
 }

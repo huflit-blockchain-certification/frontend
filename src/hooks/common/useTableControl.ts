@@ -49,8 +49,8 @@ export function useTableControl({
   )
 
   const onDeleteRowClick = async () => {
-    if (!deleteApi) return
     try {
+      if (!deleteApi) return
       await Promise.all(
         rowSelectionModel.map((row) => deleteApi({ id: row, accessToken, idParam }))
       )

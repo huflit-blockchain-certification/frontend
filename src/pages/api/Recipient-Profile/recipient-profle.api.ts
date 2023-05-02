@@ -1,4 +1,3 @@
-import { errorMessage } from '@/components/common/Toast/response.toast.component'
 import { fetcher } from '../fetcher'
 import { CreateParams, DeleteParams, DetailParams, EditParams, ListParams } from 'models'
 import _ from 'lodash'
@@ -19,8 +18,7 @@ const RecipientProfileApi = {
       })
       return record
     } catch (err: any) {
-      errorMessage()
-      console.log(err.message)
+      throw new Error(err.message)
     }
   },
   detailRecipientProfile: async ({ id, accessToken, idParam }: DetailParams) => {
@@ -32,8 +30,7 @@ const RecipientProfileApi = {
       })
       return record
     } catch (err: any) {
-      errorMessage()
-      console.log(err.message)
+      throw new Error(err.message)
     }
   },
   deleteRecipientProfile: async ({ id, accessToken, idParam }: DeleteParams) => {
@@ -45,8 +42,7 @@ const RecipientProfileApi = {
       })
       return record
     } catch (err: any) {
-      errorMessage()
-      console.log(err.message)
+      throw new Error(err.message)
     }
   },
   createRecipientProfile: async ({ data, accessToken, idParam }: CreateParams) => {
@@ -59,8 +55,7 @@ const RecipientProfileApi = {
       })
       return record
     } catch (err: any) {
-      console.log(err.message)
-      errorMessage(err.message)
+      throw new Error(err.message)
     }
   },
   createRegistrationNumber: async ({ data, accessToken, idParam }: CreateParams) => {
@@ -73,8 +68,7 @@ const RecipientProfileApi = {
       })
       return record
     } catch (err: any) {
-      console.log(err.message)
-      errorMessage(err.message)
+      throw new Error(err.message)
     }
   },
   createIDNumber: async ({ data, accessToken, idParam }: CreateParams) => {
@@ -87,8 +81,7 @@ const RecipientProfileApi = {
       })
       return record
     } catch (err: any) {
-      console.log(err.message)
-      errorMessage(err.message)
+      throw new Error(err.message)
     }
   },
   editRecipientProfile: async ({ id, data, accessToken, idParam }: EditParams) => {
@@ -101,8 +94,7 @@ const RecipientProfileApi = {
       })
       return record
     } catch (err: any) {
-      console.log(err.message)
-      errorMessage(err.message)
+      throw new Error(err.message)
     }
   },
 }

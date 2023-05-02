@@ -1,6 +1,6 @@
 import { errorMessage } from '@/components/common/Toast/response.toast.component'
 import { fetcher } from '../fetcher'
-import { CreateParams, GenerateProof, ListParams, Verify } from 'models'
+import { CreateParams, DetailParams, GenerateProof, ListParams, Verify } from 'models'
 
 const DacApi = {
   listAllDacByUni: async ({ page, accessToken, idParam }: ListParams) => {
@@ -11,8 +11,18 @@ const DacApi = {
         accessToken,
       })
     } catch (err: any) {
-      console.log(err.message)
-      errorMessage()
+      throw new Error(err.message)
+    }
+  },
+  detailDAC: async ({ id, accessToken }: DetailParams) => {
+    try {
+      return await fetcher({
+        method: 'GET',
+        url: `/dac/student/detail/${id}`,
+        accessToken,
+      })
+    } catch (err: any) {
+      throw new Error(err.message)
     }
   },
   listAllDacByStu: async ({ page, accessToken }: ListParams) => {
@@ -23,20 +33,18 @@ const DacApi = {
         accessToken,
       })
     } catch (err: any) {
-      console.log(err.message)
-      errorMessage()
+      throw new Error(err.message)
     }
   },
-  generateProof: async ({ accessToken, sharedField, idParam }: GenerateProof) => {
+  generateProof: async ({ id, accessToken, sharedField }: GenerateProof) => {
     try {
       return await fetcher({
         method: 'GET',
-        url: `/dac/student/generateProof/${idParam}?sharedField=${sharedField}`,
+        url: `/dac/student/generateProof/${id}${sharedField ? `?sharedField=${sharedField}` : ''}`,
         accessToken,
       })
     } catch (err: any) {
-      console.log(err.message)
-      errorMessage()
+      throw new Error(err.message)
     }
   },
   issue: async ({ accessToken, data, idParam }: CreateParams) => {
@@ -48,8 +56,7 @@ const DacApi = {
         accessToken,
       })
     } catch (err: any) {
-      console.log(err.message)
-      errorMessage()
+      throw new Error(err.message)
     }
   },
   verify: async ({ accessToken, data }: Verify) => {
@@ -61,8 +68,7 @@ const DacApi = {
         accessToken,
       })
     } catch (err: any) {
-      console.log(err.message)
-      errorMessage()
+      throw new Error(err.message)
     }
   },
 }

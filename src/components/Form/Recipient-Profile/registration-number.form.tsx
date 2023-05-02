@@ -30,7 +30,7 @@ function RegistrationNumberForm({ setOpen, afterActions, recordId, idParam }: Fo
     commonSubmissionHandler({
       idParam,
       afterActions,
-      createRequest: RecipientProfileApi.createRegistrationNumber,
+      editRequest: RecipientProfileApi.createRegistrationNumber,
       formData: [data],
       setLoading,
       setOpen,

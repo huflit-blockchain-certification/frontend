@@ -57,9 +57,9 @@ export interface DetailParams {
 }
 
 export interface GenerateProof {
-  sharedField: string
+  sharedField?: string | string[]
   accessToken: string
-  idParam?: string | string[] | undefined
+  id?: string | string[] | undefined
 }
 
 export interface Verify {

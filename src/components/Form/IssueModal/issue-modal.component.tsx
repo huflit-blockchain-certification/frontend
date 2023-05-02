@@ -13,9 +13,15 @@ export interface IssueModalProps {
   rowSelectionModel: GridRowSelectionModel
   accessToken: string
   idParam: string | string[] | undefined
+  afterIssue: any
 }
 
-export default function IssueModal({ rowSelectionModel, accessToken, idParam }: IssueModalProps) {
+export default function IssueModal({
+  rowSelectionModel,
+  accessToken,
+  idParam,
+  afterIssue,
+}: IssueModalProps) {
   const [cookies] = useCookies(['access_token'])
   const [selectedCert, setSelectedCert] = useState<string>()
   const [open, setOpen] = useState(false)
@@ -25,8 +31,8 @@ export default function IssueModal({ rowSelectionModel, accessToken, idParam }: 
   })
 
   const onIssueClick = async () => {
-    if (!selectedCert) return
     try {
+      if (!selectedCert) return
       const issueData = {
         listDAC: rowSelectionModel.map((row) => {
           return {
@@ -35,7 +41,8 @@ export default function IssueModal({ rowSelectionModel, accessToken, idParam }: 
         }),
         idCertificate: selectedCert,
       }
-      await DacApi.issue({ data: issueData, accessToken, idParam })
+      const response = await DacApi.issue({ data: issueData, accessToken, idParam })
+      afterIssue(response)
     } catch (err: any) {
       Toast.fire({ title: ERROR_MESSAGE, icon: 'error' })
     }

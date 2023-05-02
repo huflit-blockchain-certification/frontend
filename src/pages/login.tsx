@@ -12,6 +12,7 @@ import Button from '@mui/material/Button'
 import { useCookies } from 'react-cookie'
 import { LoginnedPage } from '@/components/common/Auth/loggined.component'
 import { AuthApi } from './api/Auth/auth.api'
+import { errorMessage } from '@/components/common/Toast/response.toast.component'
 export interface LoginProps {}
 
 export default function LoginPage(props: LoginProps) {
@@ -29,12 +30,16 @@ export default function LoginPage(props: LoginProps) {
 
   const onSubmit = (data: RefreshTokenDTO) => {
     AuthApi.login(data, async (record) => {
-      if (!record) return
-      const { accessToken, refreshToken } = record.data.tokens
-      setCookie('access_token', accessToken)
-      setCookie('refresh_token', refreshToken)
-      localStorage.setItem('user', JSON.stringify(record.data.userData))
-      router.push('/')
+      try {
+        if (!record) return
+        const { accessToken, refreshToken } = record.data.tokens
+        setCookie('access_token', accessToken)
+        setCookie('refresh_token', refreshToken)
+        localStorage.setItem('user', JSON.stringify(record.data.userData))
+        router.push('/')
+      } catch (err: any) {
+        errorMessage(err.message)
+      }
     })
   }
 
