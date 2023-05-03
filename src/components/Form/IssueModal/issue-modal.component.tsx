@@ -1,6 +1,5 @@
 import { Modal } from '@/components/common/Modal/modal.component'
-import { Toast } from '@/components/common/Toast/response.component'
-import { ERROR_MESSAGE } from '@/constants'
+import { errorMessage } from '@/components/common/Toast/response.toast.component'
 import { useTableControl } from '@/hooks/common/useTableControl'
 import { CertTypeApi } from '@/pages/api/Cert-Type/cert-type.api'
 import { DacApi } from '@/pages/api/DAC/dac.api'
@@ -25,7 +24,7 @@ export default function IssueModal({
   const [cookies] = useCookies(['access_token'])
   const [selectedCert, setSelectedCert] = useState<string>()
   const [open, setOpen] = useState(false)
-  const { listData } = useTableControl({
+  const { listData, pagination, loading, handlePaginationChange, totalPage } = useTableControl({
     accessToken: cookies.access_token,
     listingApi: CertTypeApi.listCertType,
   })
@@ -43,8 +42,9 @@ export default function IssueModal({
       }
       const response = await DacApi.issue({ data: issueData, accessToken, idParam })
       await afterIssue(response)
+      setOpen(false)
     } catch (err: any) {
-      Toast.fire({ title: ERROR_MESSAGE, icon: 'error' })
+      errorMessage('Học sinh chưa có số hiệu hoặc số vào sổ')
     }
   }
   const onSelectCert = (id: string) => {
@@ -86,7 +86,14 @@ export default function IssueModal({
                   )}
                 </div>
               ))}
-            <Pagination className="ml-auto" shape="rounded" variant="outlined" />
+            <Pagination
+              className="flex justify-end mt-4"
+              shape="rounded"
+              variant="outlined"
+              count={totalPage}
+              page={pagination?.page}
+              onChange={handlePaginationChange}
+            />
           </div>
         </div>
       </Modal>

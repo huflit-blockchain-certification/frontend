@@ -21,6 +21,7 @@ export interface TableProps {
   onDeleteRowClick?: () => void
   IssueModal?: React.ReactNode
   pagination: GridPaginationModel
+  totalPage?: number
 }
 
 export default function TableData({
@@ -34,11 +35,12 @@ export default function TableData({
   pagination,
   onDeleteRowClick,
   IssueModal,
+  totalPage,
   ...rest
 }: TableProps) {
   return (
     <div className="flex flex-col gap-3">
-      <Box sx={{ height: 400, width: '100%', display: 'table', tableLayout: 'fixed' }}>
+      <Box sx={{ height: 700, width: '100%', display: 'table', tableLayout: 'fixed' }}>
         {rowSelectionModel?.length > 0 && (
           <div className="flex gap-1">
             {IssueModal && IssueModal}
@@ -54,7 +56,7 @@ export default function TableData({
           rows={listData ?? []}
           columns={columns}
           getRowId={(row) => row._id}
-          rowCount={20}
+          rowCount={(totalPage && pagination?.pageSize * totalPage) || 20}
           loading={loading}
           keepNonExistentRowsSelected
           disableColumnFilter

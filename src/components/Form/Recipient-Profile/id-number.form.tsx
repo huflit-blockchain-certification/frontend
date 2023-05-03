@@ -35,6 +35,7 @@ function IDNumberForm({ setOpen, afterActions, recordId, idParam }: FormProps) {
       setLoading,
       setOpen,
       token: cookies.access_token,
+      exceptionEdit: true,
     })
   }
 

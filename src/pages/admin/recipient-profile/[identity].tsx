@@ -40,6 +40,7 @@ export default function RecipientProfilePage() {
     setOpen,
     crudOperation,
     idParam,
+    totalPage,
   } = useTableControl({
     accessToken: cookies.access_token,
     listingApi: RecipientProfileApi.listRecipientProfile,
@@ -134,6 +135,7 @@ export default function RecipientProfilePage() {
           onFilterChange={onFilterChange}
           pagination={pagination}
           onDeleteRowClick={onDeleteRowClick}
+          totalPage={totalPage}
           IssueModal={
             <IssueModal
               rowSelectionModel={rowSelectionModel}
@@ -144,7 +146,6 @@ export default function RecipientProfilePage() {
                   setListData(
                     listData.filter((item: string | number) => response?.data?.data.includes(item))
                   )
-                  setOpen(false)
                 } catch (err) {
                   errorMessage()
                 }

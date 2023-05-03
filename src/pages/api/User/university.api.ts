@@ -41,7 +41,7 @@ const UniversityApi = {
       }
       return await fetcher({
         method: 'GET',
-        url: '/users/universities?page=1&limit=10',
+        url: `/users/universities?page=${page}&limit=10`,
         accessToken,
       })
     } catch (err: any) {

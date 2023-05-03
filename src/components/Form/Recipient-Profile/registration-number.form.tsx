@@ -35,6 +35,7 @@ function RegistrationNumberForm({ setOpen, afterActions, recordId, idParam }: Fo
       setLoading,
       setOpen,
       token: cookies.access_token,
+      exceptionEdit: true,
     })
   }
 

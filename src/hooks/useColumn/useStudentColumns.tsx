@@ -41,6 +41,11 @@ export default function useStudentsColumns({ open, setOpen, setRecordId }: Colum
       },
     },
     {
+      field: 'address',
+      headerName: 'Nơi sinh',
+      width: 250,
+    },
+    {
       field: 'createdAt',
       headerName: 'Ngày tạo',
       width: 100,

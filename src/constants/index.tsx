@@ -17,13 +17,13 @@ const PLUGIN_NAMES = {
     NAME: 'Tổng quan',
     SLUG: '/',
     ICON: <HiOutlineChartPie size={20} />,
-    ROLES: ['UNIVERSITY', 'STUDENT', 'DOET'],
+    ROLES: ['UNIVERSITY', 'DOET'],
   },
   USERS: {
     NAME: 'Tài khoản',
     SLUG: '/user',
     ICON: <HiOutlineUserCircle size={20} />,
-    ROLES: ['UNIVERSITY', 'STUDENT', 'DOET'],
+    ROLES: ['UNIVERSITY', 'DOET'],
   },
   RECIPIENT_PROFILE: {
     NAME: 'Hồ sô người nhận',
@@ -49,12 +49,12 @@ const PLUGIN_NAMES = {
     ROLES: ['DOET'],
     ICON: <AiOutlineFieldTime size={20} />,
   },
-  // DAC: {
-  //   NAME: 'Văn bằng chứng chỉ',
-  //   SLUG: '/dac',
-  //   ICON: <AiOutlineSafetyCertificate size={20} />,
-  //   ROLES: ['UNIVERSITY', 'STUDENT', 'DOET'],
-  // },
+  DAC: {
+    NAME: 'Văn bằng chứng chỉ',
+    SLUG: '/dac',
+    ICON: <AiOutlineSafetyCertificate size={20} />,
+    ROLES: ['UNIVERSITY', 'DOET'],
+  },
 }
 //Redux
 
@@ -95,12 +95,12 @@ const defaultPlugins: PluginNames[] = [
     slug: PLUGIN_NAMES.GRADUAUATION_YEAR.SLUG,
     roles: PLUGIN_NAMES.GRADUAUATION_YEAR.ROLES,
   },
-  // {
-  //   name: PLUGIN_NAMES.DAC.NAME,
-  //   icon: PLUGIN_NAMES.DAC.ICON,
-  //   slug: PLUGIN_NAMES.DAC.SLUG,
-  //   roles: PLUGIN_NAMES.DAC.ROLES,
-  // },
+  {
+    name: PLUGIN_NAMES.DAC.NAME,
+    icon: PLUGIN_NAMES.DAC.ICON,
+    slug: PLUGIN_NAMES.DAC.SLUG,
+    roles: PLUGIN_NAMES.DAC.ROLES,
+  },
 ]
 
 const fieldDefault = [

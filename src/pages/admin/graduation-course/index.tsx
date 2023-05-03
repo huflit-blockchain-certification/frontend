@@ -28,6 +28,7 @@ export default function CertTypeListPage() {
     setRecordId,
     setOpen,
     crudOperation,
+    totalPage,
   } = useTableControl({
     accessToken: cookies.access_token,
     listingApi: GraduationCourseApi.listGraduationCourse,
@@ -55,6 +56,7 @@ export default function CertTypeListPage() {
           onFilterChange={onFilterChange}
           pagination={pagination}
           onDeleteRowClick={onDeleteRowClick}
+          totalPage={totalPage}
         />
       </Box>
     </TableLayout>

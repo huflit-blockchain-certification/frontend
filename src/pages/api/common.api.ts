@@ -8,6 +8,7 @@ interface FormSubmissionModel {
   recordId?: string | number
   createRequest?: ({ data, accessToken }: CreateParams) => Promise<any>
   editRequest?: ({ id, data, accessToken }: EditParams) => Promise<any>
+  exceptionEdit?: boolean
   idParam?: string | string[] | undefined
   afterActions: CRUDInterface
   token: string
@@ -22,10 +23,11 @@ export const commonSubmissionHandler = async ({
   recordId,
   token,
   idParam,
+  exceptionEdit,
 }: FormSubmissionModel) => {
   try {
     setLoading(true)
-    if (editRequest) {
+    if ((editRequest && recordId) || (editRequest && exceptionEdit === true)) {
       const response = await editRequest({
         id: recordId,
         data: formData,

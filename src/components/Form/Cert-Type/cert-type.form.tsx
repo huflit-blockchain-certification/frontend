@@ -52,7 +52,7 @@ function CertTypeForm({ recordId, setOpen, afterActions }: FormProps) {
         errorMessage()
       }
     })()
-  }, [recordId])
+  }, [recordId, cookies.access_token, reset])
 
   return (
     <FormHeader onSubmit={handleSubmit(onSubmit)} loading={loading}>

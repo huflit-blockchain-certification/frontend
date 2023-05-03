@@ -1,10 +1,10 @@
-import { errorMessage } from '@/components/common/Toast/response.toast.component'
 import { fetcher } from '../fetcher'
 import { CreateParams, DetailParams, GenerateProof, ListParams, Verify } from 'models'
 
 const DacApi = {
   listAllDacByUni: async ({ page, accessToken, idParam }: ListParams) => {
     try {
+      if (!idParam) return
       return await fetcher({
         method: 'GET',
         url: `/dac/manage/${idParam}?page=${page}&limit=1`,

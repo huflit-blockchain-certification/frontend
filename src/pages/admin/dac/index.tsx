@@ -8,16 +8,16 @@ import Link from 'next/link'
 import { useRouter } from 'next/router'
 import React, { useEffect } from 'react'
 
-export interface RecipientProfilePageProps {}
+export interface DACAdminPageProps {}
 
-export default function RecipientPage(props: RecipientProfilePageProps) {
+export default function DACAdminPage(props: DACAdminPageProps) {
   const { user, roles } = useAuth()
   const router = useRouter()
 
   useEffect(() => {
     if (!Array.isArray(roles)) return
     if (isAllowAccess([UNIVERSITY_ROLE], roles)) {
-      router.push(`/admin/recipient-profile/${user?.userName}`)
+      router.push(`/admin/dac/${user?.userName}`)
     }
   }, [user?.userName, roles, router])
   return (
@@ -26,7 +26,7 @@ export default function RecipientPage(props: RecipientProfilePageProps) {
       <div className="flex flex-col gap-3 w-1/2">
         <CheckPermissions requireRoles={[UNIVERSITY_ROLE]}>
           <Link
-            href={`/admin/recipient-profile/${user?.userName}`}
+            href={`/admin/dac/${user?.userName}`}
             className="p-3 shadow fw-bold text-blue-400 hover:shadow-lg transition duration-300"
           >
             Trường đại học của bạn
@@ -40,4 +40,4 @@ export default function RecipientPage(props: RecipientProfilePageProps) {
   )
 }
 
-RecipientPage.Layout = AdminLayout
+DACAdminPage.Layout = AdminLayout

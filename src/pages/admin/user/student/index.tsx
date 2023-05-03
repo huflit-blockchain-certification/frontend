@@ -32,6 +32,7 @@ export default function StudentUserListPage({}: any) {
     setRecordId,
     setOpen,
     crudOperation,
+    totalPage,
   } = useTableControl({
     accessToken: cookies.access_token,
     listingApi: StudentApi.listStudents,
@@ -72,6 +73,7 @@ export default function StudentUserListPage({}: any) {
           onFilterChange={onFilterChange}
           pagination={pagination}
           onDeleteRowClick={onDeleteRowClick}
+          totalPage={totalPage}
         />
       </Box>
     </TableLayout>
