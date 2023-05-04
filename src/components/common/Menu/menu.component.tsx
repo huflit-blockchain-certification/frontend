@@ -26,8 +26,8 @@ export function Menu(props: Navbar) {
     setAnchorEl(null)
   }
   const logout = useCallback(() => {
-    removeCookie('access_token')
-    removeCookie('refresh_token')
+    removeCookie('access_token', { httpOnly: false })
+    removeCookie('refresh_token', { httpOnly: false })
     localStorage.removeItem('user')
     router.push('/')
   }, [removeCookie, router])
