@@ -1,7 +1,7 @@
 pipeline {
     agent any
     stages {
-        stage('Deploy') {
+        stage('Deployy') {
             steps {
                 sshagent(['vinhphan-root-keys']) {
                     sh '''
