@@ -37,8 +37,8 @@ export default function LoginPage(props: LoginProps) {
           removeCookie('access_token')
           removeCookie('refresh_token')
         }
-        setCookie('access_token', accessToken)
-        setCookie('refresh_token', refreshToken)
+        setCookie('access_token', accessToken, { httpOnly: false })
+        setCookie('refresh_token', refreshToken, { httpOnly: false })
         localStorage.setItem('user', JSON.stringify(record.data.userData))
         router.push('/')
       })
