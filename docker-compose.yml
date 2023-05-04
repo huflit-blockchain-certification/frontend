@@ -8,9 +8,10 @@ services:
       dockerfile: Dockerfile
     environment:
       NODE_ENV: production
+      HOST: 0.0.0.0
     env_file:
       - .env.production
     command: yarn start
     restart: always
     ports:
-      - '3006:80'
+      - '3006:3000'
