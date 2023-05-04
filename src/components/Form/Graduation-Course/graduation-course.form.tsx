@@ -43,7 +43,7 @@ function GraduationCourseForm({ recordId, setOpen, afterActions }: FormProps) {
         accessToken: cookies.access_token,
       })
       if (!graduationCourse) return
-      reset(_.omit(graduationCourse.data.detail, ['_id', 'createdAt', 'updatedAt']))
+      reset(_.omit(graduationCourse.data.data, ['_id', 'createdAt', 'updatedAt']))
       setLoading(false)
     })()
   }, [recordId])

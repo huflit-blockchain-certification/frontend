@@ -17,13 +17,13 @@ const PLUGIN_NAMES = {
     NAME: 'Tổng quan',
     SLUG: '/',
     ICON: <HiOutlineChartPie size={20} />,
-    ROLES: ['UNIVERSITY', 'STUDENT', 'DOET'],
+    ROLES: ['UNIVERSITY', 'DOET'],
   },
   USERS: {
     NAME: 'Tài khoản',
     SLUG: '/user',
     ICON: <HiOutlineUserCircle size={20} />,
-    ROLES: ['UNIVERSITY', 'STUDENT', 'DOET'],
+    ROLES: ['UNIVERSITY', 'DOET'],
   },
   RECIPIENT_PROFILE: {
     NAME: 'Hồ sô người nhận',
@@ -49,12 +49,12 @@ const PLUGIN_NAMES = {
     ROLES: ['DOET'],
     ICON: <AiOutlineFieldTime size={20} />,
   },
-  // DAC: {
-  //   NAME: 'Văn bằng chứng chỉ',
-  //   SLUG: '/dac',
-  //   ICON: <AiOutlineSafetyCertificate size={20} />,
-  //   ROLES: ['UNIVERSITY', 'STUDENT', 'DOET'],
-  // },
+  DAC: {
+    NAME: 'Văn bằng chứng chỉ',
+    SLUG: '/dac',
+    ICON: <AiOutlineSafetyCertificate size={20} />,
+    ROLES: ['UNIVERSITY', 'DOET'],
+  },
 }
 //Redux
 
@@ -95,20 +95,49 @@ const defaultPlugins: PluginNames[] = [
     slug: PLUGIN_NAMES.GRADUAUATION_YEAR.SLUG,
     roles: PLUGIN_NAMES.GRADUAUATION_YEAR.ROLES,
   },
-  // {
-  //   name: PLUGIN_NAMES.DAC.NAME,
-  //   icon: PLUGIN_NAMES.DAC.ICON,
-  //   slug: PLUGIN_NAMES.DAC.SLUG,
-  //   roles: PLUGIN_NAMES.DAC.ROLES,
-  // },
+  {
+    name: PLUGIN_NAMES.DAC.NAME,
+    icon: PLUGIN_NAMES.DAC.ICON,
+    slug: PLUGIN_NAMES.DAC.SLUG,
+    roles: PLUGIN_NAMES.DAC.ROLES,
+  },
 ]
 
+const fieldDefault = [
+  'nameTypeCertificate',
+  'id',
+  'typeCertificate',
+  'levelCertificate',
+  'departmentName',
+  'universityName',
+  'studentName',
+  'gender',
+  'placeOfBirth',
+  'dateOfBirth',
+  'nation',
+  'registrationNum',
+  'idNumber',
+]
+const fieldShareExtend = [
+  'universityName',
+  'major',
+  'departmentName',
+  'CGPA',
+  'formOfTraining',
+  'ranking',
+]
+const dateUpTo6Y = new Date(Date.now() - 1000 * 60 * 60 * 24 * 365 * 6) // go back by 6 years
+const dateMinimum100Y = new Date(Date.now() - 1000 * 60 * 60 * 24 * 365 * 100) // go back by 100 years
+
 const SET_ACCESS_TOKEN = 'SET_ACCESS_TOKEN'
+const SET_CHECKED_FIELD = 'SET_CHECKED_FIELD'
+
 export {
   API_VERSION,
   API_URL,
   API_KEY,
   SET_ACCESS_TOKEN,
+  SET_CHECKED_FIELD,
   ACCESS_TOKEN,
   REFRESH_TOKEN,
   ERROR_MESSAGE,
@@ -117,4 +146,8 @@ export {
   STUDENT_ROLE,
   DOET_ROLE,
   defaultPlugins,
+  dateUpTo6Y,
+  dateMinimum100Y,
+  fieldDefault,
+  fieldShareExtend,
 }

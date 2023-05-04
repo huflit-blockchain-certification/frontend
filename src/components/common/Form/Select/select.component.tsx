@@ -16,6 +16,7 @@ export interface SelectProps {
   defaultValue?: any
   optionLabel?: string
   optionValue?: string
+  size?: any
 }
 
 export function Select({
@@ -30,6 +31,7 @@ export function Select({
   defaultValue,
   optionLabel,
   optionValue,
+  size,
 }: SelectProps) {
   const {
     field: { value, onChange, ref },
@@ -55,6 +57,7 @@ export function Select({
               ref={ref}
               placeholder={placeholder ?? ''}
               MenuProps={{ PaperProps: { sx: { maxHeight: 350 } } }}
+              size={size || 'medium'}
             >
               {options &&
                 options.map((option, index) => (

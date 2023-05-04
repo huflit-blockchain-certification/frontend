@@ -1,15 +1,17 @@
 import { APP_NAME } from '@/static'
 import { useRouter } from 'next/router'
-import React, { useState, useEffect } from 'react'
+import React, { useState, useEffect, useCallback } from 'react'
 import Popover from '@mui/material/Popover'
 import Link from 'next/link'
 import { useCookies } from 'react-cookie'
+import CheckPermissions from '../Auth/check-permissions'
+import { DOET_ROLE, STUDENT_ROLE, UNIVERSITY_ROLE } from '@/constants'
 
 export interface Navbar {}
 
 export function Menu(props: Navbar) {
   const router = useRouter()
-  const [cookies] = useCookies(['access_token'])
+  const [cookies, setCookie, removeCookie] = useCookies(['access_token', 'refresh_token'])
   const [accessToken, setAccessToken] = useState()
   const [anchorEl, setAnchorEl] = useState<HTMLElement | null>(null)
   useEffect(() => {
@@ -23,6 +25,12 @@ export function Menu(props: Navbar) {
   const handleClose = () => {
     setAnchorEl(null)
   }
+  const logout = useCallback(() => {
+    removeCookie('access_token')
+    removeCookie('refresh_token')
+    localStorage.removeItem('user')
+    router.push('/')
+  }, [removeCookie, router])
   const open = Boolean(anchorEl)
   const id = open ? 'simple-popover' : undefined
 
@@ -91,11 +99,13 @@ export function Menu(props: Navbar) {
                   }}
                 >
                   <div className="flex flex-col w-32 p-3 cursor-pointer">
-                    {/* <CheckPermissions requireRoles={[STUDENT_ROLE]}> */}
-                    <Link href="/info">Thông tin</Link>
-                    {/* </CheckPermissions> */}
-                    <Link href="/admin">Quản lý</Link>
-                    <Link href="/logout">Đăng xuất</Link>
+                    <CheckPermissions requireRoles={[STUDENT_ROLE]}>
+                      <Link href="/dac">Văn bằng</Link>
+                    </CheckPermissions>
+                    <CheckPermissions requireRoles={[UNIVERSITY_ROLE, DOET_ROLE]}>
+                      <Link href="/admin">Quản lý</Link>
+                    </CheckPermissions>
+                    <div onClick={logout}>Đăng xuất</div>
                   </div>
                 </Popover>
               </li>

@@ -28,10 +28,10 @@ export default function UniversityUserListPage() {
     setRecordId,
     setOpen,
     crudOperation,
+    totalPage,
   } = useTableControl({
     accessToken: cookies.access_token,
     listingApi: UniversityApi.listUniversitys,
-    deleteApi: UniversityApi.deleteUniversities,
   })
   const { columns } = useUniversityColumns({ setOpen, setRecordId })
   const { roles } = useAuth()
@@ -67,6 +67,7 @@ export default function UniversityUserListPage() {
           handlePaginationModelChange={handlePaginationModelChange}
           onFilterChange={onFilterChange}
           pagination={pagination}
+          totalPage={totalPage}
         />
       </Box>
     </TableLayout>

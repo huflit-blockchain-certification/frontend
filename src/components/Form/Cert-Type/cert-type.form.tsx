@@ -12,6 +12,7 @@ import { commonSubmissionHandler } from '@/pages/api/common.api'
 import { CertTypeSchema } from '@/validation/Cert-type/create.cert-type.validation'
 import { CertTypeApi } from '@/pages/api/Cert-Type/cert-type.api'
 import { certTypeDefaultForm } from '@/default/cert-type.default'
+import { errorMessage } from '@/components/common/Toast/response.toast.component'
 
 function CertTypeForm({ recordId, setOpen, afterActions }: FormProps) {
   const [cookies] = useCookies(['access_token'])
@@ -37,17 +38,21 @@ function CertTypeForm({ recordId, setOpen, afterActions }: FormProps) {
 
   useEffect(() => {
     ;(async () => {
-      if (!recordId) return
-      setLoading(true)
-      const certType = await CertTypeApi.detailCertType({
-        id: recordId,
-        accessToken: cookies.access_token,
-      })
-      if (!certType) return
-      reset(_.omit(certType.data.detail, ['_id', 'createdAt', 'updatedAt']))
-      setLoading(false)
+      try {
+        if (!recordId) return
+        setLoading(true)
+        const certType = await CertTypeApi.detailCertType({
+          id: recordId,
+          accessToken: cookies.access_token,
+        })
+        if (!certType) return
+        reset(_.omit(certType.data.data, ['_id', 'createdAt', 'updatedAt']))
+        setLoading(false)
+      } catch (err) {
+        errorMessage()
+      }
     })()
-  }, [recordId])
+  }, [recordId, cookies.access_token, reset])
 
   return (
     <FormHeader onSubmit={handleSubmit(onSubmit)} loading={loading}>

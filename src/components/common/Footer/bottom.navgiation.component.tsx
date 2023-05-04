@@ -1,12 +1,11 @@
 import { APP_NAME } from '@/static'
 import * as React from 'react'
-import { BsFacebook, BsTwitter, BsInstagram, BsGithub, BsDribbble } from 'react-icons/bs'
 import Logo from '../../../../public/logo.png'
 export interface FooterProps {}
 
 export default function Footer(props: FooterProps) {
   return (
-    <footer className="bg-white rounded-lg shadow dark:bg-gray-900 m-4">
+    <footer className="bg-white rounded-lg shadow dark:bg-gray-900 mt-auto">
       <div className="w-full p-4 md:py-8">
         <div className="sm:flex sm:items-center sm:justify-between">
           <a href="https://flowbite.com/" className="flex items-center mb-4 sm:mb-0">

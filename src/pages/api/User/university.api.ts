@@ -1,20 +1,8 @@
-import { errorMessage, successMessage } from '@/components/common/Toast/response.toast.component'
+import { successMessage } from '@/components/common/Toast/response.toast.component'
 import { fetcher } from '../fetcher'
 import { CreateParams, DeleteParams, DetailParams, EditParams, ListParams } from 'models'
 
 const UniversityApi = {
-  deleteUniversities: async ({ id, accessToken }: DeleteParams) => {
-    try {
-      const record = await fetcher({
-        method: 'DELETE',
-        url: `/users/universities/${id}`,
-        accessToken,
-      })
-      return record
-    } catch (err: any) {
-      throw new Error(err.message)
-    }
-  },
   detailUserUniversity: async ({ id, accessToken }: DetailParams) => {
     try {
       const record = await fetcher({
@@ -25,8 +13,7 @@ const UniversityApi = {
 
       return record
     } catch (err: any) {
-      console.log(err.message)
-      errorMessage()
+      throw new Error(err.message)
     }
   },
   editUserUniversity: async ({ id, data, accessToken }: EditParams) => {
@@ -40,8 +27,7 @@ const UniversityApi = {
       successMessage()
       return record
     } catch (err: any) {
-      console.log(err.message)
-      errorMessage()
+      throw new Error(err.message)
     }
   },
   listUniversitys: async ({ page, accessToken, keyword }: ListParams) => {
@@ -55,12 +41,11 @@ const UniversityApi = {
       }
       return await fetcher({
         method: 'GET',
-        url: '/users/universities?page=1&limit=10',
+        url: `/users/universities?page=${page}&limit=10`,
         accessToken,
       })
     } catch (err: any) {
-      console.log(err.message)
-      errorMessage()
+      throw new Error(err.message)
     }
   },
   registerUniversities: async ({ data, accessToken }: CreateParams) => {
@@ -73,8 +58,7 @@ const UniversityApi = {
       })
       return record
     } catch (err: any) {
-      console.log(err.message)
-      errorMessage(err.message)
+      throw new Error(err.message)
     }
   },
 }

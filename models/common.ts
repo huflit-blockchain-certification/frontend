@@ -30,6 +30,7 @@ export interface ListParams {
   accessToken: string
   keyword?: string
   idParam?: string | string[] | undefined
+  extraParams?: any
 }
 
 export interface CreateParams {
@@ -56,9 +57,9 @@ export interface DetailParams {
 }
 
 export interface GenerateProof {
-  sharedField: string
+  sharedField?: string | string[]
   accessToken: string
-  idParam?: string | string[] | undefined
+  id?: string | string[] | undefined
 }
 
 export interface Verify {

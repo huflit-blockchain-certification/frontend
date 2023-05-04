@@ -1,5 +1,5 @@
 # Specify the base image
-FROM node:18-alpine
+FROM node:14-alpine
 
 # Set the working directory
 WORKDIR /app
@@ -8,14 +8,22 @@ WORKDIR /app
 COPY package*.json ./
 
 # Install the dependencies
-RUN npm install 
+RUN yarn install 
 
 # Copy the rest of the application files to the working directory
 COPY . .
 
-# Build the Next.js application
-RUN npm run build
+# Copy the production environment variables file
+COPY .env.production .
 
+# Set NODE_ENV to production
+ENV NODE_ENV=production
+
+# Build the Next.js application
+RUN yarn build
+
+# Expose the default Next.js port
+EXPOSE 3006
 
 # Start the application
-CMD ["npm", "start"]
+CMD ["yarn", "start"]

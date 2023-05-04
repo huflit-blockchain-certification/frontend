@@ -1,15 +1,16 @@
+import generator from '@/utils/generator'
 import moment from 'moment'
 
 const registerUserStudentDefaultForm: any = {
-  name: '',
-  address: '',
+  name: generator.generateRandomName(),
+  address: generator.generateRandomAddress(),
   dateOfBirth: moment('01-01-2001').toDate(),
-  nation: 'Vietnam',
-  email: '',
+  nation: 'Kinh',
+  email: generator.generateEmail(),
   gender: 'MALE',
-  identity: '',
-  password: '',
-  phone: '',
+  identity: generator.generateRandomString(12),
+  password: '123456',
+  phone: generator.generateRandomString(10),
   userName: '',
   roles: ['STUDENT'],
 }

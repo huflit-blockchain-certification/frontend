@@ -1,5 +1,5 @@
 import { AdminLayout, FormHeader, FormLayout } from '@/layouts'
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 import { useForm } from 'react-hook-form'
 import { yupResolver } from '@hookform/resolvers/yup'
 import _ from 'lodash'
@@ -12,22 +12,30 @@ import { RecipientProfileApi } from '@/pages/api/Recipient-Profile/recipient-pro
 import { Input } from '@/components/common/Form/Input/Input.component'
 import { registrationNumberSchema } from '@/validation/Recipient-Profile/registration-number.validation'
 
-function RegistrationNumberForm({ setOpen, afterActions }: FormProps) {
+function RegistrationNumberForm({ setOpen, afterActions, recordId, idParam }: FormProps) {
   const [cookies] = useCookies(['access_token'])
   const [loading, setLoading] = useState(false)
 
-  const { control, handleSubmit } = useForm<RegistrationNumber>({
+  const { control, handleSubmit, setValue } = useForm<RegistrationNumber>({
     resolver: yupResolver(registrationNumberSchema),
     defaultValues: registrationNumberDefault,
   })
+
+  useEffect(() => {
+    if (!recordId) return
+    setValue('_id', recordId)
+  }, [recordId, setValue])
+
   const onSubmit = async (data: RegistrationNumber) => {
     commonSubmissionHandler({
+      idParam,
       afterActions,
-      createRequest: RecipientProfileApi.createRecipientProfile,
-      formData: data,
+      editRequest: RecipientProfileApi.createRegistrationNumber,
+      formData: [data],
       setLoading,
       setOpen,
       token: cookies.access_token,
+      exceptionEdit: true,
     })
   }
 

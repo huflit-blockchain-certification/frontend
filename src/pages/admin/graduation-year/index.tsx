@@ -21,11 +21,14 @@ export default function CertTypeListPage() {
     rowSelectionModel,
     onFilterChange,
     handlePaginationModelChange,
+    handleRowSelection,
+    onDeleteRowClick,
     open,
     recordId,
     setRecordId,
     setOpen,
     crudOperation,
+    totalPage,
   } = useTableControl({
     accessToken: cookies.access_token,
     listingApi: GraduationYearApi.listGraduationYear,
@@ -48,9 +51,12 @@ export default function CertTypeListPage() {
           listData={listData}
           loading={loading}
           rowSelectionModel={rowSelectionModel}
+          handleRowSelection={handleRowSelection}
           handlePaginationModelChange={handlePaginationModelChange}
           onFilterChange={onFilterChange}
           pagination={pagination}
+          onDeleteRowClick={onDeleteRowClick}
+          totalPage={totalPage}
         />
       </Box>
     </TableLayout>

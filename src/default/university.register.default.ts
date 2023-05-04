@@ -1,11 +1,13 @@
+import generator from '@/utils/generator'
+
 const registerUserUniversityDefaultForm: any = {
-  name: '',
-  address: '',
-  email: '',
+  name: generator.generateRandomName(),
+  address: generator.generateRandomAddress(),
+  email: generator.generateEmail(),
   gender: 'OTHER',
-  identity: '',
-  password: '',
-  phone: '0938131201',
+  identity: generator.generateRandomString(12),
+  password: '123456',
+  phone: generator.generateRandomString(10),
   userName: '',
   roles: ['UNIVERSITY'],
 }

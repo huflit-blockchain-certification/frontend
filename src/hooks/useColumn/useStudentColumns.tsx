@@ -36,13 +36,20 @@ export default function useStudentsColumns({ open, setOpen, setRecordId }: Colum
       field: 'dateOfBirth',
       headerName: 'Ngày sinh',
       width: 100,
-      renderCell: (params: any) => <div>{dateFormat(params?.dateOfBirth)}</div>,
+      renderCell: (params: any) => {
+        return <div>{dateFormat(params?.value)}</div>
+      },
+    },
+    {
+      field: 'address',
+      headerName: 'Nơi sinh',
+      width: 250,
     },
     {
       field: 'createdAt',
       headerName: 'Ngày tạo',
       width: 100,
-      renderCell: (params: any) => <div>{dateFormat(params?.createdAt)}</div>,
+      renderCell: (params: any) => <div>{dateFormat(params?.value)}</div>,
     },
     {
       headerName: 'Tùy chỉnh',

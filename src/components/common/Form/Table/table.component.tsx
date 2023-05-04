@@ -19,7 +19,9 @@ export interface TableProps {
   handlePaginationModelChange: (paginationModel: GridPaginationModel) => void
   onFilterChange: (filterModel: GridFilterModel) => void
   onDeleteRowClick?: () => void
+  IssueModal?: React.ReactNode
   pagination: GridPaginationModel
+  totalPage?: number
 }
 
 export default function TableData({
@@ -32,21 +34,29 @@ export default function TableData({
   onFilterChange,
   pagination,
   onDeleteRowClick,
+  IssueModal,
+  totalPage,
   ...rest
 }: TableProps) {
   return (
     <div className="flex flex-col gap-3">
-      <Box sx={{ height: 400, width: '100%' }}>
-        {rowSelectionModel.length > 0 && onDeleteRowClick && (
-          <Button variant="outlined" color="error" className="mb-2" onClick={onDeleteRowClick}>
-            Delete
-          </Button>
+      <Box sx={{ height: 700, width: '100%', display: 'table', tableLayout: 'fixed' }}>
+        {rowSelectionModel?.length > 0 && (
+          <div className="flex gap-1">
+            {IssueModal && IssueModal}
+            {onDeleteRowClick && (
+              <Button variant="outlined" color="error" className="mb-2" onClick={onDeleteRowClick}>
+                Xóa
+              </Button>
+            )}
+          </div>
         )}
+
         <DataGrid
           rows={listData ?? []}
           columns={columns}
           getRowId={(row) => row._id}
-          rowCount={20}
+          rowCount={(totalPage && pagination?.pageSize * totalPage) || 20}
           loading={loading}
           keepNonExistentRowsSelected
           disableColumnFilter

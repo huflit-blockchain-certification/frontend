@@ -1,9 +1,16 @@
-version: "3"
+version: '3'
+
 services:
-  blockchain-client:
-    build: 
+  fe-certificate:
+    container_name: fe-certificate
+    build:
       context: .
-    env_file: .env
-    ports:
-      - '3006:3006'
+      dockerfile: Dockerfile
+    environment:
+      NODE_ENV: production
+    env_file:
+      - .env.production
+    command: yarn start
     restart: always
+    ports:
+      - '3006:80'

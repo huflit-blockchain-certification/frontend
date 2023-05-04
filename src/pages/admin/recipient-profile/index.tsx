@@ -1,17 +1,28 @@
+import { UniList } from '@/components/RecipientProfile/UniList'
 import CheckPermissions from '@/components/common/Auth/check-permissions'
-import { UNIVERSITY_ROLE } from '@/constants'
+import { DOET_ROLE, UNIVERSITY_ROLE } from '@/constants'
 import { useAuth } from '@/hooks/common/useAuth'
 import { AdminLayout } from '@/layouts'
+import { isAllowAccess } from '@/utils/permissionChecker.util'
 import Link from 'next/link'
-import * as React from 'react'
+import { useRouter } from 'next/router'
+import React, { useEffect } from 'react'
 
 export interface RecipientProfilePageProps {}
 
 export default function RecipientPage(props: RecipientProfilePageProps) {
-  const { user } = useAuth()
+  const { user, roles } = useAuth()
+  const router = useRouter()
+
+  useEffect(() => {
+    if (!Array.isArray(roles)) return
+    if (isAllowAccess([UNIVERSITY_ROLE], roles)) {
+      router.push(`/admin/recipient-profile/${user?.userName}`)
+    }
+  }, [user?.userName, roles, router])
   return (
-    <div>
-      <div className="text-2xl font-bold">Chọn đơn vị giáo dục</div>
+    <div className="container">
+      <div className="text-2xl font-bold mb-4">Chọn đơn vị giáo dục</div>
       <div className="flex flex-col gap-3 w-1/2">
         <CheckPermissions requireRoles={[UNIVERSITY_ROLE]}>
           <Link
@@ -22,6 +33,9 @@ export default function RecipientPage(props: RecipientProfilePageProps) {
           </Link>
         </CheckPermissions>
       </div>
+      <CheckPermissions requireRoles={[DOET_ROLE]}>
+        <UniList />
+      </CheckPermissions>
     </div>
   )
 }

@@ -1,5 +1,5 @@
 import { fetcher } from '../fetcher'
-import { errorMessage, successMessage } from '@/components/common/Toast/response.toast.component'
+import { successMessage } from '@/components/common/Toast/response.toast.component'
 import { CreateParams, DeleteParams, DetailParams, EditParams, ListParams } from 'models'
 
 const CertTypeApi = {
@@ -13,8 +13,7 @@ const CertTypeApi = {
       })
       return record
     } catch (err: any) {
-      console.log(err.message)
-      errorMessage(err.message)
+      throw new Error(err.message)
     }
   },
   deleteCertType: async ({ id, accessToken }: DeleteParams) => {
@@ -39,8 +38,7 @@ const CertTypeApi = {
 
       return record
     } catch (err: any) {
-      console.log(err.message)
-      errorMessage()
+      throw new Error(err.message)
     }
   },
   editCertType: async ({ id, data, accessToken }: EditParams) => {
@@ -54,8 +52,7 @@ const CertTypeApi = {
       successMessage()
       return record
     } catch (err: any) {
-      console.log(err.message)
-      errorMessage()
+      throw new Error(err.message)
     }
   },
   listCertType: async ({ page, accessToken }: ListParams) => {
@@ -68,7 +65,7 @@ const CertTypeApi = {
       })
       return record
     } catch (err: any) {
-      console.log(err.message)
+      throw new Error(err.message)
     }
   },
 }

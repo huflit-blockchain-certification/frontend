@@ -1,4 +1,4 @@
-import { errorMessage, successMessage } from '@/components/common/Toast/response.toast.component'
+import { successMessage } from '@/components/common/Toast/response.toast.component'
 import { fetcher } from '../fetcher'
 import { CreateParams, DeleteParams, DetailParams, EditParams, ListParams } from 'models'
 
@@ -25,8 +25,7 @@ const StudentApi = {
 
       return record
     } catch (err: any) {
-      console.log(err.message)
-      errorMessage()
+      throw new Error(err.message)
     }
   },
   editUserStudent: async ({ id, data, accessToken }: EditParams) => {
@@ -40,8 +39,7 @@ const StudentApi = {
       successMessage()
       return record
     } catch (err: any) {
-      console.log(err.message)
-      errorMessage()
+      throw new Error(err.message)
     }
   },
   listStudents: async ({ page, accessToken, keyword }: ListParams) => {
@@ -59,8 +57,7 @@ const StudentApi = {
         accessToken,
       })
     } catch (err: any) {
-      console.log(err.message)
-      errorMessage()
+      throw new Error(err.message)
     }
   },
   listStudentsOfUniversity: async ({ page, accessToken, keyword, idParam }: ListParams) => {
@@ -78,8 +75,7 @@ const StudentApi = {
         accessToken,
       })
     } catch (err: any) {
-      console.log(err.message)
-      errorMessage()
+      throw new Error(err.message)
     }
   },
   registerStudents: async ({ data, accessToken }: CreateParams) => {
@@ -92,8 +88,7 @@ const StudentApi = {
       })
       return record
     } catch (err: any) {
-      console.log(err.message)
-      errorMessage(err.message)
+      throw new Error(err.message)
     }
   },
 }

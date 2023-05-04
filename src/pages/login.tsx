@@ -12,11 +12,12 @@ import Button from '@mui/material/Button'
 import { useCookies } from 'react-cookie'
 import { LoginnedPage } from '@/components/common/Auth/loggined.component'
 import { AuthApi } from './api/Auth/auth.api'
+import { errorMessage } from '@/components/common/Toast/response.toast.component'
 export interface LoginProps {}
 
 export default function LoginPage(props: LoginProps) {
   const router = useRouter()
-  const [cookies, setCookie] = useCookies<any>(['cookie-name'])
+  const [cookies, setCookie, removeCookie] = useCookies<any>(['access_token', 'refresh_token'])
 
   const {
     control,
@@ -27,15 +28,23 @@ export default function LoginPage(props: LoginProps) {
     defaultValues: { userName: '', password: '' },
   })
 
-  const onSubmit = (data: RefreshTokenDTO) => {
-    AuthApi.login(data, async (record) => {
-      if (!record) return
-      const { accessToken, refreshToken } = record.data.tokens
-      setCookie('access_token', accessToken)
-      setCookie('refresh_token', refreshToken)
-      localStorage.setItem('user', JSON.stringify(record.data.userData))
-      router.push('/')
-    })
+  const onSubmit = async (data: RefreshTokenDTO) => {
+    try {
+      await AuthApi.login(data, async (record) => {
+        if (!record) return
+        const { accessToken, refreshToken } = record.data.tokens
+        if (cookies.access_token || cookies.refresh_token) {
+          removeCookie('access_token')
+          removeCookie('refresh_token')
+        }
+        setCookie('access_token', accessToken)
+        setCookie('refresh_token', refreshToken)
+        localStorage.setItem('user', JSON.stringify(record.data.userData))
+        router.push('/')
+      })
+    } catch (err: any) {
+      errorMessage(err.message)
+    }
   }
 
   if (isSubmitting) return <LoadingIndicator />

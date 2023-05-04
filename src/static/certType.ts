@@ -1,5 +1,5 @@
 const certTypeOptions = [
-  { value: 'DIPLOMA', label: 'Bằng cấp' },
+  { value: 'DIPLOMA', label: 'Văn bằng' },
   { value: 'CERTIFICATE', label: 'Chứng chỉ' },
 ]
 

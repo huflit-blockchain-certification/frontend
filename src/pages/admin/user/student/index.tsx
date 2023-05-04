@@ -8,7 +8,7 @@ import TableData from '@/components/common/Form/Table/table.component'
 import useStudentsColumns from '@/hooks/useColumn/useStudentColumns'
 import RegisterStudentForm from '@/components/Form/User/register.student.form'
 import { afterActions } from '@/utils/afterActions.util'
-import { PLUGIN_NAMES, STUDENT_ROLE, UNIVERSITY_ROLE } from '@/constants/'
+import { PLUGIN_NAMES, UNIVERSITY_ROLE } from '@/constants/'
 import { mapUserData } from '@/utils/mapData.util'
 import { StudentApi } from '@/pages/api/User/student.api'
 import { isAllowAccess } from '@/utils/permissionChecker.util'
@@ -32,6 +32,7 @@ export default function StudentUserListPage({}: any) {
     setRecordId,
     setOpen,
     crudOperation,
+    totalPage,
   } = useTableControl({
     accessToken: cookies.access_token,
     listingApi: StudentApi.listStudents,
@@ -72,6 +73,7 @@ export default function StudentUserListPage({}: any) {
           onFilterChange={onFilterChange}
           pagination={pagination}
           onDeleteRowClick={onDeleteRowClick}
+          totalPage={totalPage}
         />
       </Box>
     </TableLayout>
