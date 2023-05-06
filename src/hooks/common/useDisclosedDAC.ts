@@ -9,9 +9,17 @@ export interface useDisclosedDACProps {
   activeStep?: number
   setLoading: (state: boolean) => void
   sharedField?: string | string[]
+  iSt: string | string[] | undefined
+  isPublic: boolean
 }
 
-export function useDisclosedDAC({ activeStep, setLoading, sharedField }: useDisclosedDACProps) {
+export function useDisclosedDAC({
+  activeStep,
+  setLoading,
+  sharedField,
+  iSt,
+  isPublic,
+}: useDisclosedDACProps) {
   const [cookies] = useCookies(['access_token'])
   const router = useRouter()
   const [disclosedDAC, setDisclosedDAC] = useState<any>()
@@ -31,11 +39,14 @@ export function useDisclosedDAC({ activeStep, setLoading, sharedField }: useDisc
           const disclosedDAC = await DacApi.generateProof({
             id: idDAC,
             accessToken: cookies.access_token,
+            iSt: isPublic ? iSt : undefined,
             sharedField,
           })
           setQRURL(
             window.location.origin +
-              `/verify/${idDAC}${sharedField ? `?sharedField=${sharedField}` : ''}`
+              `/verify/${idDAC}${iSt ? `?iSt=${iSt}` : ''}${
+                sharedField ? `?sharedField=${sharedField}` : ''
+              }`
           )
           setDisclosedDAC(disclosedDAC)
         }

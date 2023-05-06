@@ -36,11 +36,14 @@ const DacApi = {
       throw new Error(err.message)
     }
   },
-  generateProof: async ({ id, accessToken, sharedField }: GenerateProof) => {
+  generateProof: async ({ id, iSt, accessToken, sharedField }: GenerateProof) => {
     try {
+      const sharedFields = sharedField ? `?sharedField=${sharedField}` : ''
       return await fetcher({
         method: 'GET',
-        url: `/dac/student/generateProof/${id}${sharedField ? `?sharedField=${sharedField}` : ''}`,
+        url: iSt
+          ? `/dac/generateProof/${id}/${iSt}${sharedFields}`
+          : `/dac/student/generateProof/${id}${sharedFields}`,
         accessToken,
       })
     } catch (err: any) {

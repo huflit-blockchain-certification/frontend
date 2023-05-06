@@ -13,9 +13,9 @@ export interface VerifyPageProps {}
 export default function VerifyPage({}: VerifyPageProps) {
   const [loading, setLoading] = useState(false)
   const router = useRouter()
-  const { sharedField } = router.query
+  const { sharedField, iSt } = router.query
   const [cookies] = useCookies(['access_token'])
-  const { disclosedDAC } = useDisclosedDAC({ setLoading, sharedField })
+  const { disclosedDAC } = useDisclosedDAC({ setLoading, sharedField, iSt, isPublic: true })
   const [verified, setVerified] = useState<boolean | undefined>()
   const extraFields =
     sharedField &&
@@ -70,7 +70,7 @@ export default function VerifyPage({}: VerifyPageProps) {
         <DACDetail
           DAC={disclosedDAC?.data?.data?.disclosedData}
           extraFields={extraFields}
-          pdfOptions={{ enable: true }}
+          // pdfOptions={{ enable: true }}
         />
       </div>
     )
