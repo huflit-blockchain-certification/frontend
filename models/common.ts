@@ -60,6 +60,7 @@ export interface GenerateProof {
   sharedField?: string | string[]
   accessToken: string
   id?: string | string[] | undefined
+  iSt?: string | string[] | undefined
 }
 
 export interface Verify {

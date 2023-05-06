@@ -135,6 +135,7 @@ export default function InfoDACPage(props: InfoDACPageProps) {
   const [loading, setLoading] = useState(false)
   const router = useRouter()
   const { idDAC } = router.query
+  const iSt = DAC?.iSt
   const [activeStep, setActiveStep] = useState(0)
   const checked = useSelector((state: any) => state.checkedFieldReducer.checkedFields)
   const sharedField = Object.keys(checked)
@@ -145,7 +146,13 @@ export default function InfoDACPage(props: InfoDACPageProps) {
       return obj
     }, [])
     .join(',')
-  const { disclosedDAC, qrURL } = useDisclosedDAC({ activeStep, setLoading, sharedField })
+  const { disclosedDAC, qrURL } = useDisclosedDAC({
+    activeStep,
+    setLoading,
+    sharedField,
+    iSt,
+    isPublic: false,
+  })
   useEffect(() => {
     ;(async () => {
       try {

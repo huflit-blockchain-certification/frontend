@@ -109,6 +109,7 @@ const fieldDefault = [
   'typeCertificate',
   'levelCertificate',
   'departmentName',
+  'major',
   'universityName',
   'studentName',
   'gender',
@@ -118,14 +119,7 @@ const fieldDefault = [
   'registrationNum',
   'idNumber',
 ]
-const fieldShareExtend = [
-  'universityName',
-  'major',
-  'departmentName',
-  'CGPA',
-  'formOfTraining',
-  'ranking',
-]
+const fieldShareExtend = ['CGPA', 'formOfTraining', 'ranking']
 const dateUpTo6Y = new Date(Date.now() - 1000 * 60 * 60 * 24 * 365 * 6) // go back by 6 years
 const dateMinimum100Y = new Date(Date.now() - 1000 * 60 * 60 * 24 * 365 * 100) // go back by 100 years
 
