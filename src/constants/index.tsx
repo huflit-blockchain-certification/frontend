@@ -13,12 +13,12 @@ const STUDENT_ROLE = 'STUDENT'
 const DOET_ROLE = 'DOET'
 
 const PLUGIN_NAMES = {
-  OVERVIEW: {
-    NAME: 'Tổng quan',
-    SLUG: '/',
-    ICON: <HiOutlineChartPie size={20} />,
-    ROLES: ['UNIVERSITY', 'DOET'],
-  },
+  // OVERVIEW: {
+  //   NAME: 'Tổng quan',
+  //   SLUG: '/',
+  //   ICON: <HiOutlineChartPie size={20} />,
+  //   ROLES: ['UNIVERSITY', 'DOET'],
+  // },
   USERS: {
     NAME: 'Tài khoản',
     SLUG: '/user',
@@ -59,12 +59,12 @@ const PLUGIN_NAMES = {
 //Redux
 
 const defaultPlugins: PluginNames[] = [
-  {
-    name: PLUGIN_NAMES.OVERVIEW.NAME,
-    icon: PLUGIN_NAMES.OVERVIEW.ICON,
-    slug: PLUGIN_NAMES.OVERVIEW.SLUG,
-    roles: PLUGIN_NAMES.OVERVIEW.ROLES,
-  },
+  // {
+  //   name: PLUGIN_NAMES.OVERVIEW.NAME,
+  //   icon: PLUGIN_NAMES.OVERVIEW.ICON,
+  //   slug: PLUGIN_NAMES.OVERVIEW.SLUG,
+  //   roles: PLUGIN_NAMES.OVERVIEW.ROLES,
+  // },
   {
     name: PLUGIN_NAMES.USERS.NAME,
     icon: PLUGIN_NAMES.USERS.ICON,

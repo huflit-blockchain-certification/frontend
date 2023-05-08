@@ -65,32 +65,47 @@ export default function RecipientProfilePage() {
         {
           enableCSV: true,
           titleCSV: 'Nhập hồ sơ',
-          requestAfterConfirmCSV: async (data) =>
-            await RecipientProfileApi.createRecipientProfile({
-              data,
-              accessToken: cookies.access_token,
-              idParam,
-            }),
+          requestAfterConfirmCSV: async (data) => {
+            try {
+              await RecipientProfileApi.createRecipientProfile({
+                data,
+                accessToken: cookies.access_token,
+                idParam,
+              })
+            } catch (err: any) {
+              errorMessage(err.message)
+            }
+          },
         },
         {
           enableCSV: isAllowAccess([DOET_ROLE], roles),
           titleCSV: 'Nhập số hiệu',
-          requestAfterConfirmCSV: async (data) =>
-            await RecipientProfileApi.createRegistrationNumber({
-              data,
-              accessToken: cookies.access_token,
-              idParam,
-            }),
+          requestAfterConfirmCSV: async (data) => {
+            try {
+              await RecipientProfileApi.createRegistrationNumber({
+                data,
+                accessToken: cookies.access_token,
+                idParam,
+              })
+            } catch (err: any) {
+              errorMessage(err.message)
+            }
+          },
         },
         {
           enableCSV: isAllowAccess([UNIVERSITY_ROLE], roles),
           titleCSV: 'Nhập số vào sổ',
-          requestAfterConfirmCSV: async (data) =>
-            await RecipientProfileApi.createIDNumber({
-              data,
-              accessToken: cookies.access_token,
-              idParam,
-            }),
+          requestAfterConfirmCSV: async (data) => {
+            try {
+              await RecipientProfileApi.createIDNumber({
+                data,
+                accessToken: cookies.access_token,
+                idParam,
+              })
+            } catch (err: any) {
+              errorMessage(err.message)
+            }
+          },
         },
       ]}
     >

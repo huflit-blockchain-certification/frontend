@@ -72,7 +72,7 @@ export default function LoginPage(props: LoginProps) {
               </div>
               <div className="m-auto">
                 <Button type="submit" variant="outlined">
-                  Login
+                  Đăng nhập
                 </Button>
               </div>
             </div>

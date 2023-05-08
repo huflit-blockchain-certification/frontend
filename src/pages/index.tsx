@@ -1,6 +1,5 @@
 import Head from 'next/head'
 import { MainLayout } from '@/layouts'
-import { Button, TextField } from '@mui/material'
 
 export default function Home() {
   return (
@@ -190,4 +189,5 @@ export default function Home() {
     </>
   )
 }
+
 Home.Layout = MainLayout

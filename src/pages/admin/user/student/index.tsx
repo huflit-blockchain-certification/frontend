@@ -13,6 +13,8 @@ import { mapUserData } from '@/utils/mapData.util'
 import { StudentApi } from '@/pages/api/User/student.api'
 import { isAllowAccess } from '@/utils/permissionChecker.util'
 import { useAuth } from '@/hooks/common/useAuth'
+import { serverSideTranslations } from 'next-i18next/serverSideTranslations'
+import { GetStaticProps } from 'next'
 export interface UserTablePageProps {}
 
 export default function StudentUserListPage({}: any) {
@@ -78,6 +80,13 @@ export default function StudentUserListPage({}: any) {
       </Box>
     </TableLayout>
   )
+}
+export const getStaticProps: GetStaticProps = async ({ locale }) => {
+  return {
+    props: {
+      ...(await serverSideTranslations(locale || 'vi', ['common'])),
+    },
+  }
 }
 
 StudentUserListPage.Layout = AdminLayout

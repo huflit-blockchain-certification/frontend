@@ -10,6 +10,8 @@ import { PLUGIN_NAMES } from '@/constants/'
 import CertTypeForm from '@/components/Form/Cert-Type/cert-type.form'
 import { CertTypeApi } from '@/pages/api/Cert-Type/cert-type.api'
 import useCertTypeColumns from '@/hooks/useColumn/useCertTypeColumn'
+import { serverSideTranslations } from 'next-i18next/serverSideTranslations'
+import { GetStaticProps } from 'next'
 
 export default function CertTypeListPage() {
   const [cookies] = useCookies(['access_token'])
@@ -61,6 +63,14 @@ export default function CertTypeListPage() {
       </Box>
     </TableLayout>
   )
+}
+
+export const getStaticProps: GetStaticProps = async ({ locale }) => {
+  return {
+    props: {
+      ...(await serverSideTranslations(locale || 'vi', ['common'])),
+    },
+  }
 }
 
 CertTypeListPage.Layout = AdminLayout
