@@ -1,5 +1,10 @@
 import Head from 'next/head'
 import { MainLayout } from '@/layouts'
+import Image1 from '../../public/landing-page1.jpeg'
+import Image2 from '../../public/landing-page2.jpg'
+import Image3 from '../../public/landing-page3.webp'
+import Image from 'next/image'
+import { Button, TextField } from '@mui/material'
 
 export default function Home() {
   return (
@@ -71,28 +76,10 @@ export default function Home() {
           </div>
         </dl>
       </div>
-      <div className="grid grid-cols-2 md:grid-cols-3 gap-4">
-        <div>
-          <img
-            className="h-auto max-w-full rounded-lg"
-            src="https://flowbite.s3.amazonaws.com/docs/gallery/square/image.jpg"
-            alt=""
-          />
-        </div>
-        <div>
-          <img
-            className="h-auto max-w-full rounded-lg"
-            src="https://flowbite.s3.amazonaws.com/docs/gallery/square/image-1.jpg"
-            alt=""
-          />
-        </div>
-        <div>
-          <img
-            className="h-auto max-w-full rounded-lg"
-            src="https://flowbite.s3.amazonaws.com/docs/gallery/square/image-2.jpg"
-            alt=""
-          />
-        </div>
+      <div className="grid grid-cols-3 container gap-20">
+        <Image src={Image1} alt="" className="w-full h-80"></Image>
+        <Image src={Image2} alt="" className="w-full h-80"></Image>
+        <Image src={Image3} alt="" className="w-full h-80"></Image>
       </div>
       <div className="grid mb-8 border border-gray-200 rounded-lg shadow-sm dark:border-gray-700 md:mb-12 md:grid-cols-2">
         <figure className="flex flex-col items-center justify-center p-8 text-center bg-white border-b border-gray-200 rounded-t-lg md:rounded-t-none md:rounded-tl-lg md:border-r dark:bg-gray-800 dark:border-gray-700">
@@ -172,7 +159,7 @@ export default function Home() {
           </figcaption>
         </figure>
       </div>
-      {/* <div className="flex justify-center">
+      <div className="flex justify-center">
         <form className="flex flex-col gap-4 shadow p-5 w-1/3">
           <div className="font-bold text-red-600 text-center">Tra cứu văn bằng chứng chỉ</div>
           <div>
@@ -185,7 +172,7 @@ export default function Home() {
             Tra cứu
           </Button>
         </form>
-      </div> */}
+      </div>
     </>
   )
 }
