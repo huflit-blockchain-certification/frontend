@@ -1,4 +1,6 @@
 import { API_URL, API_KEY } from '@/constants/'
+import { captalizeFirstWord } from '@/utils/formatter.util'
+import translate from 'translate'
 
 interface IFetcher {
   method: string
@@ -33,8 +35,10 @@ const fetcher = async ({ method, url, body, accessToken, ...rest }: IFetcher) =>
     body: JSON.stringify(body), // body data type must match "Content-Type" header
   })
   if (!response.ok) {
-    return response.text().then((text) => {
-      throw new Error(JSON.parse(text).message)
+    return response.text().then(async (text) => {
+      const message = JSON.parse(text).message
+      const translatedError = await translate(message, 'vi')
+      throw new Error(captalizeFirstWord(translatedError))
     })
   }
   return await response.json() // parses JSON response into native JavaScript objects

@@ -1,6 +1,7 @@
 import { HiPencil } from 'react-icons/hi'
 import * as React from 'react'
 import { dateFormat } from '@/utils/formatter.util'
+import { useTranslation } from 'next-i18next'
 
 interface ColumnsProps {
   open?: boolean
@@ -9,13 +10,9 @@ interface ColumnsProps {
 }
 
 export default function useCertTypeColumns({ open, setOpen, setRecordId }: ColumnsProps) {
+  const { t } = useTranslation('common')
   const columns: any = [
     { field: '_id', headerName: 'ID', width: 250 },
-    {
-      field: 'identity',
-      headerName: 'CMND',
-      width: 150,
-    },
     {
       field: 'name',
       headerName: 'Tên',
@@ -23,10 +20,14 @@ export default function useCertTypeColumns({ open, setOpen, setRecordId }: Colum
     },
     {
       field: 'type',
-      headerName: 'Tpe',
+      headerName: 'Type',
       width: 200,
+      renderCell: (params: any) => <div>{t(params.value)}</div>,
     },
-    { field: 'level', headerName: 'Level' },
+    {
+      field: 'level',
+      headerName: 'Cấp bậc',
+    },
     {
       field: 'createdAt',
       headerName: 'Ngày tạo',

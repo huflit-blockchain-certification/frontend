@@ -1,6 +1,7 @@
 import { HiPencil } from 'react-icons/hi'
 import * as React from 'react'
 import { dateFormat } from '@/utils/formatter.util'
+import { useTranslation } from 'next-i18next'
 
 interface ColumnsProps {
   open?: boolean
@@ -9,6 +10,7 @@ interface ColumnsProps {
 }
 
 export default function useStudentsColumns({ open, setOpen, setRecordId }: ColumnsProps) {
+  const { t } = useTranslation('common')
   const columns: any = [
     { field: '_id', headerName: 'ID', width: 250 },
     {
@@ -26,7 +28,13 @@ export default function useStudentsColumns({ open, setOpen, setRecordId }: Colum
       headerName: 'Email',
       width: 200,
     },
-    { field: 'gender', headerName: 'Giới tính' },
+    {
+      field: 'gender',
+      headerName: 'Giới tính',
+      renderCell: (params: any) => {
+        return <div>{t(params.value)}</div>
+      },
+    },
     {
       field: 'nation',
       headerName: 'Dân tộc',

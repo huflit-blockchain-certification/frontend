@@ -113,7 +113,7 @@ export function useTableControl({
         setLoading(false)
       } catch (err: any) {
         setLoading(false)
-        errorMessage(err.message)
+        console.log(err.message)
       }
     })()
   }, [

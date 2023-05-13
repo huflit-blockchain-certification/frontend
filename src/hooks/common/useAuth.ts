@@ -16,7 +16,10 @@ export function useAuth() {
   const [accessToken, setAccessToken] = useState<JwtPayload>()
   const [user, setUser] = useState<AdminUser>()
   useEffect(() => {
-    const userInfo = typeof window !== undefined && JSON.parse(localStorage.getItem('user') || '')
+    const userInfo =
+      typeof window !== undefined &&
+      localStorage.getItem('user' || '') &&
+      JSON.parse(localStorage.getItem('user') || '')
     setUser(userInfo)
   }, [])
 
