@@ -1,7 +1,7 @@
 import React, { ReactNode } from 'react'
 import Box from '@mui/material/Box'
 import { Modal as CustomModal } from '@mui/material/'
-
+import { GrClose } from 'react-icons/gr'
 interface CustomModalProps {
   open: boolean
   beforeClose?: () => void
@@ -17,13 +17,12 @@ export function Modal({ children, open, setOpen, beforeClose, width }: CustomMod
     left: '50%',
     transform: 'translate(-50%, -50%)',
     minWidth: 400,
-    width: width || 700,
+    width: { lg: width || 700, md: '100%', sm: '100%', xs: '100%' },
     minHeight: 600,
     maxHeight: 800,
     bgcolor: 'background.paper',
     border: '2px solid #000',
     boxShadow: 24,
-    p: 4,
     overflowY: 'scroll',
   }
 
@@ -42,7 +41,16 @@ export function Modal({ children, open, setOpen, beforeClose, width }: CustomMod
         aria-labelledby="modal-modal-title"
         aria-describedby="modal-modal-description"
       >
-        <Box sx={style}>{children}</Box>
+        <Box sx={style}>
+          <div className="w-100 h-100 relative p-8">
+            <GrClose
+              size={28}
+              className="absolute right-2 top-2 cursor-pointer"
+              onClick={handleClose}
+            />
+            {children}
+          </div>
+        </Box>
       </CustomModal>
     </div>
   )

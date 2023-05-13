@@ -34,14 +34,14 @@ export default function LoginPage(props: LoginProps) {
         if (!record) return
         const { accessToken, refreshToken } = record.data.tokens
         if (cookies.access_token || cookies.refresh_token) {
-          removeCookie('access_token', { httpOnly: false })
-          removeCookie('refresh_token', { httpOnly: false })
+          removeCookie('access_token', { httpOnly: false, path: '/' })
+          removeCookie('refresh_token', { httpOnly: false, path: '/' })
         }
         const now = new Date()
         const oneWeek = 7 * 24 * 60 * 60 * 1000 // one week in milliseconds
         const expires = new Date(now.getTime() + oneWeek)
-        setCookie('access_token', accessToken, { httpOnly: false, expires })
-        setCookie('refresh_token', refreshToken, { httpOnly: false, expires })
+        setCookie('access_token', accessToken, { httpOnly: false, expires, path: '/' })
+        setCookie('refresh_token', refreshToken, { httpOnly: false, expires, path: '/' })
         localStorage.setItem('user', JSON.stringify(record.data.userData))
         router.push('/')
       })

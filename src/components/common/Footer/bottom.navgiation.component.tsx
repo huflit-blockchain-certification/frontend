@@ -17,22 +17,22 @@ export default function Footer(props: FooterProps) {
           <ul className="flex flex-wrap items-center mb-6 text-sm font-medium text-gray-500 sm:mb-0 dark:text-gray-400">
             <li>
               <a href="#" className="mr-4 hover:underline md:mr-6 ">
-                About
+                Thông tin
               </a>
             </li>
             <li>
               <a href="#" className="mr-4 hover:underline md:mr-6">
-                Privacy Policy
+                Chính sách
               </a>
             </li>
             <li>
               <a href="#" className="mr-4 hover:underline md:mr-6 ">
-                Licensing
+                Cấp phép
               </a>
             </li>
             <li>
               <a href="#" className="hover:underline">
-                Contact
+                Liên hệ
               </a>
             </li>
           </ul>
@@ -43,7 +43,7 @@ export default function Footer(props: FooterProps) {
           <a href="https://flowbite.com/" className="hover:underline">
             High3ar™
           </a>
-          . All Rights Reserved.
+          . Đã đăng ký bản quyền.
         </span>
       </div>
     </footer>
