@@ -23,11 +23,11 @@ export default function RecipientPage(props: RecipientProfilePageProps) {
   }, [user?.userName, roles, router])
   return (
     <SelectPageLayout title="Chọn đơn vị giáo dục">
-      <div className="flex flex-col gap-3 w-1/2">
+      <div className="flex flex-col gap-3">
         <CheckPermissions requireRoles={[UNIVERSITY_ROLE]}>
           <Link
             href={`/admin/recipient-profile/${user?.userName}`}
-            className="p-3 shadow fw-bold text-blue-400 hover:shadow-lg transition duration-300"
+            className="p-4 shadow fw-bold text-blue-400 hover:bg-slate-100 w-1/2"
           >
             Trường đại học của bạn
           </Link>
