@@ -10,9 +10,7 @@ export function AdminLayout({ children }: LayoutProps) {
     <Auth>
       <Menu />
       <div className="flex">
-        <div>
-          <AdminSideBar />
-        </div>
+        <AdminSideBar />
         <div className="flex-1">
           <main className="p-5">{children}</main>
         </div>
