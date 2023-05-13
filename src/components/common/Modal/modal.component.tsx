@@ -8,22 +8,25 @@ interface CustomModalProps {
   setOpen: (state: boolean) => void
   children: ReactNode
   width?: number
+  height?: number
 }
 
-export function Modal({ children, open, setOpen, beforeClose, width }: CustomModalProps) {
+export function Modal({ children, open, setOpen, beforeClose, width, height }: CustomModalProps) {
   const style = {
     position: 'absolute' as 'absolute',
     top: '50%',
     left: '50%',
     transform: 'translate(-50%, -50%)',
     minWidth: 400,
-    width: { lg: width || 700, md: '100%', sm: '100%', xs: '100%' },
-    minHeight: 600,
+    width: { lg: width || 700, md: '60%', sm: '80%', xs: '100%' },
+    height: height || 'auto',
+    minHeight: 200,
     maxHeight: 800,
     bgcolor: 'background.paper',
     border: '2px solid #000',
+    borderRadius: 2,
     boxShadow: 24,
-    overflowY: 'scroll',
+    overflowY: 'auto',
   }
 
   const handleClose = () => {

@@ -4,7 +4,6 @@ import Image1 from '../../public/landing-page1.jpeg'
 import Image2 from '../../public/landing-page2.jpg'
 import Image3 from '../../public/landing-page3.webp'
 import Image from 'next/image'
-import { Button, TextField } from '@mui/material'
 
 export default function Home() {
   return (
@@ -94,7 +93,7 @@ export default function Home() {
         ></Image>
       </div>
       <div className="grid mb-8 border border-gray-200 rounded-lg shadow-sm dark:border-gray-700 md:mb-12 md:grid-cols-2">
-        <figure className="flex flex-col items-center justify-center p-8 text-center bg-white border-b border-gray-200 rounded-t-lg md:rounded-t-none md:rounded-tl-lg md:border-r dark:bg-gray-800 dark:border-gray-700">
+        <figure className="flex flex-col items-center justify-center p-8 text-center bg-white border-b border-gray-200 rounded-t-lg md:rounded-t-none md:rounded-tl-lg md:border-r dark:bg-gray-800 dark:border-gray-700 hover:bg-slate-100">
           <blockquote className="max-w-2xl mx-auto mb-4 text-gray-500 lg:mb-8 dark:text-gray-400">
             <h3 className="text-lg font-semibold text-gray-900 dark:text-white">
               Cảm nhận của học sinh
@@ -116,7 +115,7 @@ export default function Home() {
             </div>
           </figcaption>
         </figure>
-        <figure className="flex flex-col items-center justify-center p-8 text-center bg-white border-b border-gray-200 rounded-t-lg md:rounded-t-none md:rounded-tl-lg md:border-r dark:bg-gray-800 dark:border-gray-700">
+        <figure className="flex flex-col items-center justify-center p-8 text-center bg-white border-b border-gray-200 rounded-t-lg md:rounded-t-none md:rounded-tl-lg md:border-r dark:bg-gray-800 dark:border-gray-700 hover:bg-slate-100">
           <blockquote className="max-w-2xl mx-auto mb-4 text-gray-500 lg:mb-8 dark:text-gray-400">
             <h3 className="text-lg font-semibold text-gray-900 dark:text-white">
               Giảng viên nói gì ?
@@ -139,7 +138,7 @@ export default function Home() {
             </div>
           </figcaption>
         </figure>
-        <figure className="flex flex-col items-center justify-center p-8 text-center bg-white border-b border-gray-200 rounded-t-lg md:rounded-t-none md:rounded-tl-lg md:border-r dark:bg-gray-800 dark:border-gray-700">
+        <figure className="flex flex-col items-center justify-center p-8 text-center bg-white border-b border-gray-200 rounded-t-lg md:rounded-t-none md:rounded-tl-lg md:border-r dark:bg-gray-800 dark:border-gray-700 hover:bg-slate-100">
           <blockquote className="max-w-2xl mx-auto mb-4 text-gray-500 lg:mb-8 dark:text-gray-400">
             <h3 className="text-lg font-semibold text-gray-900 dark:text-white">
               Phụ huynh trải nghiệm
@@ -161,7 +160,7 @@ export default function Home() {
             </div>
           </figcaption>
         </figure>
-        <figure className="flex flex-col items-center justify-center p-8 text-center bg-white border-b border-gray-200 rounded-t-lg md:rounded-t-none md:rounded-tl-lg md:border-r dark:bg-gray-800 dark:border-gray-700">
+        <figure className="flex flex-col items-center justify-center p-8 text-center bg-white border-b border-gray-200 rounded-t-lg md:rounded-t-none md:rounded-tl-lg md:border-r dark:bg-gray-800 dark:border-gray-700 hover:bg-slate-100">
           <blockquote className="max-w-2xl mx-auto mb-4 text-gray-500 lg:mb-8 dark:text-gray-400">
             <h3 className="text-lg font-semibold text-gray-900 dark:text-white">
               Trung tâm Anh Ngữ Apex Leader
@@ -183,20 +182,6 @@ export default function Home() {
             </div>
           </figcaption>
         </figure>
-      </div>
-      <div className="flex justify-center">
-        <form className="flex flex-col gap-4 shadow p-5 w-full lg:w-1/3 sm:w-full">
-          <div className="font-bold text-red-600 text-center">Tra cứu văn bằng chứng chỉ</div>
-          <div>
-            <div className="mb-2 block">
-              <label htmlFor="name" />
-            </div>
-            <TextField label="Tra cứu" name="search" required={true} fullWidth />
-          </div>
-          <Button type="submit" variant="outlined">
-            Tra cứu
-          </Button>
-        </form>
       </div>
     </>
   )
