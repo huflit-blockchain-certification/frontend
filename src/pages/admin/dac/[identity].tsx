@@ -4,9 +4,7 @@ import { useTableControl } from '@/hooks/common/useTableControl'
 import { useCookies } from 'react-cookie'
 import React from 'react'
 import TableData from '@/components/common/Form/Table/table.component'
-import { DOET_ROLE, PLUGIN_NAMES } from '@/constants/'
-import { isAllowAccess } from '@/utils/permissionChecker.util'
-import { useAuth } from '@/hooks/common/useAuth'
+import { PLUGIN_NAMES } from '@/constants/'
 import useDACColumns from '@/hooks/useColumn/useDACColumn'
 import { DacApi } from '@/pages/api/DAC/dac.api'
 
@@ -32,14 +30,13 @@ export default function DACUniPage(props: DACUniPageProps) {
     idKey,
   })
   const { columns } = useDACColumns({ setOpen, setRecordId })
-  const { roles } = useAuth()
 
   return (
     <TableLayout
       title={PLUGIN_NAMES.DAC.NAME}
       onCreateClick={() => setOpen(true)}
       disabledOptions={{
-        disableMainBtn: !isAllowAccess([DOET_ROLE], roles),
+        disableMainBtn: true,
       }}
     >
       <Box sx={{ height: 700, width: '100%' }}>

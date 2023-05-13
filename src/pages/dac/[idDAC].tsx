@@ -161,8 +161,8 @@ export default function InfoDACPage(props: InfoDACPageProps) {
         const DAC = await DacApi.detailDAC({ id: idDAC, accessToken: cookies.access_token })
         setDAC(DAC.data.data)
         setLoading(false)
-      } catch (err) {
-        errorMessage()
+      } catch (err: any) {
+        console.log(err.message)
       }
     })()
   }, [cookies.access_token, idDAC])

@@ -10,18 +10,7 @@ export interface infoPageProps {}
 
 export default function InfoPage(props: infoPageProps) {
   const [cookies] = useCookies(['access_token'])
-  const {
-    listData,
-    loading,
-    rowSelectionModel,
-    onFilterChange,
-    handlePaginationModelChange,
-    open,
-    recordId,
-    setRecordId,
-    setOpen,
-    crudOperation,
-  } = useTableControl({
+  const { listData, loading } = useTableControl({
     accessToken: cookies.access_token,
     listingApi: DacApi.listAllDacByStu,
   })
