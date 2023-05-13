@@ -1,3 +1,4 @@
+import { LoadingIndicator } from '@/components/common/LoadingIndicator/loadingIndicator.component'
 import { Modal } from '@/components/common/Modal/modal.component'
 import { errorMessage } from '@/components/common/Toast/response.toast.component'
 import { useTableControl } from '@/hooks/common/useTableControl'
@@ -50,7 +51,9 @@ export default function IssueModal({
   const onSelectCert = (id: string) => {
     setSelectedCert(id)
   }
-
+  if (loading) {
+    return <LoadingIndicator />
+  }
   return (
     <>
       <Button variant="outlined" color="error" className="mb-2" onClick={() => setOpen(true)}>

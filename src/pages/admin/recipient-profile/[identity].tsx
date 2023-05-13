@@ -161,6 +161,7 @@ export default function RecipientProfilePage() {
                   setListData(
                     listData.filter((item: string | number) => response?.data?.data.includes(item))
                   )
+                  setOpen(false)
                 } catch (err) {
                   errorMessage()
                 }

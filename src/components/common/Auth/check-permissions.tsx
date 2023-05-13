@@ -12,5 +12,5 @@ export default function CheckPermissions({ children, requireRoles }: CheckPermis
   if (!isAllowAccess(requireRoles, roles)) {
     return null
   }
-  return <div>{children}</div>
+  return <>{children}</>
 }

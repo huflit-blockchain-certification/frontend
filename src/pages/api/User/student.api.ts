@@ -60,18 +60,11 @@ const StudentApi = {
       throw new Error(err.message)
     }
   },
-  listStudentsOfUniversity: async ({ page, accessToken, keyword, idParam }: ListParams) => {
+  listStudentsOfUniversity: async ({ page, accessToken, idParam }: ListParams) => {
     try {
-      if (keyword) {
-        return await fetcher({
-          method: 'GET',
-          url: `/users/students/createdBy/${idParam}?page=${page}&limit=10`,
-          accessToken,
-        })
-      }
       return await fetcher({
         method: 'GET',
-        url: `/users/students?page=${page}&limit=10`,
+        url: `/users/students/createdBy/${idParam}?page=${page}&limit=10`,
         accessToken,
       })
     } catch (err: any) {
