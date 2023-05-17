@@ -1,9 +1,6 @@
 import Head from 'next/head'
 import { MainLayout } from '@/layouts'
-import Image1 from '../../public/landing-page1.jpeg'
-import Image2 from '../../public/landing-page2.jpg'
-import Image3 from '../../public/landing-page3.webp'
-import Image from 'next/image'
+import VerifyKeyForm from '@/components/Form/VerifyKey/verify-key.form'
 
 export default function Home() {
   return (
@@ -54,135 +51,7 @@ export default function Home() {
           </div>
         </div>
       </section>
-      <div
-        className=" p-4 bg-white rounded-lg md:p-8 dark:bg-gray-800 shadow"
-        id="stats"
-        role="tabpanel"
-        aria-labelledby="stats-tab"
-      >
-        <dl className="grid grid-cols-1 sm:grid-cols-1 md:grid-cols-3 lg:grid-cols-3 gap-20 p-4 mx-auto text-gray-900 dark:text-white sm:p-8">
-          <div className="flex flex-col items-center justify-center">
-            <dt className="mb-2 text-3xl font-extrabold">50M+</dt>
-            <dd className="text-gray-500 dark:text-gray-400">Người tiêu dùng</dd>
-          </div>
-          <div className="flex flex-col items-center justify-center">
-            <dt className="mb-2 text-3xl font-extrabold">66+</dt>
-            <dd className="text-gray-500 dark:text-gray-400">Đối tác</dd>
-          </div>
-          <div className="flex flex-col items-center justify-center">
-            <dt className="mb-2 text-3xl font-extrabold">1000+</dt>
-            <dd className="text-gray-500 dark:text-gray-400">Bài viết</dd>
-          </div>
-        </dl>
-      </div>
-      <div className="grid grid-cols-1 sm:grid-cols-1 md:grid-cols-3 lg:grid-cols-3 ">
-        <Image
-          src={Image1}
-          alt=""
-          className="w-full h-60 lg:h-96 sm:h-80 md:h-80 rounded shadow"
-        ></Image>
-        <Image
-          src={Image2}
-          alt=""
-          className="w-full h-60 lg:h-96 sm:h-80 md:h-80 rounded shadow"
-        ></Image>
-        <Image
-          src={Image3}
-          alt=""
-          className="w-full h-60 lg:h-96 sm:h-80 md:h-80 rounded shadow"
-        ></Image>
-      </div>
-      <div className="grid mb-8 border border-gray-200 rounded-lg shadow-sm dark:border-gray-700 md:mb-12 md:grid-cols-2">
-        <figure className="flex flex-col items-center justify-center p-8 text-center bg-white border-b border-gray-200 rounded-t-lg md:rounded-t-none md:rounded-tl-lg md:border-r dark:bg-gray-800 dark:border-gray-700 hover:bg-slate-100">
-          <blockquote className="max-w-2xl mx-auto mb-4 text-gray-500 lg:mb-8 dark:text-gray-400">
-            <h3 className="text-lg font-semibold text-gray-900 dark:text-white">
-              Cảm nhận của học sinh
-            </h3>
-            <p className="my-4">
-              Bản thân là học sinh chưa từng nghĩ mình sẽ có một công nghệ mới tuyệt vời có thể dễ
-              dàng xác thực văn bằng đến vậy.
-            </p>
-          </blockquote>
-          <figcaption className="flex items-center justify-center space-x-3">
-            <img
-              className="rounded-full w-9 h-9"
-              src="https://scontent.fsgn5-2.fna.fbcdn.net/v/t39.30808-6/299736055_2554035778071516_385462712747607399_n.jpg?_nc_cat=105&ccb=1-7&_nc_sid=09cbfe&_nc_ohc=VxsTVx5XYu8AX_RhYd2&_nc_ht=scontent.fsgn5-2.fna&oh=00_AfB9xr9aUIw_7puL8Ha6wrWYgnmqqLHYcnYy3-T82ZUr0Q&oe=6463AAAA"
-              alt="profile picture"
-            />
-            <div className="space-y-0.5 font-medium dark:text-white text-left">
-              <div>Trần Thanh Long</div>
-              <div className="text-sm text-gray-500 dark:text-gray-400">Sinh viên HUFLIT</div>
-            </div>
-          </figcaption>
-        </figure>
-        <figure className="flex flex-col items-center justify-center p-8 text-center bg-white border-b border-gray-200 rounded-t-lg md:rounded-t-none md:rounded-tl-lg md:border-r dark:bg-gray-800 dark:border-gray-700 hover:bg-slate-100">
-          <blockquote className="max-w-2xl mx-auto mb-4 text-gray-500 lg:mb-8 dark:text-gray-400">
-            <h3 className="text-lg font-semibold text-gray-900 dark:text-white">
-              Giảng viên nói gì ?
-            </h3>
-            <p className="my-4">
-              Ban đầu cứ nghĩ công nghệ mới rất khó ứng dụng vào thực tế nhưng hoàn toàn trái ngược.
-            </p>
-          </blockquote>
-          <figcaption className="flex items-center justify-center space-x-3">
-            <img
-              className="rounded-full w-9 h-9"
-              src="https://images2.thanhnien.vn/Uploaded/thuyhang/2022_11_09/hinh-tho-day-1-7814.jpg"
-              alt="profile picture"
-            />
-            <div className="space-y-0.5 font-medium dark:text-white text-left">
-              <div>Trần Thành Công</div>
-              <div className="text-sm text-gray-500 dark:text-gray-400">
-                Giảng viên tại Đại học Bách Khoa
-              </div>
-            </div>
-          </figcaption>
-        </figure>
-        <figure className="flex flex-col items-center justify-center p-8 text-center bg-white border-b border-gray-200 rounded-t-lg md:rounded-t-none md:rounded-tl-lg md:border-r dark:bg-gray-800 dark:border-gray-700 hover:bg-slate-100">
-          <blockquote className="max-w-2xl mx-auto mb-4 text-gray-500 lg:mb-8 dark:text-gray-400">
-            <h3 className="text-lg font-semibold text-gray-900 dark:text-white">
-              Phụ huynh trải nghiệm
-            </h3>
-            <p className="my-4">
-              Trước đây việc xác thực văn bằng chứng chỉ tiêu tốn rất nhiều thời gian nhưng giờ tôi
-              không còn phải lo nữa. Rất tuyệt vời !
-            </p>
-          </blockquote>
-          <figcaption className="flex items-center justify-center space-x-3">
-            <img
-              className="rounded-full w-9 h-9"
-              src="https://flowbite.s3.amazonaws.com/blocks/marketing-ui/avatars/karen-nelson.png"
-              alt="profile picture"
-            />
-            <div className="space-y-0.5 font-medium dark:text-white text-left">
-              <div>Trần Xuân Trang</div>
-              <div className="text-sm text-gray-500 dark:text-gray-400">Phụ huynh</div>
-            </div>
-          </figcaption>
-        </figure>
-        <figure className="flex flex-col items-center justify-center p-8 text-center bg-white border-b border-gray-200 rounded-t-lg md:rounded-t-none md:rounded-tl-lg md:border-r dark:bg-gray-800 dark:border-gray-700 hover:bg-slate-100">
-          <blockquote className="max-w-2xl mx-auto mb-4 text-gray-500 lg:mb-8 dark:text-gray-400">
-            <h3 className="text-lg font-semibold text-gray-900 dark:text-white">
-              Trung tâm Anh Ngữ Apex Leader
-            </h3>
-            <p className="my-4">
-              Từ nay việc xác thực văn bằng chứng chỉ đã trở nên dễ dàng hơn bao giờ hết cảm ơn các
-              bên liên quan cho đã ra đời một sản phẩm mang tính cách mạng !
-            </p>
-          </blockquote>
-          <figcaption className="flex items-center justify-center space-x-3">
-            <img
-              className="rounded-full w-9 h-9"
-              src="https://znews-photo.zingcdn.me/w660/Uploaded/neg_esfjaex/2023_02_26/shark_Thuyanh_1_1.jpg"
-              alt="profile picture"
-            />
-            <div className="space-y-0.5 font-medium dark:text-white text-left">
-              <div> Nguyễn Ngọc Thủy</div>
-              <div className="text-sm text-gray-500 dark:text-gray-400">Chủ tịch Apex Leader</div>
-            </div>
-          </figcaption>
-        </figure>
-      </div>
+      <VerifyKeyForm />
     </>
   )
 }

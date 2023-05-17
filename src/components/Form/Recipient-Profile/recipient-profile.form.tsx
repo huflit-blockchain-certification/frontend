@@ -34,7 +34,7 @@ function RecipientProfileForm({ recordId, setOpen, afterActions, idParam }: Form
   const { user, roles } = useAuth()
   const { control, handleSubmit, reset } = useForm<RecipientProfile>({
     defaultValues: recipientProfileDefaultForm,
-    // resolver: yupResolver(!recordId ? RecipientProfileSchema : EditRecipientProfileSchema),
+    resolver: yupResolver(!recordId ? RecipientProfileSchema : EditRecipientProfileSchema),
   })
   const onSubmit = async (data: any) => {
     if (data?.dateOfBirth) {
