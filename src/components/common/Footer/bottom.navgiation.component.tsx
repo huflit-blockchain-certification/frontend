@@ -1,6 +1,5 @@
 import { APP_NAME } from '@/static'
 import * as React from 'react'
-import Logo from '../../../../public/logo.png'
 export interface FooterProps {}
 
 export default function Footer(props: FooterProps) {
@@ -9,7 +8,6 @@ export default function Footer(props: FooterProps) {
       <div className="w-full p-4 md:py-8">
         <div className="sm:flex sm:items-center sm:justify-between">
           <a href="https://flowbite.com/" className="flex items-center mb-4 sm:mb-0">
-            <img src={Logo.src} className="h-8 mr-3" alt="Highbar Logo" />
             <span className="self-center text-2xl font-semibold whitespace-nowrap dark:text-white">
               {APP_NAME}
             </span>

@@ -13,8 +13,7 @@ const GraduationCourseApi: any = {
       })
       return record
     } catch (err: any) {
-      console.log(err.message)
-      errorMessage(err.message)
+      throw new Error(err.message)
     }
   },
   deleteGraduationCourse: async ({ id, accessToken }: DeleteParams) => {
@@ -54,8 +53,7 @@ const GraduationCourseApi: any = {
       successMessage()
       return record
     } catch (err: any) {
-      console.log(err.message)
-      errorMessage()
+      throw new Error(err.message)
     }
   },
   listGraduationCourse: async ({ page, pageSize, accessToken }: ListParams) => {
@@ -67,7 +65,7 @@ const GraduationCourseApi: any = {
       })
       return record
     } catch (err: any) {
-      console.log(err.message)
+      throw new Error(err.message)
     }
   },
 }

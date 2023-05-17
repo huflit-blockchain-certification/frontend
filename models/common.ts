@@ -24,6 +24,9 @@ export interface FormProps {
   idParam?: string | string[] | undefined
 }
 
+export interface VerifyKeyParams {
+  data: any
+}
 export interface ListParams {
   page: number
   pageSize?: number

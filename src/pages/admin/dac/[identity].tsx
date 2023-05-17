@@ -40,7 +40,7 @@ export default function DACUniPage(props: DACUniPageProps) {
       }}
     >
       <Box sx={{ height: 700, width: '100%' }}>
-        {/* <TableData
+        <TableData
           columns={columns}
           listData={listData}
           loading={loading}
@@ -49,7 +49,7 @@ export default function DACUniPage(props: DACUniPageProps) {
           onFilterChange={onFilterChange}
           pagination={pagination}
           totalPage={totalPage}
-        /> */}
+        />
       </Box>
     </TableLayout>
   )
