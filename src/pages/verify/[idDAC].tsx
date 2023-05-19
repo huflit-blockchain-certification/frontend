@@ -70,6 +70,7 @@ export default function VerifyPage({}: VerifyPageProps) {
         <DACDetail
           DAC={disclosedDAC?.data?.data?.disclosedData}
           extraFields={extraFields}
+          verifyKey={disclosedDAC?.data?.data?.key}
           // pdfOptions={{ enable: true }}
         />
       </div>

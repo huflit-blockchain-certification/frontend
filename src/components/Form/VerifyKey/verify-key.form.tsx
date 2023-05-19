@@ -9,6 +9,8 @@ import { verifyKeySchema } from '@/validation/VerifyKey/verify-key.validation'
 import { LoadingIndicator } from '@/components/common/LoadingIndicator/loadingIndicator.component'
 import { VerifyKeyApi } from '@/pages/api/VerifyKey/verify-key.api'
 import { errorMessage } from '@/components/common/Toast/response.toast.component'
+import { Toast } from '@/components/common/Toast/response.component'
+import translate from 'translate'
 
 export default function VerifyKeyForm() {
   const [loading, setLoading] = useState(false)
@@ -21,7 +23,9 @@ export default function VerifyKeyForm() {
       try {
         setLoading(true)
         const verifyKey = await VerifyKeyApi.verifyKey({ data })
-        console.log(verifyKey)
+        if (verifyKey && verifyKey.data && verifyKey.data.success) {
+          Toast.fire({ title: await translate(verifyKey.message, 'vi'), icon: 'success' })
+        }
         setLoading(false)
       } catch (err: any) {
         setLoading(false)

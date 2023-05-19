@@ -118,6 +118,7 @@ const fieldDefault = [
   'nation',
   'registrationNum',
   'idNumber',
+  'key',
 ]
 const fieldShareExtend = ['CGPA', 'formOfTraining', 'ranking']
 const dateUpTo6Y = new Date(Date.now() - 1000 * 60 * 60 * 24 * 365 * 6) // go back by 6 years
