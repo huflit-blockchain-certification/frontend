@@ -10,7 +10,7 @@ import { Button, Checkbox } from '@mui/material'
 import { Modal } from '@/components/common/Modal/modal.component'
 import { fieldDefault } from '@/constants'
 import { fieldShareExtend } from '@/constants'
-import { DACCustomeRender } from '@/components/DAC/DACCustomRender'
+import { DACCustomRender } from '@/components/DAC/DACCustomRender'
 import { DACStepper } from '@/components/DAC/DACStepper'
 import { useDispatch, useSelector } from 'react-redux'
 import { setCheckedField } from '@/actions/checked-field.action'
@@ -25,6 +25,7 @@ export interface FirstScreenProps {
 }
 export interface DACDetail {
   DAC: any
+  verifyKey?: string
   shareOptions?: { setOpen?: any; enable: boolean }
   extraFields?: any
   QRCodeOptions?: { enable: boolean; data: any }
@@ -50,7 +51,7 @@ export function FirstScreen({ DAC }: FirstScreenProps) {
         <div>
           <div className="font-bold">Thông tin mặc định</div>
           {fieldDefault.map((field, index) => {
-            return <DACCustomeRender key={index} field={field} data={DAC?.[field]} />
+            return <DACCustomRender key={index} field={field} data={DAC?.[field]} />
           })}
         </div>
         <div>
@@ -59,7 +60,7 @@ export function FirstScreen({ DAC }: FirstScreenProps) {
             return (
               <div key={index} className="flex gap-1 items-center">
                 <Checkbox checked={checked[field]} onChange={handleChange} name={field} />
-                <DACCustomeRender key={index} field={field} data={DAC?.[field]} />
+                <DACCustomRender key={index} field={field} data={DAC?.[field]} />
               </div>
             )
           })}
@@ -74,10 +75,10 @@ export function DACDetail({
   extraFields,
   QRCodeOptions,
   pdfOptions,
+  verifyKey,
 }: DACDetail) {
   const pdfArea = useRef<any>()
   if (!DAC) return null
-
   const handleDownloadPdf = async () => {
     const element = pdfArea.current
     const canvas = await html2canvas(element)
@@ -112,13 +113,18 @@ export function DACDetail({
         <div className="text-center">cấp</div>
         <div className="flex flex-col gap-3">
           {fieldDefault.map((field, index) => {
-            return <DACCustomeRender key={index} field={field} data={DAC?.[field]} />
+            return <DACCustomRender key={index} field={field} data={DAC?.[field]} />
           })}
           {extraFields &&
             Object.keys(extraFields).map(function (field, index) {
               if (!extraFields[field]) return
-              return <DACCustomeRender key={index} field={field} data={DAC?.[field]} />
+              return <DACCustomRender key={index} field={field} data={DAC?.[field]} />
             })}
+          {verifyKey && (
+            <p>
+              Mã xác thực: <span className="font-bold"> {verifyKey}</span>
+            </p>
+          )}
         </div>
         <div className="flex flex-col items-end gap-2">
           <p>TPHCM , {moment(DAC?.dateOfIssuing).format('DD-MM-YYYY')}</p>
@@ -166,7 +172,6 @@ export default function InfoDACPage(props: InfoDACPageProps) {
       }
     })()
   }, [cookies.access_token, idDAC])
-
   return (
     <>
       {!loading ? (
@@ -179,6 +184,7 @@ export default function InfoDACPage(props: InfoDACPageProps) {
                   {activeStep === 1 && (
                     <DACDetail
                       DAC={disclosedDAC?.data?.data?.disclosedData}
+                      verifyKey={disclosedDAC?.data?.data?.key}
                       extraFields={checked}
                       QRCodeOptions={{ enable: true, data: qrURL }}
                       pdfOptions={{ enable: true }}

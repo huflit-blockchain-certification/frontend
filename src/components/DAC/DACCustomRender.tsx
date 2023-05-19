@@ -6,7 +6,7 @@ export interface DACCustomRenderProps {
   data: any
 }
 
-export function DACCustomeRender({ field, data }: DACCustomRenderProps) {
+export function DACCustomRender({ field, data }: DACCustomRenderProps) {
   switch (field) {
     case 'id':
       return (
