@@ -56,7 +56,6 @@ const CertTypeApi = {
     }
   },
   listCertType: async ({ page, accessToken }: ListParams) => {
-    console.log(accessToken)
     try {
       const record = await fetcher({
         method: 'GET',
