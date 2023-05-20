@@ -48,6 +48,9 @@ export default function UniversityUserListPage() {
           enableCSV: isAllowAccess([DOET_ROLE], roles),
           requestAfterConfirmCSV: (data) =>
             mapUserData(data, UniversityApi.registerUniversities, cookies.access_token),
+          afterImport: (data) => {
+            crudOperation.create(data)
+          }
         },
       ]}
     >

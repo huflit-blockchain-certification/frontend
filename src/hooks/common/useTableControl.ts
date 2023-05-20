@@ -1,5 +1,4 @@
 import { Toast } from '@/components/common/Toast/response.component'
-import { errorMessage } from '@/components/common/Toast/response.toast.component'
 import { ERROR_MESSAGE } from '@/constants/'
 import { GridFilterModel, GridPaginationModel, GridRowSelectionModel } from '@mui/x-data-grid'
 import { CRUDInterface, DeleteParams, EditParams, ListParams } from 'models'
@@ -71,24 +70,37 @@ export function useTableControl({
 
   const crudOperation: CRUDInterface = {
     create: (response: any) => {
-      const responeData = response?.data?.data
-      if (!response || !responeData) return
-      if (Array.isArray(responeData)) {
-        setListData([...responeData, ...listData])
+      const responseData = response?.data?.data
+      if (!response || !responseData) return
+      if (Array.isArray(responseData)) {
+        setListData([...responseData, ...listData])
       } else {
-        setListData([responeData, ...listData])
+        setListData([responseData, ...listData])
       }
     },
     edit: (response: any) => {
-      if (!response || !response?.data?.data) return
-      setListData(
-        listData.map((item: any) => {
-          if (item?._id === response.data.data._id) {
-            item = response.data.data
-          }
-          return item
-        })
-      )
+      const responseData = response?.data?.data
+      if (!response || !responseData) return
+      if (Array.isArray(responseData)) {
+        setListData(
+          listData.map((item: any) => {
+            const resItem = responseData.find((res) => res._id === item._id)
+            if (resItem) {
+              item = resItem
+            }
+            return item
+          })
+        )
+      } else {
+        setListData(
+          listData.map((item: any) => {
+            if (item?._id === responseData._id) {
+              item = responseData
+            }
+            return item
+          })
+        )
+      }
     },
   }
   useEffect(() => {

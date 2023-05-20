@@ -47,7 +47,8 @@ export const commonSubmissionHandler = async ({
     setLoading(false)
     afterActions.create(response)
     successMessage('Tạo')
-  } catch (err) {
-    errorMessage()
+  } catch (err: any) {
+    setLoading(false)
+    errorMessage(err.message)
   }
 }

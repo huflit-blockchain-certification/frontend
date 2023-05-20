@@ -6,6 +6,7 @@ import { CSVInput } from '@/components/common/Form/CSVInput/csvinput.component'
 interface CSV {
   enableCSV?: boolean
   requestAfterConfirmCSV?: (data: any[]) => Promise<any>
+  afterImport?: (data: any) => void
   titleCSV?: string
 }
 interface DisabledOptions {
@@ -47,6 +48,7 @@ export function TableLayout({
                 <CSVInput
                   titleCSV={c?.titleCSV}
                   requestAfterConfirmCSV={c.requestAfterConfirmCSV}
+                  afterImport={c.afterImport}
                   key={index}
                 />
               )

@@ -38,6 +38,7 @@ export default function TableData({
   totalPage,
   ...rest
 }: TableProps) {
+  console.log(rowSelectionModel)
   return (
     <div className="flex flex-col gap-3">
       <Box sx={{ height: 700, width: '100%', display: 'table', tableLayout: 'fixed' }}>

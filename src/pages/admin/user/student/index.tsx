@@ -54,6 +54,9 @@ export default function StudentUserListPage({}: any) {
           enableCSV: isAllowAccess([UNIVERSITY_ROLE], roles),
           requestAfterConfirmCSV: (data) =>
             mapUserData(data, StudentApi.registerStudents, cookies.access_token),
+               afterImport: (data) => {
+            crudOperation.create(data)
+          }
         },
       ]}
     >

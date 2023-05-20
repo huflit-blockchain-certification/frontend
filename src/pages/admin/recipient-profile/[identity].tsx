@@ -15,7 +15,7 @@ import { useForm } from 'react-hook-form'
 import { Select } from '@/components/common/Form/Select/select.component'
 import { isAllowAccess } from '@/utils/permissionChecker.util'
 import { useAuth } from '@/hooks/common/useAuth'
-import { errorMessage } from '@/components/common/Toast/response.toast.component'
+import { errorMessage, successMessage } from '@/components/common/Toast/response.toast.component'
 
 export default function RecipientProfilePage() {
   const idKey = 'identity'
@@ -67,7 +67,7 @@ export default function RecipientProfilePage() {
           titleCSV: 'Nhập hồ sơ',
           requestAfterConfirmCSV: async (data) => {
             try {
-              await RecipientProfileApi.createRecipientProfile({
+              return await RecipientProfileApi.createRecipientProfile({
                 data,
                 accessToken: cookies.access_token,
                 idParam,
@@ -75,6 +75,9 @@ export default function RecipientProfilePage() {
             } catch (err: any) {
               errorMessage(err.message)
             }
+          },
+          afterImport(data) {
+            crudOperation.create(data)
           },
         },
         {
@@ -82,7 +85,7 @@ export default function RecipientProfilePage() {
           titleCSV: 'Nhập số hiệu',
           requestAfterConfirmCSV: async (data) => {
             try {
-              await RecipientProfileApi.createRegistrationNumber({
+              return await RecipientProfileApi.createRegistrationNumber({
                 data,
                 accessToken: cookies.access_token,
                 idParam,
@@ -91,13 +94,16 @@ export default function RecipientProfilePage() {
               errorMessage(err.message)
             }
           },
+          afterImport(data) {
+            crudOperation.edit(data)
+          },
         },
         {
           enableCSV: isAllowAccess([UNIVERSITY_ROLE], roles),
           titleCSV: 'Nhập số vào sổ',
           requestAfterConfirmCSV: async (data) => {
             try {
-              await RecipientProfileApi.createIDNumber({
+              return await RecipientProfileApi.createIDNumber({
                 data,
                 accessToken: cookies.access_token,
                 idParam,
@@ -105,6 +111,9 @@ export default function RecipientProfilePage() {
             } catch (err: any) {
               errorMessage(err.message)
             }
+          },
+          afterImport(data) {
+            crudOperation.edit(data)
           },
         },
       ]}
@@ -161,6 +170,7 @@ export default function RecipientProfilePage() {
                   setListData(
                     listData.filter((item: string | number) => response?.data?.data.includes(item))
                   )
+                  successMessage('Cấp bằng')
                   setOpen(false)
                 } catch (err) {
                   errorMessage()

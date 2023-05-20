@@ -1,5 +1,4 @@
 import { HiPencil } from 'react-icons/hi'
-import { AiOutlineCheckCircle, AiOutlineCloseCircle } from 'react-icons/ai'
 import * as React from 'react'
 import { dateFormat } from '@/utils/formatter.util'
 import { CRUDInterface } from 'models'
@@ -47,32 +46,12 @@ export default function useRecipientProfileColumn({
     {
       field: 'idNumber',
       headerName: 'Số vào sổ',
-      renderCell(params: any) {
-        return (
-          <>
-            {params?.value ? (
-              <AiOutlineCheckCircle size={18} />
-            ) : (
-              <AiOutlineCloseCircle size={18} />
-            )}
-          </>
-        )
-      },
+      width: 150,
     },
     {
       field: 'registrationNum',
       headerName: 'Số hiệu',
-      renderCell(params: any) {
-        return (
-          <>
-            {params?.value ? (
-              <AiOutlineCheckCircle size={18} />
-            ) : (
-              <AiOutlineCloseCircle size={18} />
-            )}
-          </>
-        )
-      },
+      width: 150,
     },
     {
       field: 'universityName',
@@ -124,7 +103,6 @@ export default function useRecipientProfileColumn({
               <Button variant="outlined" onClick={() => setOpenRegistrationNumberModal(true)}>
                 Số hiệu
               </Button>
-
               <Modal open={openRegistrationNumberModal} setOpen={setOpenRegistrationNumberModal}>
                 <RegistrationNumberForm
                   recordId={params?.id}

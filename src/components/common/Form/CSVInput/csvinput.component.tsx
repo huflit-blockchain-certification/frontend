@@ -7,9 +7,10 @@ import { errorMessage } from '../../Toast/response.toast.component'
 export interface CSVInputProps {
   requestAfterConfirmCSV?: (data: any[]) => Promise<any>
   titleCSV?: string
+  afterImport?: (data: any) => any
 }
 
-export function CSVInput({ requestAfterConfirmCSV, titleCSV }: CSVInputProps) {
+export function CSVInput({ requestAfterConfirmCSV, titleCSV, afterImport }: CSVInputProps) {
   const handleCSV = (event: React.ChangeEvent<HTMLInputElement>): void => {
     try {
       const file = event.target.files?.[0]
@@ -27,11 +28,13 @@ export function CSVInput({ requestAfterConfirmCSV, titleCSV }: CSVInputProps) {
           confirmButtonText: 'Yes',
         })
 
-        console.log(data)
         if (confirmResult.isConfirmed) {
           if (!data?.length) return
           if (!requestAfterConfirmCSV) return
           const response = await requestAfterConfirmCSV(data)
+          if (afterImport) {
+            afterImport(response)
+          }
           if (!response) return
           await Toast.fire({ title: 'Nhập thành công!', icon: 'success' })
         }
