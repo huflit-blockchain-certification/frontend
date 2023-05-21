@@ -5,7 +5,7 @@ export interface RecipientProfile {
   departmentName: string
   studentName: string
   universityName: string
-  dateOfBirth: string
+  dateOfBirth: string | null
   year: string | Date
   nameCourse: string
   major: string
