@@ -40,6 +40,9 @@ function RecipientProfileForm({ recordId, setOpen, afterActions, idParam }: Form
     if (data?.dateOfBirth) {
       data.dateOfBirth = new Date(moment(data?.dateOfBirth).format('YYYY-MM-DD'))
     }
+    if (data?.year) {
+      data.year = moment(data?.year).format('YYYY')
+    }
     commonSubmissionHandler({
       afterActions,
       createRequest: RecipientProfileApi.createRecipientProfile,
