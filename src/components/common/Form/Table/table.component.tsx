@@ -66,6 +66,7 @@ export default function TableData({
           slots={{ toolbar: GridToolbar }}
           slotProps={{
             toolbar: {
+              csvOptions: { utf8WithBom: true },
               showQuickFilter: true,
               quickFilterProps: { debounceMs: 500 },
             },

@@ -1,8 +1,7 @@
-import { PLUGIN_NAMES, defaultPlugins } from '@/constants/'
-import Link from 'next/link'
-import React, { useEffect, useState } from 'react'
+import { defaultPlugins } from '@/constants/'
+import { useEffect, useState } from 'react'
 import _ from 'lodash'
-import { AdminUser, PluginNames } from 'models'
+import { PluginNames } from 'models'
 import { useAuth } from './useAuth'
 
 export default function usePermissions() {

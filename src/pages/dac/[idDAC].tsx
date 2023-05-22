@@ -3,7 +3,6 @@ import { useRouter } from 'next/router'
 import React, { useEffect, useRef, useState } from 'react'
 import { DacApi } from '../api/DAC/dac.api'
 import { useCookies } from 'react-cookie'
-import { errorMessage } from '@/components/common/Toast/response.toast.component'
 import { LoadingIndicator } from '@/components/common/LoadingIndicator/loadingIndicator.component'
 import moment from 'moment'
 import { Button, Checkbox } from '@mui/material'
@@ -202,5 +201,20 @@ export default function InfoDACPage(props: InfoDACPageProps) {
     </>
   )
 }
+// export const getStaticPaths: GetStaticPaths = async () => {
+//   const paths = ['/dac/644e0fedf64b14f84b974d81']
+//   return {
+//     paths,
+//     fallback: false, // or 'blocking' or 'true' depending on your requirements
+//   }
+// }
+
+// export const getStaticProps: GetStaticProps = async ({ locale }) => {
+//   return {
+//     props: {
+//       ...(await serverSideTranslations(locale || 'vi', ['common'])),
+//     },
+//   }
+// }
 
 InfoDACPage.Layout = MainLayout

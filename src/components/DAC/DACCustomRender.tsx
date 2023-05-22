@@ -1,5 +1,7 @@
 import moment from 'moment'
 import * as React from 'react'
+import { useTranslation } from 'react-i18next'
+import { LoadingIndicator } from '../common/LoadingIndicator/loadingIndicator.component'
 
 export interface DACCustomRenderProps {
   field: any
@@ -7,6 +9,8 @@ export interface DACCustomRenderProps {
 }
 
 export function DACCustomRender({ field, data }: DACCustomRenderProps) {
+  const { t, ready } = useTranslation('common')
+  if (!ready) return <LoadingIndicator />
   switch (field) {
     case 'id':
       return (
@@ -23,7 +27,7 @@ export function DACCustomRender({ field, data }: DACCustomRenderProps) {
     case 'gender':
       return (
         <p>
-          Giới tính: <span className="font-bold"> {data}</span>
+          Giới tính: <span className="font-bold"> {t(data)}</span>
         </p>
       )
     case 'nation':
@@ -41,7 +45,7 @@ export function DACCustomRender({ field, data }: DACCustomRenderProps) {
     case 'typeCertificate':
       return (
         <p>
-          Loại bằng: <span className="font-bold"> {data}</span>
+          Loại bằng: <span className="font-bold"> {t(data)}</span>
         </p>
       )
     case 'departmentName':
@@ -78,13 +82,13 @@ export function DACCustomRender({ field, data }: DACCustomRenderProps) {
     case 'ranking':
       return (
         <p>
-          Xếp loại tốt nghiệp: <span className="font-bold"> {data}</span>
+          Xếp loại tốt nghiệp: <span className="font-bold"> {t(data)}</span>
         </p>
       )
     case 'formOfTraining':
       return (
         <p>
-          Hình thức đào tạo: <span className="font-bold"> {data}</span>
+          Hình thức đào tạo: <span className="font-bold"> {t(data)}</span>
         </p>
       )
     case 'registrationNum':
@@ -115,18 +119,6 @@ export function DACCustomRender({ field, data }: DACCustomRenderProps) {
       return (
         <p>
           CGPA: <span className="font-bold"> {data}</span>
-        </p>
-      )
-    case 'formOFTraining':
-      return (
-        <p>
-          Hình thức đào tạo: <span className="font-bold"> {data}</span>
-        </p>
-      )
-    case 'ranking':
-      return (
-        <p>
-          Xếp loại tốt nghiệp: <span className="font-bold"> {data}</span>
         </p>
       )
     default:

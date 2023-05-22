@@ -61,9 +61,10 @@ export default function RecipientProfilePage() {
     <TableLayout
       title={PLUGIN_NAMES.RECIPIENT_PROFILE.NAME}
       onCreateClick={() => setOpen(true)}
+      disabledOptions={{ disableMainBtn: !isAllowAccess([UNIVERSITY_ROLE], roles) }}
       csv={[
         {
-          enableCSV: true,
+          enableCSV: isAllowAccess([UNIVERSITY_ROLE], roles),
           titleCSV: 'Nhập hồ sơ',
           requestAfterConfirmCSV: async (data) => {
             try {

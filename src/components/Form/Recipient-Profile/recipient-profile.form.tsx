@@ -24,8 +24,6 @@ import { departmentOptions } from '@/static/department'
 import useGraduationCourse from '@/hooks/common/useGraduationCourse'
 import { RecipientProfile } from 'models/RecipientProfile'
 import { useAuth } from '@/hooks/common/useAuth'
-import { isAllowAccess } from '@/utils/permissionChecker.util'
-import { DOET_ROLE } from '@/constants'
 import moment from 'moment'
 
 function RecipientProfileForm({ recordId, setOpen, afterActions, idParam }: FormProps) {
@@ -33,7 +31,7 @@ function RecipientProfileForm({ recordId, setOpen, afterActions, idParam }: Form
   const [loading, setLoading] = useState(false)
   const { user, roles } = useAuth()
   const { control, handleSubmit, reset } = useForm<RecipientProfile>({
-    defaultValues: recipientProfileDefaultForm,
+    defaultValues: recipientProfileDefaultForm(),
     resolver: yupResolver(!recordId ? RecipientProfileSchema : EditRecipientProfileSchema),
   })
   const onSubmit = async (data: any) => {
@@ -82,11 +80,7 @@ function RecipientProfileForm({ recordId, setOpen, afterActions, idParam }: Form
     })()
   }, [idParam, recordId, reset, cookies.access_token])
   return (
-    <FormHeader
-      onSubmit={handleSubmit(onSubmit)}
-      loading={loading}
-      options={!isAllowAccess([DOET_ROLE], roles) && recordId && { disabled: true }}
-    >
+    <FormHeader onSubmit={handleSubmit(onSubmit)} loading={loading}>
       <div className="w-full">
         <FormLayout className="relative">
           {!recordId && (
