@@ -38,7 +38,7 @@ export function FormHeader({
                     variant="outlined"
                     style={{ marginLeft: 'auto' }}
                     type="submit"
-                    disabled={options?.disabled && true}
+                    disabled={options?.disabled}
                   >
                     Lưu
                   </Button>

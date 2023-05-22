@@ -4,6 +4,7 @@ import { CookiesProvider } from 'react-cookie'
 import { Provider } from 'react-redux'
 import store from '../store'
 import { appWithTranslation } from 'next-i18next'
+import nextI18nConfig from 'next-i18next.config'
 
 function App({ Component, pageProps }: AppPropsWithLayout) {
   const Layout = Component.Layout ?? Component
@@ -19,4 +20,4 @@ function App({ Component, pageProps }: AppPropsWithLayout) {
   )
 }
 
-export default appWithTranslation(App)
+export default appWithTranslation(App, nextI18nConfig)

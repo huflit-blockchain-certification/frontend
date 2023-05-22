@@ -4,5 +4,14 @@
   "FEMALE": "FEMALE",
   "OTHER": "OTHER",
   "DIPLOMA": "Diploma",
-  "CERTIFICATE": "Certificate"
+  "CERTIFICATE": "Certificate",
+  "VERY_GOOD": "Very Good",
+  "EXCELLENT": "Excellent",
+  "GOOD": "Good",
+  "AVERAGE_GOOD": "Average Good",
+  "ORDINAL": "Ordinal",
+  "FULL_TIME": "Full-Time",
+  "PART_TIME": "Part-Time",
+  "DISTANCE_LEARNING": "Distance Learning",
+  "GUIDED_SELF_LEARNING": "Guided Self Learning"
 }

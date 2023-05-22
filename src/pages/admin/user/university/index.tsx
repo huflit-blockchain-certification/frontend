@@ -50,7 +50,7 @@ export default function UniversityUserListPage() {
             mapUserData(data, UniversityApi.registerUniversities, cookies.access_token),
           afterImport: (data) => {
             crudOperation.create(data)
-          }
+          },
         },
       ]}
     >

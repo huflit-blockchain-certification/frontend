@@ -26,7 +26,7 @@ function RegisterStudentForm({ recordId, setOpen, afterActions }: FormProps) {
 
   const { control, handleSubmit, reset, setValue, watch } = useForm<User>({
     resolver: yupResolver(recordId ? editStudentSchema : registerStudentSchema),
-    defaultValues: registerUserStudentDefaultForm,
+    defaultValues: registerUserStudentDefaultForm(),
   })
   const onSubmit = async (data: User) => {
     if (data?.dateOfBirth) {

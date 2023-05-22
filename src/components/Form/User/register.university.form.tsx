@@ -21,10 +21,9 @@ function RegisterUniversityForm({ recordId, setOpen, afterActions }: FormProps) 
   const [loading, setLoading] = useState(false)
 
   const { control, handleSubmit, reset, setValue, watch } = useForm<User>({
-    defaultValues: registerUserUniversityDefaultForm,
+    defaultValues: registerUserUniversityDefaultForm(),
     resolver: yupResolver(registerUniversitySchema),
   })
-
   const onSubmit = async (data: any) => {
     commonSubmissionHandler({
       afterActions,
@@ -74,7 +73,7 @@ function RegisterUniversityForm({ recordId, setOpen, afterActions }: FormProps) 
           />
           <Input name="address" label="Địa chỉ" control={control} required />
           <Input name="name" label="Tên" control={control} required />
-          <Input name="identity" label="CMND" control={control} required />
+          <Input name="identity" label="Mã định danh" control={control} required />
           <RefInput
             name="userName"
             label="Tên tài khoản"

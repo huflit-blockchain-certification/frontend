@@ -18,8 +18,9 @@ import { GetStaticProps } from 'next'
 export interface UserTablePageProps {}
 
 export default function StudentUserListPage({}: any) {
+  const idKey = 'createdBy'
   const [cookies] = useCookies(['access_token'])
-
+  const { roles } = useAuth()
   const {
     listData,
     pagination,
@@ -37,11 +38,13 @@ export default function StudentUserListPage({}: any) {
     totalPage,
   } = useTableControl({
     accessToken: cookies.access_token,
-    listingApi: StudentApi.listStudents,
+    idKey,
+    listingApi: roles?.includes(UNIVERSITY_ROLE)
+      ? StudentApi.listStudentsOfUniversity
+      : StudentApi.listStudents,
     deleteApi: StudentApi.deleteStudents,
   })
   const { columns } = useStudentsColumns({ setOpen, setRecordId })
-  const { roles } = useAuth()
   return (
     <TableLayout
       disabledOptions={{
@@ -54,9 +57,9 @@ export default function StudentUserListPage({}: any) {
           enableCSV: isAllowAccess([UNIVERSITY_ROLE], roles),
           requestAfterConfirmCSV: (data) =>
             mapUserData(data, StudentApi.registerStudents, cookies.access_token),
-               afterImport: (data) => {
+          afterImport: (data) => {
             crudOperation.create(data)
-          }
+          },
         },
       ]}
     >

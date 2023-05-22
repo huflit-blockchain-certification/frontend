@@ -4,5 +4,14 @@
   "FEMALE": "Nữ",
   "OTHER": "Khác",
   "DIPLOMA": "Văn bằng",
-  "CERTIFICATE": "Chứng chỉ"
+  "CERTIFICATE": "Chứng chỉ",
+  "EXCELLENT": "Xuất xắc",
+  "VERY_GOOD": "Giỏi",
+  "GOOD": "Trung bình",
+  "AVERAGE_GOOD": "Yếu",
+  "ORDINAL": "Kém",
+  "FULL_TIME": "2 Buổi",
+  "PART_TIME": "1 buổi",
+  "DISTANCE_LEARNING": "Học từ xa",
+  "GUIDED_SELF_LEARNING": "Tự học có hướng dẫn"
 }

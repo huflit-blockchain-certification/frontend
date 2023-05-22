@@ -7,7 +7,7 @@ const DacApi = {
       if (!idParam) return
       return await fetcher({
         method: 'GET',
-        url: `/dac/manage/${idParam}?page=${page}&limit=1`,
+        url: `/dac/manage/${idParam}?page=${page}&limit=10`,
         accessToken,
       })
     } catch (err: any) {
@@ -29,7 +29,7 @@ const DacApi = {
     try {
       return await fetcher({
         method: 'GET',
-        url: `/dac/student?page=${page}&limit=1`,
+        url: `/dac/student?page=${page}&limit=10`,
         accessToken,
       })
     } catch (err: any) {
