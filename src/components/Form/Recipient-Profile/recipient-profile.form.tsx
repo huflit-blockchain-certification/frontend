@@ -45,7 +45,7 @@ function RecipientProfileForm({ recordId, setOpen, afterActions, idParam }: Form
       afterActions,
       createRequest: RecipientProfileApi.createRecipientProfile,
       editRequest: RecipientProfileApi.editRecipientProfile,
-      formData: [data],
+      formData: !recordId ? [data] : data,
       setLoading,
       setOpen,
       idParam,

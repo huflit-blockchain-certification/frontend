@@ -1,6 +1,6 @@
 import { UniList } from '@/components/RecipientProfile/UniList'
 import CheckPermissions from '@/components/common/Auth/check-permissions'
-import { DOET_ROLE, UNIVERSITY_ROLE } from '@/constants'
+import { DOET_ROLE, PLUGIN_NAMES, UNIVERSITY_ROLE } from '@/constants'
 import { useAuth } from '@/hooks/common/useAuth'
 import { AdminLayout } from '@/layouts'
 import { SelectPageLayout } from '@/layouts/select-page.layout'
@@ -22,7 +22,7 @@ export default function RecipientPage(props: RecipientProfilePageProps) {
     }
   }, [user?.userName, roles, router])
   return (
-    <SelectPageLayout title="Chọn đơn vị giáo dục">
+    <SelectPageLayout title={PLUGIN_NAMES.RECIPIENT_PROFILE.NAME} subTitle="Chọn đơn vị giáo dục">
       <div className="flex flex-col gap-3">
         <CheckPermissions requireRoles={[UNIVERSITY_ROLE]}>
           <Link
