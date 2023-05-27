@@ -37,7 +37,7 @@ export default function CertTypeListPage() {
   const { columns } = useGraduationYearColumn({ setOpen, setRecordId })
 
   return (
-    <TableLayout title={PLUGIN_NAMES.GRADUAUATION_COURSE.NAME} onCreateClick={() => setOpen(true)}>
+    <TableLayout title={PLUGIN_NAMES.GRADUAUATION_YEAR.NAME} onCreateClick={() => setOpen(true)}>
       <Box sx={{ height: 700, width: '100%' }}>
         <Modal beforeClose={() => setRecordId(undefined)} open={open} setOpen={setOpen}>
           <GraduationYearForm

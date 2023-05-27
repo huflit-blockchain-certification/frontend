@@ -5,6 +5,7 @@ import { DacApi } from '../api/DAC/dac.api'
 import { useCookies } from 'react-cookie'
 import { useTableControl } from '@/hooks/common/useTableControl'
 import { LoadingIndicator } from '@/components/common/LoadingIndicator/loadingIndicator.component'
+import { nameCertificate } from '@/utils/formatter.util'
 
 export interface infoPageProps {}
 
@@ -28,7 +29,7 @@ export default function InfoPage(props: infoPageProps) {
                   <CardCertificate
                     key={dac.id}
                     id={dac._id}
-                    nameTypeCertificate={dac.nameTypeCertificate}
+                    nameTypeCertificate={nameCertificate(dac.nameTypeCertificate, dac.major)}
                     dateOfIssuing={dac.nameOfIssuing}
                     dispensingStatus={dac.dispensingStatus}
                     nameCourse={dac.nameCourse}

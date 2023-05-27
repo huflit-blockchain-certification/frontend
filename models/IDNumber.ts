@@ -1,4 +1,4 @@
 export interface IDNumber {
-  _id: string
+  idDAC: string
   idNumber: string
 }

@@ -2,13 +2,15 @@ import moment from 'moment'
 import * as React from 'react'
 import { useTranslation } from 'react-i18next'
 import { LoadingIndicator } from '../common/LoadingIndicator/loadingIndicator.component'
+import { nameCertificate } from '@/utils/formatter.util'
 
 export interface DACCustomRenderProps {
   field: any
   data: any
+  DAC?: any
 }
 
-export function DACCustomRender({ field, data }: DACCustomRenderProps) {
+export function DACCustomRender({ field, data, DAC }: DACCustomRenderProps) {
   const { t, ready } = useTranslation('common')
   if (!ready) return <LoadingIndicator />
   switch (field) {
@@ -39,7 +41,7 @@ export function DACCustomRender({ field, data }: DACCustomRenderProps) {
     case 'nameTypeCertificate':
       return (
         <p>
-          Tên bằng: <span className="font-bold"> {data}</span>
+          Tên bằng: <span className="font-bold"> {nameCertificate(data, DAC?.major)}</span>
         </p>
       )
     case 'typeCertificate':

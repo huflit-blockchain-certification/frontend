@@ -28,6 +28,7 @@ export default function useRecipientProfileColumn({
   const [openRegistrationNumberModal, setOpenRegistrationNumberModal] = React.useState(false)
   const columns: any = [
     { field: '_id', headerName: 'ID', width: 250 },
+    { field: 'id', headerName: 'Mã hồ sơ' },
     {
       field: 'iSt',
       headerName: 'Mã học sinh',
@@ -91,7 +92,7 @@ export default function useRecipientProfileColumn({
                 </Button>
                 <Modal open={openIDNumberModal} setOpen={setOpenIDNumberModal}>
                   <IDNumberForm
-                    recordId={params?.id}
+                    recordId={params?.row?.id}
                     setOpen={setOpenIDNumberModal}
                     afterActions={afterActions(crudOperation)}
                     idParam={idParam}
@@ -105,7 +106,7 @@ export default function useRecipientProfileColumn({
               </Button>
               <Modal open={openRegistrationNumberModal} setOpen={setOpenRegistrationNumberModal}>
                 <RegistrationNumberForm
-                  recordId={params?.id}
+                  recordId={params?.row?.id}
                   setOpen={setOpenRegistrationNumberModal}
                   afterActions={afterActions(crudOperation)}
                   idParam={idParam}
