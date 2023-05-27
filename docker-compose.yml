@@ -13,4 +13,4 @@ services:
       - .env.production
     restart: always
     ports:
-      - '3006:3000'
+      - '3006:3007'
