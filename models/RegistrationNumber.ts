@@ -1,4 +1,4 @@
 export interface RegistrationNumber {
-  _id: string
+  idDAC: string
   registrationNumber: string
 }

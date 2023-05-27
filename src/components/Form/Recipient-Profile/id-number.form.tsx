@@ -23,7 +23,7 @@ function IDNumberForm({ setOpen, afterActions, recordId, idParam }: FormProps) {
 
   useEffect(() => {
     if (!recordId) return
-    setValue('_id', recordId)
+    setValue('idDAC', recordId)
   }, [recordId, setValue])
 
   const onSubmit = async (data: IDNumber) => {
@@ -43,7 +43,7 @@ function IDNumberForm({ setOpen, afterActions, recordId, idParam }: FormProps) {
     <FormHeader onSubmit={handleSubmit(onSubmit)} loading={loading}>
       <div className="w-full">
         <FormLayout className="relative">
-          <Input control={control} name="_id" label="Số vào sổ" />
+          <Input control={control} name="idDAC" label="Số vào sổ" />
           <Input control={control} name="idNumber" label="Số idNumber" />
         </FormLayout>
       </div>

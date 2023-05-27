@@ -15,7 +15,7 @@ export default function VerifyPage({}: VerifyPageProps) {
   const router = useRouter()
   const { sharedField, iSt } = router.query
   const [cookies] = useCookies(['access_token'])
-  const { disclosedDAC } = useDisclosedDAC({ setLoading, sharedField, iSt, isPublic: true })
+  const { disclosedDAC, qrURL } = useDisclosedDAC({ setLoading, sharedField, iSt, isPublic: true })
   const [verified, setVerified] = useState<boolean | undefined>()
   const extraFields =
     sharedField &&
@@ -71,7 +71,8 @@ export default function VerifyPage({}: VerifyPageProps) {
           DAC={disclosedDAC?.data?.data?.disclosedData}
           extraFields={extraFields}
           verifyKey={disclosedDAC?.data?.data?.key}
-          // pdfOptions={{ enable: true }}
+          QRCodeOptions={{ enable: true, data: qrURL }}
+          pdfOptions={{ enable: true }}
         />
       </div>
     )

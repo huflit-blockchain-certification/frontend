@@ -1,5 +1,5 @@
 const registrationNumberDefault = {
-  _id: '',
+  idDAC: '',
   registrationNumber: '',
 }
 export { registrationNumberDefault }

@@ -14,9 +14,8 @@ import { DACStepper } from '@/components/DAC/DACStepper'
 import { useDispatch, useSelector } from 'react-redux'
 import { setCheckedField } from '@/actions/checked-field.action'
 import QRCode from 'qrcode.react'
-import html2canvas from 'html2canvas'
-import jsPDF from 'jspdf'
 import { useDisclosedDAC } from '@/hooks/common/useDisclosedDAC'
+import { useReactToPrint } from 'react-to-print'
 
 export interface InfoDACPageProps {}
 export interface FirstScreenProps {
@@ -50,7 +49,7 @@ export function FirstScreen({ DAC }: FirstScreenProps) {
         <div>
           <div className="font-bold">Thông tin mặc định</div>
           {fieldDefault.map((field, index) => {
-            return <DACCustomRender key={index} field={field} data={DAC?.[field]} />
+            return <DACCustomRender key={index} field={field} data={DAC?.[field]} DAC={DAC} />
           })}
         </div>
         <div>
@@ -59,7 +58,7 @@ export function FirstScreen({ DAC }: FirstScreenProps) {
             return (
               <div key={index} className="flex gap-1 items-center">
                 <Checkbox checked={checked[field]} onChange={handleChange} name={field} />
-                <DACCustomRender key={index} field={field} data={DAC?.[field]} />
+                <DACCustomRender key={index} field={field} data={DAC?.[field]} DAC={DAC} />
               </div>
             )
           })}
@@ -76,22 +75,36 @@ export function DACDetail({
   pdfOptions,
   verifyKey,
 }: DACDetail) {
-  const pdfArea = useRef<any>()
-  if (!DAC) return null
-  const handleDownloadPdf = async () => {
-    const element = pdfArea.current
-    const canvas = await html2canvas(element)
-    const data = canvas.toDataURL('image/png')
-    const pdf = new jsPDF()
-    const imgProperties = pdf.getImageProperties(data)
-    const pdfWidth = pdf.internal.pageSize.getWidth()
-    const pdfHeight = (imgProperties.height * pdfWidth) / imgProperties.width
+  const [isPrinting, setIsPrinting] = useState(false)
+  const promiseResolveRef = useRef<null | (() => void)>(null)
+  const pdfAreaRef = useRef<HTMLDivElement>(null)
 
-    pdf.addImage(data, 'PNG', 0, 0, pdfWidth, pdfHeight)
-    pdf.save('print.pdf')
-  }
+  useEffect(() => {
+    if (isPrinting && promiseResolveRef.current) {
+      // Resolves the Promise, letting `react-to-print` know that the DOM updates are completed
+      promiseResolveRef.current()
+    }
+  }, [isPrinting])
+  const handlePrint = useReactToPrint({
+    content: () => pdfAreaRef.current,
+    copyStyles: true,
+    documentTitle: `${DAC?.id || ''}-vbcc`,
+    onBeforeGetContent: () => {
+      return new Promise<void>((resolve) => {
+        promiseResolveRef.current = resolve
+        setIsPrinting(true)
+      })
+    },
+    onAfterPrint: () => {
+      // Reset the Promise resolve so we can print again
+      promiseResolveRef.current = null
+      setIsPrinting(false)
+    },
+  })
+  if (!DAC) return null
+
   return (
-    <div className="bg-white p-8 rounded-lg shadow hover:shadow-lg ">
+    <div className="bg-white p-8 rounded-lg shadow hover:shadow-lg">
       <div className="flex justify-end">
         {shareOptions && shareOptions?.enable && (
           <Button variant="outlined" onClick={() => shareOptions?.setOpen(true)}>
@@ -99,12 +112,12 @@ export function DACDetail({
           </Button>
         )}
         {pdfOptions && pdfOptions?.enable && (
-          <Button variant="outlined" onClick={handleDownloadPdf}>
+          <Button variant="outlined" onClick={handlePrint}>
             Tải PDF
           </Button>
         )}
       </div>
-      <div ref={pdfArea} className="p-4">
+      <div ref={pdfAreaRef} className="p-4">
         <h1 className="text-2xl font-bold text-center mb-4">Cộng hòa xã hội chủ nghĩa Việt Nam</h1>
         <h1 className="text-2xl font-bold text-center mb-4">
           Hiệu trưởng trường {DAC?.universityName}
@@ -112,12 +125,12 @@ export function DACDetail({
         <div className="text-center">cấp</div>
         <div className="flex flex-col gap-3">
           {fieldDefault.map((field, index) => {
-            return <DACCustomRender key={index} field={field} data={DAC?.[field]} />
+            return <DACCustomRender key={index} field={field} data={DAC?.[field]} DAC={DAC} />
           })}
           {extraFields &&
             Object.keys(extraFields).map(function (field, index) {
               if (!extraFields[field]) return
-              return <DACCustomRender key={index} field={field} data={DAC?.[field]} />
+              return <DACCustomRender key={index} field={field} data={DAC?.[field]} DAC={DAC} />
             })}
           {verifyKey && (
             <p>
@@ -201,20 +214,5 @@ export default function InfoDACPage(props: InfoDACPageProps) {
     </>
   )
 }
-// export const getStaticPaths: GetStaticPaths = async () => {
-//   const paths = ['/dac/644e0fedf64b14f84b974d81']
-//   return {
-//     paths,
-//     fallback: false, // or 'blocking' or 'true' depending on your requirements
-//   }
-// }
-
-// export const getStaticProps: GetStaticProps = async ({ locale }) => {
-//   return {
-//     props: {
-//       ...(await serverSideTranslations(locale || 'vi', ['common'])),
-//     },
-//   }
-// }
 
 InfoDACPage.Layout = MainLayout
