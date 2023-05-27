@@ -52,7 +52,7 @@ function GraduationCourseForm({ recordId, setOpen, afterActions }: FormProps) {
     <FormHeader onSubmit={handleSubmit(onSubmit)} loading={loading}>
       <div className="w-full">
         <FormLayout className="relative">
-          <Input name="name" label="Tên bằng" control={control} required />
+          <Input name="name" label="Tên khóa" control={control} required />
           <DatePicker name="startDate" label="Ngày bắt đầu" control={control} required />
           <DatePicker name="endDate" label="Ngày kết thúc" control={control} required />
         </FormLayout>
