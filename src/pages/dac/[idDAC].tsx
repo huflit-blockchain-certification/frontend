@@ -34,6 +34,12 @@ export function FirstScreen({ DAC }: FirstScreenProps) {
   const dispatch = useDispatch()
   const checked = useSelector((state: any) => state.checkedFieldReducer.checkedFields)
   const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    const targetName = event.target.name
+    const targetChecked = event.target.checked
+    const CGPA = 'CGPA'
+    if (targetName === CGPA) {
+      return dispatch(setCheckedField({ ...checked, CGPA: targetChecked, ranking: targetChecked }))
+    }
     dispatch(
       setCheckedField({
         ...checked,
