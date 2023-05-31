@@ -8,7 +8,7 @@ export const recipientProfileDefaultForm = () => {
     departmentName: '',
     studentName: '',
     universityName: '',
-    dateOfBirth: null,
+    dateOfBirth: undefined,
     year: '2023',
     nameCourse: '',
     major: '',

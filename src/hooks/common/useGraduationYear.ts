@@ -24,7 +24,7 @@ export default function useGraduationYear({ options }: useGraduationYearProps) {
         if (options) {
           return setGraduationYears(
             graduationYears.data.data.map((course: any) => {
-              return { value: course.name, label: course.name }
+              return { value: course.year, label: course.year }
             })
           )
         }

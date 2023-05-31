@@ -11,9 +11,13 @@ import { VerifyKeyApi } from '@/pages/api/VerifyKey/verify-key.api'
 import { errorMessage } from '@/components/common/Toast/response.toast.component'
 import { Toast } from '@/components/common/Toast/response.component'
 import translate from 'translate'
+import { DACDetail } from '@/pages/dac/[idDAC]'
+import { Modal } from '@/components/common/Modal/modal.component'
 
 export default function VerifyKeyForm() {
   const [loading, setLoading] = useState(false)
+  const [dac, setDAC] = useState()
+  const [open, setOpen] = useState(false)
   const { control, handleSubmit } = useForm<VerifyKey>({
     defaultValues: verifyKeyDefault,
     resolver: yupResolver(verifyKeySchema),
@@ -26,6 +30,8 @@ export default function VerifyKeyForm() {
         if (verifyKey && verifyKey.data && verifyKey.data.success) {
           Toast.fire({ title: await translate(verifyKey.message, 'vi'), icon: 'success' })
         }
+        setDAC(verifyKey?.data?.data)
+        setOpen(true)
         setLoading(false)
       } catch (err: any) {
         setLoading(false)
@@ -53,6 +59,11 @@ export default function VerifyKeyForm() {
           Tra cứu
         </Button>
       </form>
+      {dac && (
+        <Modal open={open} setOpen={setOpen}>
+          <DACDetail DAC={dac} pdfOptions={{ enable: true }} />
+        </Modal>
+      )}
     </div>
   )
 }

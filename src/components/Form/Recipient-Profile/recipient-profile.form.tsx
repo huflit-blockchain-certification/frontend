@@ -118,13 +118,7 @@ function RecipientProfileForm({ recordId, setOpen, afterActions, idParam }: Form
             options={graduationCourses}
           />
           <Select control={control} name="ranking" label="Xếp loại" options={rankingOptions} />
-          <DatePicker
-            control={control}
-            name="year"
-            label="Năm tốt nghiệp"
-            format="YYYY"
-            views={['year']}
-          />
+          <Select control={control} name="year" label="Năm tốt nghiệp" options={graduationYears} />
           <Select
             control={control}
             name="formOfTraining"
