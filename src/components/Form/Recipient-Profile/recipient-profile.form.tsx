@@ -25,11 +25,12 @@ import useGraduationCourse from '@/hooks/common/useGraduationCourse'
 import { RecipientProfile } from 'models/RecipientProfile'
 import { useAuth } from '@/hooks/common/useAuth'
 import moment from 'moment'
+import useGraduationYear from '@/hooks/common/useGraduationYear'
 
 function RecipientProfileForm({ recordId, setOpen, afterActions, idParam }: FormProps) {
   const [cookies] = useCookies(['access_token'])
   const [loading, setLoading] = useState(false)
-  const { user, roles } = useAuth()
+  const { user } = useAuth()
   const { control, handleSubmit, reset } = useForm<RecipientProfile>({
     defaultValues: recipientProfileDefaultForm(),
     resolver: yupResolver(!recordId ? RecipientProfileSchema : EditRecipientProfileSchema),
@@ -54,6 +55,7 @@ function RecipientProfileForm({ recordId, setOpen, afterActions, idParam }: Form
     })
   }
   const { graduationCourses } = useGraduationCourse({ options: true })
+  const { graduationYears } = useGraduationYear({ options: true })
   useEffect(() => {
     ;(async () => {
       if (!recordId) return

@@ -6,6 +6,7 @@ import { useAuth } from './useAuth'
 
 export default function usePermissions() {
   const [adminPlugins, setAdminPlugins] = useState<PluginNames[]>([])
+  const [activePlugin, setActivePlugin] = useState(defaultPlugins[0].name)
   const { user } = useAuth()
   useEffect(() => {
     if (!user) return
@@ -21,6 +22,5 @@ export default function usePermissions() {
     )
     setAdminPlugins(checkPermissions)
   }, [user?.roles])
-
-  return { adminPlugins }
+  return { adminPlugins, activePlugin, setActivePlugin }
 }

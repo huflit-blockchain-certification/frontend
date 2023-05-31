@@ -1,38 +1,38 @@
 import { errorMessage } from '@/components/common/Toast/response.toast.component'
-import { GraduationCourseApi } from '@/pages/api/Graduation-Course/graduation-course.api'
+import { GraduationYearApi } from '@/pages/api/Graduation-Year/graduation-year.api'
 import { useState, useEffect } from 'react'
 import { useCookies } from 'react-cookie'
 
-export interface useGraduationCourseProps {
+export interface useGraduationYearProps {
   options?: boolean
 }
 
-export default function useGraduationCourse({ options }: useGraduationCourseProps) {
-  const [graduationCourses, setGraduationCourses] = useState([])
+export default function useGraduationYear({ options }: useGraduationYearProps) {
+  const [graduationYears, setGraduationYears] = useState([])
   const [cookies] = useCookies(['access_token'])
   useEffect(() => {
     ;(async () => {
       try {
-        const graduationCourses = await GraduationCourseApi.listGraduationCourse({
+        const graduationYears = await GraduationYearApi.listGraduationYear({
           page: 1,
           pageSize: 100,
           accessToken: cookies.access_token,
         })
-        if (!graduationCourses) {
+        if (!graduationYears) {
           return
         }
         if (options) {
-          return setGraduationCourses(
-            graduationCourses.data.data.map((course: any) => {
+          return setGraduationYears(
+            graduationYears.data.data.map((course: any) => {
               return { value: course.name, label: course.name }
             })
           )
         }
-        setGraduationCourses(graduationCourses.data.data)
+        setGraduationYears(graduationYears.data.data)
       } catch (err) {
         errorMessage()
       }
     })()
   }, [cookies.access_token, options])
-  return { graduationCourses }
+  return { graduationYears }
 }

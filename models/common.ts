@@ -81,4 +81,5 @@ export interface PluginNames {
   icon: any
   slug: string
   roles: string[]
+  isActive: boolean
 }

@@ -91,7 +91,7 @@ export function Menu(props: Navbar) {
                         <Link href="/dac">Văn bằng</Link>
                       </CheckPermissions>
                       <CheckPermissions requireRoles={[UNIVERSITY_ROLE, DOET_ROLE]}>
-                        <Link href="/admin">Quản lý</Link>
+                        <Link href="/admin/user">Quản lý</Link>
                       </CheckPermissions>
                       <div onClick={logout}>Đăng xuất</div>
                     </div>

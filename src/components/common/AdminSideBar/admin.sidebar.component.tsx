@@ -4,7 +4,7 @@ import _ from 'lodash'
 import usePermissions from '@/hooks/common/usePermissions'
 
 export default function AdminSideBar() {
-  const { adminPlugins } = usePermissions()
+  const { adminPlugins, activePlugin, setActivePlugin } = usePermissions()
   return (
     <aside
       id="default-sidebar"
@@ -19,7 +19,14 @@ export default function AdminSideBar() {
                 <div className="flex gap-3 items-center" key={index}>
                   {plugin.icon}
                   <Link
-                    className="flex items-center p-2 text-base font-normal text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700"
+                    onClick={() => setActivePlugin(plugin.name)}
+                    className={`flex items-center p-2 text-base  text-gray-900 rounded-lg 
+                    ${
+                      activePlugin === plugin.name
+                        ? 'font-bold bg-sky-50 text-blue-500'
+                        : 'font-normal'
+                    }
+                    dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 w-full`}
                     href={`/admin${plugin.slug}`}
                   >
                     {plugin.name}

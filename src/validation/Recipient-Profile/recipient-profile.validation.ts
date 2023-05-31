@@ -1,5 +1,6 @@
 import { dateMinimum100Y, dateUpTo6Y } from '@/constants'
 import * as yup from 'yup'
+import { ExtendValidation } from '../extend.validation'
 
 const RecipientProfileSchema = yup.object().shape({
   id: yup.string().required('Mã hồ sơ không được để trống').min(5).max(100),
@@ -24,9 +25,24 @@ const RecipientProfileSchema = yup.object().shape({
   major: yup.string().required('Ngành không được để trống'),
   placeOfBirth: yup.string().required('Nơi sinh không được để trống'),
   nation: yup.string().required('Dân tộc không được để trống'),
-  ranking: yup.string().required('Xếp loại không được để trống'),
+  ranking: yup
+    .string()
+    .required('Xếp loại không được để trống')
+    .test('is-valid-ranking', 'Xếp loại không khớp với CGPA', function (value) {
+      const cgpa = this.parent.CGPA
+      return ExtendValidation.rankingCategoriesMapping({ ranking: value, cgpa })
+    }),
   formOfTraining: yup.string().required('Hình thức đào tạo không được để trống'),
-  CGPA: yup.number().required('CGPA không được để trống').min(0).max(10),
+  CGPA: yup
+    .number()
+    .required('CGPA không được để trống')
+    .min(0)
+    .max(10)
+    .test('is-valid-cgpa', 'CGPA không khớp với xếp loại', function (value) {
+      if (!value) return false
+      const ranking = this.parent.ranking
+      return ExtendValidation.rankingCategoriesMapping({ ranking, cgpa: value })
+    }),
   gender: yup.string().required('Giới tình không được để trống'),
 })
 
