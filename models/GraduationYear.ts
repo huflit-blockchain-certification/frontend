@@ -1,3 +1,3 @@
 export interface GraduationYear {
-  year: string | Date
+  year: string | Date | undefined
 }

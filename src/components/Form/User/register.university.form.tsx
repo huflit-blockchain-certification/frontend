@@ -4,14 +4,12 @@ import React, { useEffect, useState } from 'react'
 import { useForm } from 'react-hook-form'
 import { yupResolver } from '@hookform/resolvers/yup'
 import { registerUniversitySchema } from '@/validation/User/register.university.user.validation'
-import Radio from '@/components/common/Form/Radio/radio.component'
 import { registerUserUniversityDefaultForm } from '@/default/university.register.default'
 import _ from 'lodash'
 import { useCookies } from 'react-cookie'
 import { FormProps } from 'models'
 import { RefInput } from '../../common/Form/RefInput/ref.input.component'
-import { User } from 'models/User'
-import { genderOptions } from '@/static/gender'
+import { UserUniversity } from 'models/User'
 import { commonSubmissionHandler } from '@/pages/api/common.api'
 import { UniversityApi } from '@/pages/api/User/university.api'
 import { errorMessage } from '@/components/common/Toast/response.toast.component'
@@ -20,7 +18,7 @@ function RegisterUniversityForm({ recordId, setOpen, afterActions }: FormProps) 
   const [cookies] = useCookies(['access_token'])
   const [loading, setLoading] = useState(false)
 
-  const { control, handleSubmit, reset, setValue, watch } = useForm<User>({
+  const { control, handleSubmit, reset, setValue, watch } = useForm<UserUniversity>({
     defaultValues: registerUserUniversityDefaultForm(),
     resolver: yupResolver(registerUniversitySchema),
   })
@@ -64,13 +62,6 @@ function RegisterUniversityForm({ recordId, setOpen, afterActions }: FormProps) 
       <div className="w-full">
         <FormLayout className="relative">
           <Input name="phone" label="Số điện thoại" control={control} required />
-          <Radio
-            label="Giới tính"
-            name="gender"
-            control={control}
-            options={genderOptions}
-            disabled
-          />
           <Input name="address" label="Địa chỉ" control={control} required />
           <Input name="name" label="Tên" control={control} required />
           <Input name="identity" label="Mã định danh" control={control} required />

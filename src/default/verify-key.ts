@@ -1,1 +1,3 @@
-export const verifyKeyDefault = { name: '', identity: '', key: '' }
+import { VerifyKey } from 'models/VerifyKey'
+
+export const verifyKeyDefault: VerifyKey = { name: '', identity: '', key: '' }

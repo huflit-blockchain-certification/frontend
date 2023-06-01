@@ -1,7 +1,8 @@
 import generator from '@/utils/generator'
+import { UserStudent } from 'models'
 import moment from 'moment'
 
-const registerUserStudentDefaultForm = () => {
+const registerUserStudentDefaultForm = (): UserStudent => {
   return {
     name: generator.generateRandomName(),
     address: generator.generateRandomAddress(),

@@ -69,8 +69,9 @@ export default function VerifyPage({}: VerifyPageProps) {
         <hr className="h-px my-8 bg-gray-200 border-0 dark:bg-gray-700" />
         <DACDetail
           DAC={disclosedDAC?.data?.data?.disclosedData}
-          extraFields={extraFields}
           verifyKey={disclosedDAC?.data?.data?.key}
+          identityStudent={disclosedDAC?.data?.data?.identityStudent}
+          extraFields={extraFields}
           QRCodeOptions={{ enable: true, data: qrURL }}
           pdfOptions={{ enable: true }}
         />

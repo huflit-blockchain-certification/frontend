@@ -5,5 +5,5 @@ export enum EnumCertType {
 export interface CertType {
   name: string
   type: EnumCertType | string
-  level: number | null
+  level: number | undefined
 }

@@ -11,6 +11,8 @@ const ERROR_MESSAGE = 'Đã có lỗi xảy ra !'
 const UNIVERSITY_ROLE = 'UNIVERSITY'
 const STUDENT_ROLE = 'STUDENT'
 const DOET_ROLE = 'DOET'
+const CERTIFICATE = 'CERTIFICATE'
+const DIPLOMA = 'DIPLOMA'
 
 const PLUGIN_NAMES = {
   USERS: {
@@ -145,4 +147,6 @@ export {
   dateMinimum100Y,
   fieldDefault,
   fieldShareExtend,
+  CERTIFICATE,
+  DIPLOMA,
 }

@@ -1,6 +1,7 @@
 import generator from '@/utils/generator'
+import { RecipientProfile } from 'models/RecipientProfile'
 
-export const recipientProfileDefaultForm = () => {
+export const recipientProfileDefaultForm = (): RecipientProfile => {
   return {
     id: `DAC${generator.generateRandomString(6)}`,
     iU: '',
@@ -9,14 +10,14 @@ export const recipientProfileDefaultForm = () => {
     studentName: '',
     universityName: '',
     dateOfBirth: undefined,
-    year: '2023',
+    year: undefined,
     nameCourse: '',
     major: '',
     placeOfBirth: '',
-    nation: 'Kinh',
+    nation: '',
     ranking: '',
     formOfTraining: '',
-    CGPA: 5,
+    CGPA: undefined,
     gender: '',
   }
 }

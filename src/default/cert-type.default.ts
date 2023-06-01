@@ -3,7 +3,7 @@ import { CertType } from 'models'
 const certTypeDefaultForm: CertType = {
   name: '',
   type: 'DIPLOMA',
-  level: 0,
+  level: undefined,
 }
 
 export { certTypeDefaultForm }

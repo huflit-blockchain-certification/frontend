@@ -29,6 +29,7 @@ export interface DACDetail {
   QRCodeOptions?: { enable: boolean; data: any }
   pdfOptions?: { enable: true }
   verified?: boolean
+  identityStudent?: string
 }
 export function FirstScreen({ DAC }: FirstScreenProps) {
   const dispatch = useDispatch()
@@ -80,6 +81,7 @@ export function DACDetail({
   QRCodeOptions,
   pdfOptions,
   verifyKey,
+  identityStudent,
 }: DACDetail) {
   const [isPrinting, setIsPrinting] = useState(false)
   const promiseResolveRef = useRef<null | (() => void)>(null)
@@ -138,6 +140,11 @@ export function DACDetail({
               if (!extraFields[field]) return
               return <DACCustomRender key={index} field={field} data={DAC?.[field]} DAC={DAC} />
             })}
+          {identityStudent && (
+            <p>
+              Mã sinh viên: <span className="font-bold"> {identityStudent}</span>
+            </p>
+          )}
           {verifyKey && (
             <p>
               Mã xác thực: <span className="font-bold"> {verifyKey}</span>
@@ -203,6 +210,7 @@ export default function InfoDACPage(props: InfoDACPageProps) {
                     <DACDetail
                       DAC={disclosedDAC?.data?.data?.disclosedData}
                       verifyKey={disclosedDAC?.data?.data?.key}
+                      identityStudent={disclosedDAC?.data?.data?.identityStudent}
                       extraFields={checked}
                       QRCodeOptions={{ enable: true, data: qrURL }}
                       pdfOptions={{ enable: true }}
@@ -211,7 +219,11 @@ export default function InfoDACPage(props: InfoDACPageProps) {
                 </DACStepper>
               </div>
             </Modal>
-            <DACDetail shareOptions={{ setOpen, enable: true }} DAC={DAC} />
+            <DACDetail
+              shareOptions={{ setOpen, enable: true }}
+              DAC={DAC}
+              identityStudent={DAC?.iSt}
+            />
           </div>
         </>
       ) : (

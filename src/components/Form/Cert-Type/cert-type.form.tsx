@@ -13,6 +13,7 @@ import { CertTypeSchema } from '@/validation/Cert-type/create.cert-type.validati
 import { CertTypeApi } from '@/pages/api/Cert-Type/cert-type.api'
 import { certTypeDefaultForm } from '@/default/cert-type.default'
 import { errorMessage } from '@/components/common/Toast/response.toast.component'
+import { DIPLOMA } from '@/constants'
 
 function CertTypeForm({ recordId, setOpen, afterActions }: FormProps) {
   const [cookies] = useCookies(['access_token'])
@@ -24,6 +25,9 @@ function CertTypeForm({ recordId, setOpen, afterActions }: FormProps) {
   })
   const watchType = watch('type')
   const onSubmit = async (data: CertType) => {
+    if (data.type === DIPLOMA) {
+      data.level = 0
+    }
     commonSubmissionHandler({
       afterActions,
       createRequest: CertTypeApi.createCertType,

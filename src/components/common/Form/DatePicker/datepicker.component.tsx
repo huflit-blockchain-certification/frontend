@@ -43,7 +43,7 @@ export function DatePicker({
             {...field}
             views={views && views}
             label={label}
-            value={moment(value)}
+            value={(value && moment(value)) || undefined}
             format={format ? format : 'DD-MM-YYYY'}
             onChange={(e) => {
               onChange(e)

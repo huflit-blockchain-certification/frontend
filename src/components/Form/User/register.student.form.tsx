@@ -12,7 +12,7 @@ import {
   editStudentSchema,
   registerStudentSchema,
 } from '@/validation/User/register.student.user.validation'
-import { User } from 'models/User'
+import { UserStudent } from 'models/User'
 import { RefInput } from '../../common/Form/RefInput/ref.input.component'
 import { FormProps } from 'models'
 import { genderOptions } from '@/static/gender'
@@ -24,11 +24,11 @@ function RegisterStudentForm({ recordId, setOpen, afterActions }: FormProps) {
   const [cookies] = useCookies(['access_token'])
   const [loading, setLoading] = useState(false)
 
-  const { control, handleSubmit, reset, setValue, watch } = useForm<User>({
+  const { control, handleSubmit, reset, setValue, watch } = useForm<UserStudent>({
     resolver: yupResolver(recordId ? editStudentSchema : registerStudentSchema),
     defaultValues: registerUserStudentDefaultForm(),
   })
-  const onSubmit = async (data: User) => {
+  const onSubmit = async (data: UserStudent) => {
     if (data?.dateOfBirth) {
       data.dateOfBirth = new Date(moment(data?.dateOfBirth).format('YYYY-MM-DD'))
     }

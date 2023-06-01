@@ -39,9 +39,6 @@ function RecipientProfileForm({ recordId, setOpen, afterActions, idParam }: Form
     if (data?.dateOfBirth) {
       data.dateOfBirth = new Date(moment(data?.dateOfBirth).format('YYYY-MM-DD'))
     }
-    if (data?.year) {
-      data.year = moment(data?.year).format('YYYY')
-    }
     commonSubmissionHandler({
       afterActions,
       createRequest: RecipientProfileApi.createRecipientProfile,
@@ -98,7 +95,12 @@ function RecipientProfileForm({ recordId, setOpen, afterActions, idParam }: Form
                 defaultValue={user?.userName}
                 disabled
               />
-              <Input control={control} name="universityName" label="Trường đại học" />
+              <Input
+                control={control}
+                name="universityName"
+                label="Trường đại học"
+                defaultValue={user?.name}
+              />
               <DatePicker control={control} name="dateOfBirth" label="Ngày sinh" />
               <Input control={control} name="placeOfBirth" label="Nơi sinh" />
               <Input control={control} name="nation" label="Dân tộc" />

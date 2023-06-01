@@ -53,7 +53,7 @@ export default function VerifyKeyForm() {
           Tra cứu văn bằng chứng chỉ
         </div>
         <Input control={control} label="Tên" name="name" required fullWidth />
-        <Input control={control} label="CMND" name="identity" required fullWidth />
+        <Input control={control} label="Mã sinh viên / CMND" name="identity" required fullWidth />
         <Input control={control} label="Mã" name="key" required fullWidth />
         <Button type="submit" variant="outlined">
           Tra cứu

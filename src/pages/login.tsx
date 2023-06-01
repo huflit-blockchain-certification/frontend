@@ -4,7 +4,7 @@ import { APP_NAME } from '@/static'
 import { FormHeader, MainLayout } from '@/layouts'
 import { loginSchema } from '@/validation/User/login.user.validation'
 import { yupResolver } from '@hookform/resolvers/yup'
-import * as React from 'react'
+import React from 'react'
 import { useForm } from 'react-hook-form'
 import { useRouter } from 'next/router'
 import { LoadingIndicator } from '@/components/common/LoadingIndicator/loadingIndicator.component'
@@ -18,7 +18,9 @@ export interface LoginProps {}
 export default function LoginPage(props: LoginProps) {
   const router = useRouter()
   const [cookies, setCookie, removeCookie] = useCookies<any>(['access_token', 'refresh_token'])
-
+  const now = new Date()
+  const oneWeek = 7 * 24 * 60 * 60 * 1000 // one week in milliseconds
+  const expires = new Date(now.getTime() + oneWeek)
   const {
     control,
     handleSubmit,
@@ -33,16 +35,14 @@ export default function LoginPage(props: LoginProps) {
       await AuthApi.login(data, async (record) => {
         if (!record) return
         const { accessToken, refreshToken } = record.data.tokens
+        const { userData } = record.data
         if (cookies.access_token || cookies.refresh_token) {
           removeCookie('access_token', { httpOnly: false, path: '/' })
           removeCookie('refresh_token', { httpOnly: false, path: '/' })
         }
-        const now = new Date()
-        const oneWeek = 7 * 24 * 60 * 60 * 1000 // one week in milliseconds
-        const expires = new Date(now.getTime() + oneWeek)
         setCookie('access_token', accessToken, { httpOnly: false, expires, path: '/' })
         setCookie('refresh_token', refreshToken, { httpOnly: false, expires, path: '/' })
-        localStorage.setItem('user', JSON.stringify(record.data.userData))
+        localStorage.setItem('user', JSON.stringify(userData))
         router.push('/')
       })
     } catch (err: any) {

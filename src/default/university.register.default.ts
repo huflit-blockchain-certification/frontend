@@ -1,6 +1,7 @@
 import generator from '@/utils/generator'
+import { UserUniversity } from 'models'
 
-const registerUserUniversityDefaultForm = () => {
+const registerUserUniversityDefaultForm = (): UserUniversity => {
   return {
     name: generator.generateRandomName(),
     address: generator.generateRandomAddress(),

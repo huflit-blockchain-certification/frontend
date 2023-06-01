@@ -74,6 +74,10 @@ export interface AdminUser {
   roles: string[]
   userName: string
   _id: string
+  address: string
+  email: string
+  phone: string
+  name: string
 }
 
 export interface PluginNames {

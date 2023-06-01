@@ -32,7 +32,7 @@ export function useDisclosedDAC({
       try {
         if (!idDAC) return
         setLoading(true)
-        if (activeStep === 0) {
+        if (activeStep && activeStep === 0) {
           setDisclosedDAC(undefined)
           setQRURL(undefined)
         } else if (activeStep === 1 || !activeStep) {

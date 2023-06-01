@@ -5,14 +5,14 @@ export interface RecipientProfile {
   departmentName: string
   studentName: string
   universityName: string
-  dateOfBirth: string | null
-  year: string | Date
+  dateOfBirth: string | undefined
+  year: string | Date | undefined
   nameCourse: string
   major: string
-  placeOfBirth: string
+  placeOfBirth: string | undefined
   nation: string
   ranking: string
   formOfTraining: string
-  CGPA: number
+  CGPA: number | undefined
   gender: string
 }
