@@ -1,5 +1,6 @@
 import * as React from 'react'
 import { dateFormat } from '@/utils/formatter.util'
+import { HiPencil } from 'react-icons/hi'
 
 interface ColumnsProps {
   open?: boolean
@@ -14,7 +15,6 @@ export default function useGraduationYearColumn({ open, setOpen, setRecordId }: 
       field: 'year',
       headerName: 'Năm',
       width: 100,
-      // renderCell: (params: any) => <div>{dateFormat(params?.year)}</div>,
     },
     {
       field: 'createdAt',
@@ -22,18 +22,18 @@ export default function useGraduationYearColumn({ open, setOpen, setRecordId }: 
       width: 100,
       renderCell: (params: any) => <div>{dateFormat(params?.value)}</div>,
     },
-    // {
-    //   headerName: 'Tùy chỉnh',
-    //   renderCell: (params: any) => (
-    //     <HiPencil
-    //       className="text-xl cursor-pointer"
-    //       onClick={() => {
-    //         setOpen(true)
-    //         setRecordId(params?.id)
-    //       }}
-    //     />
-    //   ),
-    // },
+    {
+      headerName: 'Tùy chỉnh',
+      renderCell: (params: any) => (
+        <HiPencil
+          className="text-xl cursor-pointer"
+          onClick={() => {
+            setOpen(true)
+            setRecordId(params?.id)
+          }}
+        />
+      ),
+    },
   ]
   return { columns }
 }

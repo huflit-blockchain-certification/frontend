@@ -12,6 +12,7 @@ import { graduationYearDefaultForm } from '@/default/graduation-year.default'
 import { graduationYearSchema } from '@/validation/Graduation-Year/graduation-year.validation'
 import { DatePicker } from '@/components/common/Form/DatePicker/datepicker.component'
 import moment from 'moment'
+import { errorMessage } from '@/components/common/Toast/response.toast.component'
 
 function GraduationYearForm({ recordId, setOpen, afterActions }: FormProps) {
   const [cookies] = useCookies(['access_token'])
@@ -36,18 +37,22 @@ function GraduationYearForm({ recordId, setOpen, afterActions }: FormProps) {
 
   useEffect(() => {
     ;(async () => {
-      if (!recordId) return
-      setLoading(true)
-      const graduationCourse = await GraduationYearApi.detailGraduationYear({
-        id: recordId,
-        accessToken: cookies.access_token,
-      })
-      if (!graduationCourse) return
-      reset(_.omit(graduationCourse.data.detail, ['_id', 'createdAt', 'updatedAt']))
-      setLoading(false)
+      try {
+        if (!recordId) return
+        setLoading(true)
+        const graduationCourse = await GraduationYearApi.detailGraduationYear({
+          id: recordId,
+          accessToken: cookies.access_token,
+        })
+        if (!graduationCourse) return
+        reset(_.omit(graduationCourse.data.data, ['_id', 'createdAt', 'updatedAt']))
+        setLoading(false)
+      } catch (err: any) {
+        setLoading(false)
+        errorMessage(err.message)
+      }
     })()
   }, [recordId])
-
   return (
     <FormHeader onSubmit={handleSubmit(onSubmit)} loading={loading}>
       <div className="w-full">

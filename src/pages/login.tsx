@@ -1,5 +1,4 @@
 import { Input } from '@/components/common/Form/Input/Input.component'
-import { RefreshTokenDTO } from '@/DTO/User/login.dto.user'
 import { APP_NAME } from '@/static'
 import { FormHeader, MainLayout } from '@/layouts'
 import { loginSchema } from '@/validation/User/login.user.validation'
@@ -25,12 +24,12 @@ export default function LoginPage(props: LoginProps) {
     control,
     handleSubmit,
     formState: { isSubmitting },
-  } = useForm<RefreshTokenDTO>({
+  } = useForm<any>({
     resolver: yupResolver(loginSchema),
     defaultValues: { userName: '', password: '' },
   })
 
-  const onSubmit = async (data: RefreshTokenDTO) => {
+  const onSubmit = async (data: any) => {
     try {
       await AuthApi.login(data, async (record) => {
         if (!record) return

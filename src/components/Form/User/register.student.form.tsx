@@ -19,6 +19,7 @@ import { genderOptions } from '@/static/gender'
 import { commonSubmissionHandler } from '@/pages/api/common.api'
 import { StudentApi } from '@/pages/api/User/student.api'
 import moment from 'moment'
+import { errorMessage } from '@/components/common/Toast/response.toast.component'
 
 function RegisterStudentForm({ recordId, setOpen, afterActions }: FormProps) {
   const [cookies] = useCookies(['access_token'])
@@ -46,25 +47,30 @@ function RegisterStudentForm({ recordId, setOpen, afterActions }: FormProps) {
 
   useEffect(() => {
     ;(async () => {
-      if (!recordId) return
-      setLoading(true)
-      const user = await StudentApi.detailUserStudent({
-        id: recordId,
-        accessToken: cookies.access_token,
-      })
-      if (!user) return
-      const response = _.omit(user.data.data, [
-        'identity',
-        'name',
-        '_id',
-        'idUser',
-        'email',
-        'createdBy',
-        'createdAt',
-        'updatedAt',
-      ])
-      reset(response)
-      setLoading(false)
+      try {
+        if (!recordId) return
+        setLoading(true)
+        const user = await StudentApi.detailUserStudent({
+          id: recordId,
+          accessToken: cookies.access_token,
+        })
+        if (!user) return
+        const response = _.omit(user.data.data, [
+          'identity',
+          'name',
+          '_id',
+          'idUser',
+          'email',
+          'createdBy',
+          'createdAt',
+          'updatedAt',
+        ])
+        reset(response)
+        setLoading(false)
+      } catch (err: any) {
+        setLoading(false)
+        errorMessage(err.message)
+      }
     })()
   }, [recordId])
 

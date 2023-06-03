@@ -1,5 +1,4 @@
-import { Toast } from '@/components/common/Toast/response.component'
-import { ERROR_MESSAGE } from '@/constants/'
+import { errorMessage, successMessage } from '@/components/common/Toast/response.toast.component'
 import { GridFilterModel, GridPaginationModel, GridRowSelectionModel } from '@mui/x-data-grid'
 import { CRUDInterface, DeleteParams, EditParams, ListParams } from 'models'
 import { useRouter } from 'next/router'
@@ -62,9 +61,10 @@ export function useTableControl({
       await Promise.all(
         rowSelectionModel.map((row) => deleteApi({ id: row, accessToken, idParam }))
       )
-      setListData(listData.filter((item: string | number) => rowSelectionModel.includes(item)))
+      setListData(listData.filter((item: any) => !rowSelectionModel.includes(item?._id)))
+      successMessage('Xóa thành công')
     } catch (err: any) {
-      Toast.fire({ title: ERROR_MESSAGE, icon: 'error' })
+      errorMessage(err.message)
     }
   }
 

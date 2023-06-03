@@ -8,8 +8,8 @@ import TableData from '@/components/common/Form/Table/table.component'
 import useStudentsColumns from '@/hooks/useColumn/useStudentColumns'
 import RegisterStudentForm from '@/components/Form/User/register.student.form'
 import { afterActions } from '@/utils/afterActions.util'
-import { PLUGIN_NAMES, UNIVERSITY_ROLE } from '@/constants/'
-import { mapUserData } from '@/utils/mapData.util'
+import { PLUGIN_NAMES, STUDENT_ROLE, UNIVERSITY_ROLE } from '@/constants/'
+import { MapData } from '@/utils/mapData.util'
 import { StudentApi } from '@/pages/api/User/student.api'
 import { isAllowAccess } from '@/utils/permissionChecker.util'
 import { useAuth } from '@/hooks/common/useAuth'
@@ -27,7 +27,6 @@ export default function StudentUserListPage({}: any) {
     loading,
     rowSelectionModel,
     handleRowSelection,
-    onDeleteRowClick,
     onFilterChange,
     handlePaginationModelChange,
     open,
@@ -52,11 +51,18 @@ export default function StudentUserListPage({}: any) {
       }}
       title={PLUGIN_NAMES.USERS.NAME}
       onCreateClick={() => setOpen(true)}
+      enableDownloadCSV
       csv={[
         {
+          titleCSV: 'Nhập tài khoản',
           enableCSV: isAllowAccess([UNIVERSITY_ROLE], roles),
-          requestAfterConfirmCSV: (data) =>
-            mapUserData(data, StudentApi.registerStudents, cookies.access_token),
+          requestAfterConfirmCSV: async (data) =>
+            await MapData.mapExcelData({
+              data,
+              requestFn: StudentApi.registerStudents,
+              cookies: cookies.access_token,
+              roles: [STUDENT_ROLE],
+            }),
           afterImport: (data) => {
             crudOperation.create(data)
           },
@@ -80,7 +86,6 @@ export default function StudentUserListPage({}: any) {
           handlePaginationModelChange={handlePaginationModelChange}
           onFilterChange={onFilterChange}
           pagination={pagination}
-          onDeleteRowClick={onDeleteRowClick}
           totalPage={totalPage}
         />
       </Box>

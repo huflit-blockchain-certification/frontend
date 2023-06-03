@@ -23,17 +23,15 @@ export function CardCertificate({
       className="block max-w-md p-6 bg-white border border-gray-200 rounded-lg shadow hover:bg-gray-100 dark:bg-gray-800 
           dark:border-gray-700 dark:hover:bg-gray-700"
     >
-      <div className="flex">
-        <h5 className="mb-2 text-xl font-bold tracking-tight text-gray-900 dark:text-white flex-1">
-          {nameTypeCertificate}
-        </h5>
-        {dispensingStatus && (
-          <span className="inline-flex items-center bg-green-100 text-green-800 text-xs font-medium mr-2 px-2.5 py-0.5 rounded-full dark:bg-green-900 dark:text-green-300">
-            <span className="w-2 h-2 mr-1 bg-green-500 rounded-full"></span>
-            Đã xác nhận
-          </span>
-        )}
-      </div>
+      <h5 className="mb-2 text-xl font-bold tracking-tight text-gray-900 dark:text-white">
+        {nameTypeCertificate}
+      </h5>
+      {dispensingStatus && (
+        <span className="inline-flex items-center bg-green-100 text-green-800 text-xs font-medium mr-2 px-2.5 py-0.5 rounded-full dark:bg-green-900 dark:text-green-300">
+          <span className="w-2 h-2 mr-1 bg-green-500 rounded-full"></span>
+          Đã xác nhận
+        </span>
+      )}
       <p className="font-normal text-gray-700 dark:text-gray-400">{nameCourse}</p>
       <a href="#" className="inline-flex items-center text-blue-600 hover:underline">
         Chia sẻ

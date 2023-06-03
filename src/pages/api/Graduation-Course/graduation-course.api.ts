@@ -38,8 +38,7 @@ const GraduationCourseApi: any = {
 
       return record
     } catch (err: any) {
-      console.log(err.message)
-      errorMessage()
+      throw new Error(err.message)
     }
   },
   editGraduationCourse: async ({ id, data, accessToken }: EditParams) => {

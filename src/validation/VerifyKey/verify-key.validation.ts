@@ -15,6 +15,7 @@ const verifyKeySchema = yup.object().shape({
     .string()
     .required('Mã không được để trống')
     .matches(/^[0-9]{10}$/, 'Mã phải có 9 số'),
+  idDAC: yup.string().required('Mã hồ sơ không được để trống').min(5).max(100),
 })
 
 export { verifyKeySchema }

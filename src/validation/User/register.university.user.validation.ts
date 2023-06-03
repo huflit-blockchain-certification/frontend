@@ -4,9 +4,12 @@ export const registerUniversitySchema = yup.object().shape({
   name: yup
     .string()
     .required('Tên không được để trống')
-    .min(3)
-    .max(50)
-    .matches(/^[a-zA-Z ]+$/),
+    .min(3, 'Tên trường đại học cần ít nhất 3 ký tự')
+    .max(50, 'Tên trường đại học không được vượt quá 50 ký tự')
+    .matches(
+      /^[^\d!"#$%&'()*+,\-.\/:;<=>?@\[\\\]^_`{|}~0-9]+$/,
+      'Tên trường đại học không được có ký tự đặc biệt và số'
+    ),
   phone: yup
     .string()
     .required('Số điện thoại không được để trống')

@@ -35,7 +35,7 @@ export default function VerifyKeyForm() {
         setLoading(false)
       } catch (err: any) {
         setLoading(false)
-        errorMessage(err)
+        errorMessage(err.message)
       }
     })()
   }
@@ -55,6 +55,7 @@ export default function VerifyKeyForm() {
         <Input control={control} label="Tên" name="name" required fullWidth />
         <Input control={control} label="Mã sinh viên / CMND" name="identity" required fullWidth />
         <Input control={control} label="Mã" name="key" required fullWidth />
+        <Input control={control} label="Mã hồ sơ" name="idDAC" required fullWidth />
         <Button type="submit" variant="outlined">
           Tra cứu
         </Button>

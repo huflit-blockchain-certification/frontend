@@ -12,7 +12,7 @@ export default function useUniversityColumns({ open, setOpen, setRecordId }: Col
     { field: '_id', headerName: 'ID', width: 250 },
     {
       field: 'identity',
-      headerName: 'CMND',
+      headerName: 'Mã định danh',
       width: 150,
     },
     {
@@ -25,7 +25,6 @@ export default function useUniversityColumns({ open, setOpen, setRecordId }: Col
       headerName: 'Email',
       width: 200,
     },
-    { field: 'gender', headerName: 'Giới tính' },
     { field: 'createdAt', headerName: 'Ngày tạo', width: 200 },
     {
       headerName: 'Tùy chỉnh',

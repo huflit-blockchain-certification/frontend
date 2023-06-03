@@ -26,6 +26,7 @@ import { RecipientProfile } from 'models/RecipientProfile'
 import { useAuth } from '@/hooks/common/useAuth'
 import moment from 'moment'
 import useGraduationYear from '@/hooks/common/useGraduationYear'
+import { errorMessage } from '@/components/common/Toast/response.toast.component'
 
 function RecipientProfileForm({ recordId, setOpen, afterActions, idParam }: FormProps) {
   const [cookies] = useCookies(['access_token'])
@@ -55,27 +56,33 @@ function RecipientProfileForm({ recordId, setOpen, afterActions, idParam }: Form
   const { graduationYears } = useGraduationYear({ options: true })
   useEffect(() => {
     ;(async () => {
+      try {
+        if (!recordId) return
+        setLoading(true)
+        const recipientProfile = await RecipientProfileApi.detailRecipientProfile({
+          id: recordId,
+          accessToken: cookies.access_token,
+          idParam,
+        })
+        if (!recipientProfile) return
+        const response = recipientProfile.data.data
+        reset(
+          _.pick(response, [
+            'year',
+            'nameCourse',
+            'major',
+            'ranking',
+            'formOfTraining',
+            'CGPA',
+            'departmentName',
+          ])
+        )
+        setLoading(false)
+      } catch (err: any) {
+        setLoading(false)
+        errorMessage(err.message)
+      }
       if (!recordId) return
-      setLoading(true)
-      const recipientProfile = await RecipientProfileApi.detailRecipientProfile({
-        id: recordId,
-        accessToken: cookies.access_token,
-        idParam,
-      })
-      if (!recipientProfile) return
-      const response = recipientProfile.data.data
-      reset(
-        _.pick(response, [
-          'year',
-          'nameCourse',
-          'major',
-          'ranking',
-          'formOfTraining',
-          'CGPA',
-          'departmentName',
-        ])
-      )
-      setLoading(false)
     })()
   }, [idParam, recordId, reset, cookies.access_token])
   return (

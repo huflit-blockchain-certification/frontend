@@ -3,6 +3,7 @@ import React from 'react'
 import Button from '@mui/material/Button'
 import { GoBack } from '@/components/common/Goback/goback.component'
 import { CSVInput } from '@/components/common/Form/CSVInput/csvinput.component'
+import { Download } from '@/components/common/Download/download.component'
 interface CSV {
   enableCSV?: boolean
   requestAfterConfirmCSV?: (data: any[]) => Promise<any>
@@ -19,6 +20,7 @@ interface TableLayoutProps {
   onCreateClick?: () => void
   csv?: CSV[]
   additionalButtons?: React.ReactNode
+  enableDownloadCSV?: boolean
   disabledOptions?: DisabledOptions
 }
 
@@ -30,6 +32,7 @@ export function TableLayout({
   csv,
   additionalButtons,
   disabledOptions,
+  enableDownloadCSV,
 }: TableLayoutProps) {
   const router = useRouter()
   return (
@@ -40,6 +43,9 @@ export function TableLayout({
           <div className="text-2xl font-bold">{title?.toUpperCase() || ''}</div>
         </div>
         <div className="ml-auto flex gap-3 h-9">
+          {enableDownloadCSV && (
+            <Download title="Tải biểu mẫu" fileName="BieuMau.csv" filePath="/BieuMau.xlsx" />
+          )}
           {csv &&
             csv.length > 0 &&
             csv.map((c, index) => {

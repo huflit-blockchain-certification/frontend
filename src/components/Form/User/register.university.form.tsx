@@ -48,8 +48,9 @@ function RegisterUniversityForm({ recordId, setOpen, afterActions }: FormProps) 
         response.userName = response.idUser.userName
         reset(response)
         setLoading(false)
-      } catch (err) {
-        errorMessage()
+      } catch (err: any) {
+        setLoading(false)
+        errorMessage(err.message)
       }
     })()
   }, [recordId])

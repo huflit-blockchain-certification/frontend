@@ -16,6 +16,7 @@ import { Select } from '@/components/common/Form/Select/select.component'
 import { isAllowAccess } from '@/utils/permissionChecker.util'
 import { useAuth } from '@/hooks/common/useAuth'
 import { errorMessage, successMessage } from '@/components/common/Toast/response.toast.component'
+import { MapData } from '@/utils/mapData.util'
 
 export default function RecipientProfilePage() {
   const idKey = 'identity'
@@ -62,21 +63,18 @@ export default function RecipientProfilePage() {
       title={PLUGIN_NAMES.RECIPIENT_PROFILE.NAME}
       onCreateClick={() => setOpen(true)}
       disabledOptions={{ disableMainBtn: !isAllowAccess([UNIVERSITY_ROLE], roles) }}
+      enableDownloadCSV
       csv={[
         {
           enableCSV: isAllowAccess([UNIVERSITY_ROLE], roles),
           titleCSV: 'Nhập hồ sơ',
-          requestAfterConfirmCSV: async (data) => {
-            try {
-              return await RecipientProfileApi.createRecipientProfile({
-                data,
-                accessToken: cookies.access_token,
-                idParam,
-              })
-            } catch (err: any) {
-              errorMessage(err.message)
-            }
-          },
+          requestAfterConfirmCSV: async (data) =>
+            await MapData.mapExcelData({
+              data,
+              requestFn: RecipientProfileApi.createRecipientProfile,
+              cookies: cookies.access_token,
+              idParam,
+            }),
           afterImport(data) {
             crudOperation.create(data)
           },
@@ -84,17 +82,14 @@ export default function RecipientProfilePage() {
         {
           enableCSV: isAllowAccess([DOET_ROLE], roles),
           titleCSV: 'Nhập số hiệu',
-          requestAfterConfirmCSV: async (data) => {
-            try {
-              return await RecipientProfileApi.createRegistrationNumber({
-                data,
-                accessToken: cookies.access_token,
-                idParam,
-              })
-            } catch (err: any) {
-              errorMessage(err.message)
-            }
-          },
+          requestAfterConfirmCSV: async (data) =>
+            await MapData.mapExcelData({
+              data,
+              requestFn: RecipientProfileApi.createRegistrationNumber,
+              cookies: cookies.access_token,
+              idParam,
+              useAlternativeKey: true,
+            }),
           afterImport(data) {
             crudOperation.edit(data)
           },
@@ -102,17 +97,14 @@ export default function RecipientProfilePage() {
         {
           enableCSV: isAllowAccess([UNIVERSITY_ROLE], roles),
           titleCSV: 'Nhập số vào sổ',
-          requestAfterConfirmCSV: async (data) => {
-            try {
-              return await RecipientProfileApi.createIDNumber({
-                data,
-                accessToken: cookies.access_token,
-                idParam,
-              })
-            } catch (err: any) {
-              errorMessage(err.message)
-            }
-          },
+          requestAfterConfirmCSV: async (data) =>
+            await MapData.mapExcelData({
+              data,
+              requestFn: RecipientProfileApi.createIDNumber,
+              cookies: cookies.access_token,
+              idParam,
+              useAlternativeKey: true,
+            }),
           afterImport(data) {
             crudOperation.edit(data)
           },
@@ -169,7 +161,7 @@ export default function RecipientProfilePage() {
               afterIssue={(response: any) => {
                 try {
                   setListData(
-                    listData.filter((item: string | number) => response?.data?.data.includes(item))
+                    listData.filter((item: any) => !response?.data?.data.includes(item?._id))
                   )
                   successMessage('Cấp bằng')
                   setOpen(false)

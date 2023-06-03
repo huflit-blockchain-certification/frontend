@@ -15,7 +15,7 @@ export default function useStudentsColumns({ open, setOpen, setRecordId }: Colum
     { field: '_id', headerName: 'ID', width: 250 },
     {
       field: 'identity',
-      headerName: 'CMND',
+      headerName: 'Mã định danh',
       width: 150,
     },
     {

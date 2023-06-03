@@ -1,9 +1,8 @@
-import { RefreshTokenDTO } from '@/DTO/User/login.dto.user'
 import { successMessage } from '@/components/common/Toast/response.toast.component'
 import { fetcher } from '../fetcher'
 
 const AuthApi = {
-  login: async (data: RefreshTokenDTO, actions: (action: any) => void) => {
+  login: async (data: any, actions: (action: any) => void) => {
     try {
       const record = await fetcher({
         method: 'POST',

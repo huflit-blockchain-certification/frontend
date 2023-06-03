@@ -12,6 +12,7 @@ import { GraduationCourse } from 'models/GraduationCourse'
 import { DatePicker } from '@/components/common/Form/DatePicker/datepicker.component'
 import { graduationCourseSchema } from '@/validation/Graduation-Course/graduation-course.validation'
 import { graduationCourseDefaultForm } from '@/default/graduation-course.default'
+import { errorMessage } from '@/components/common/Toast/response.toast.component'
 
 function GraduationCourseForm({ recordId, setOpen, afterActions }: FormProps) {
   const [cookies] = useCookies(['access_token'])
@@ -36,15 +37,20 @@ function GraduationCourseForm({ recordId, setOpen, afterActions }: FormProps) {
 
   useEffect(() => {
     ;(async () => {
-      if (!recordId) return
-      setLoading(true)
-      const graduationCourse = await GraduationCourseApi.detailGraduationCourse({
-        id: recordId,
-        accessToken: cookies.access_token,
-      })
-      if (!graduationCourse) return
-      reset(_.omit(graduationCourse.data.data, ['_id', 'createdAt', 'updatedAt']))
-      setLoading(false)
+      try {
+        if (!recordId) return
+        setLoading(true)
+        const graduationCourse = await GraduationCourseApi.detailGraduationCourse({
+          id: recordId,
+          accessToken: cookies.access_token,
+        })
+        if (!graduationCourse) return
+        reset(_.omit(graduationCourse.data.data, ['_id', 'createdAt', 'updatedAt']))
+        setLoading(false)
+      } catch (err: any) {
+        setLoading(false)
+        errorMessage(err.message)
+      }
     })()
   }, [recordId])
 

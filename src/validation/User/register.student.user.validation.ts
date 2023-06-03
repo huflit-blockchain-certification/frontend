@@ -5,9 +5,12 @@ const registerStudentSchema = yup.object().shape({
   name: yup
     .string()
     .required('Tên không được để trống')
-    .min(3)
-    .max(50)
-    .matches(/^[a-zA-Z ]+$/),
+    .min(3, 'Tên sinh viên cần ít nhất 3 ký tự')
+    .max(50, 'Tên sinh viên không được vượt quá 50 ký tự')
+    .matches(
+      /^[^\d!"#$%&'()*+,\-.\/:;<=>?@\[\\\]^_`{|}~0-9]+$/,
+      'Tên sinh viên không được có ký tự đặc biệt và số'
+    ),
   phone: yup
     .string()
     .required('Số điện thoại không được để trống')

@@ -47,7 +47,7 @@ export function Modal({ children, open, setOpen, beforeClose, width, height }: C
         <Box sx={style}>
           <div className="w-100 h-100 relative p-8">
             <GrClose
-              size={28}
+              size={20}
               className="absolute right-2 top-2 cursor-pointer"
               onClick={handleClose}
             />

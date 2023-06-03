@@ -31,7 +31,7 @@ export default function useRecipientProfileColumn({
     { field: 'id', headerName: 'Mã hồ sơ' },
     {
       field: 'iSt',
-      headerName: 'Mã học sinh',
+      headerName: 'Mã sinh viên',
       width: 150,
     },
     {
@@ -41,7 +41,7 @@ export default function useRecipientProfileColumn({
     },
     {
       field: 'studentName',
-      headerName: 'Tên học sinh',
+      headerName: 'Tên',
       width: 150,
     },
     {
@@ -56,7 +56,7 @@ export default function useRecipientProfileColumn({
     },
     {
       field: 'universityName',
-      headerName: 'Trường',
+      headerName: 'Tên trường',
       width: 150,
     },
     { field: 'year', headerName: 'Năm tốt nghiệp', width: 150 },

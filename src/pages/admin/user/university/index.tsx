@@ -7,8 +7,8 @@ import { Modal } from '@/components/common/Modal/modal.component'
 import TableData from '@/components/common/Form/Table/table.component'
 import RegisterUniversityForm from '@/components/Form/User/register.university.form'
 import { afterActions } from '@/utils/afterActions.util'
-import { DOET_ROLE, PLUGIN_NAMES } from '@/constants/'
-import { mapUserData } from '@/utils/mapData.util'
+import { DOET_ROLE, PLUGIN_NAMES, UNIVERSITY_ROLE } from '@/constants/'
+import { MapData } from '@/utils/mapData.util'
 import { UniversityApi } from '@/pages/api/User/university.api'
 import useUniversityColumns from '@/hooks/useColumn/useUniversityColumn'
 import { isAllowAccess } from '@/utils/permissionChecker.util'
@@ -23,6 +23,7 @@ export default function UniversityUserListPage() {
     rowSelectionModel,
     onFilterChange,
     handlePaginationModelChange,
+    handleRowSelection,
     open,
     recordId,
     setRecordId,
@@ -43,11 +44,18 @@ export default function UniversityUserListPage() {
       disabledOptions={{
         disableMainBtn: !isAllowAccess([DOET_ROLE], roles),
       }}
+      enableDownloadCSV
       csv={[
         {
+          titleCSV: 'Nhập tài khoản',
           enableCSV: isAllowAccess([DOET_ROLE], roles),
-          requestAfterConfirmCSV: (data) =>
-            mapUserData(data, UniversityApi.registerUniversities, cookies.access_token),
+          requestAfterConfirmCSV: async (data) =>
+            await MapData.mapExcelData({
+              data,
+              requestFn: UniversityApi.registerUniversities,
+              cookies: cookies.access_token,
+              roles: [UNIVERSITY_ROLE],
+            }),
           afterImport: (data) => {
             crudOperation.create(data)
           },
@@ -66,6 +74,7 @@ export default function UniversityUserListPage() {
           columns={columns}
           listData={listData}
           loading={loading}
+          handleRowSelection={handleRowSelection}
           rowSelectionModel={rowSelectionModel}
           handlePaginationModelChange={handlePaginationModelChange}
           onFilterChange={onFilterChange}

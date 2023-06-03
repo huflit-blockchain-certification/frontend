@@ -1,5 +1,5 @@
 import { fetcher } from '../fetcher'
-import { errorMessage, successMessage } from '@/components/common/Toast/response.toast.component'
+import { successMessage } from '@/components/common/Toast/response.toast.component'
 import { CreateParams, DeleteParams, DetailParams, EditParams, ListParams } from 'models'
 
 const GraduationYearApi = {
@@ -13,8 +13,7 @@ const GraduationYearApi = {
       })
       return record
     } catch (err: any) {
-      console.log(err.message)
-      errorMessage(err.message)
+      throw new Error(err.message)
     }
   },
   deleteGraduationYear: async ({ id, accessToken }: DeleteParams) => {
@@ -39,8 +38,7 @@ const GraduationYearApi = {
 
       return record
     } catch (err: any) {
-      console.log(err.message)
-      errorMessage()
+      throw new Error(err.message)
     }
   },
   editGraduationYear: async ({ id, data, accessToken }: EditParams) => {
@@ -54,8 +52,7 @@ const GraduationYearApi = {
       successMessage()
       return record
     } catch (err: any) {
-      console.log(err.message)
-      errorMessage()
+      throw new Error(err.message)
     }
   },
   listGraduationYear: async ({ page, accessToken }: ListParams) => {
@@ -67,7 +64,7 @@ const GraduationYearApi = {
       })
       return record
     } catch (err: any) {
-      console.log(err.message)
+      throw new Error(err.message)
     }
   },
 }

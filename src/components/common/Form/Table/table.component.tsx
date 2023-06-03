@@ -62,6 +62,7 @@ export default function TableData({
           disableColumnFilter
           paginationMode="server"
           rowSelectionModel={rowSelectionModel}
+          onRowSelectionModelChange={handleRowSelection}
           slots={{ toolbar: GridToolbar }}
           slotProps={{
             toolbar: {
@@ -71,13 +72,14 @@ export default function TableData({
             },
           }}
           disableColumnSelector
-          onRowSelectionModelChange={handleRowSelection}
           onPaginationModelChange={handlePaginationModelChange}
           onFilterModelChange={onFilterChange}
           paginationModel={{ ...pagination, page: pagination?.page - 1 }}
           pageSizeOptions={[5]}
           filterMode="server"
-          checkboxSelection
+          checkboxSelection={
+            handleRowSelection && rowSelectionModel && onDeleteRowClick ? true : false
+          }
           disableRowSelectionOnClick
           {...rest}
         />

@@ -122,13 +122,52 @@ const fieldDefault = [
   'idNumber',
   'key',
 ]
+
 const fieldShareExtend = ['CGPA', 'ranking', 'formOfTraining']
 const dateUpTo6Y = new Date(Date.now() - 1000 * 60 * 60 * 24 * 365 * 6) // go back by 6 years
 const dateMinimum100Y = new Date(Date.now() - 1000 * 60 * 60 * 24 * 365 * 100) // go back by 100 years
 
 const SET_ACCESS_TOKEN = 'SET_ACCESS_TOKEN'
 const SET_CHECKED_FIELD = 'SET_CHECKED_FIELD'
-
+const excelKeysMapping = [
+  //Uni
+  { vn: 'Số điện thoại', en: 'phone' },
+  { vn: 'Địa chỉ', en: 'address' },
+  { vn: 'Tên', en: 'name' },
+  { vn: 'Mã định danh', en: 'identity' },
+  { vn: 'Tên đăng nhập', en: 'userName' },
+  {
+    vn: 'Email',
+    en: 'email',
+  },
+  {
+    vn: 'Mật khẩu',
+    en: 'password',
+  },
+  //Student
+  { vn: 'Ngày sinh', en: 'dateOfBirth' },
+  { vn: 'Giới tính', en: 'gender' },
+  { vn: 'Dân tộc', en: 'nation' },
+  //Recipient-Profile
+  { vn: 'Mã hồ sơ', en: 'id', alternativeKey: 'idDAC' },
+  { vn: 'Mã trường', en: 'iU' },
+  { vn: 'Mã sinh viên', en: 'iSt' },
+  { vn: 'Khoa', en: 'departmentName' },
+  { vn: 'Tên sinh viên', en: 'studentName' },
+  { vn: 'Tên trường', en: 'universityName' },
+  // { vn: 'Ngày sinh', en: 'dateOfBirth' },
+  { vn: 'Năm tốt nghiệp', en: 'year' },
+  { vn: 'Khóa tốt nghiệp', en: 'nameCourse' },
+  { vn: 'Ngành', en: 'major' },
+  { vn: 'Nơi sinh', en: 'placeOfBirth' },
+  // { vn: 'Dân tộc', en: 'nation' },
+  { vn: 'Xếp loại', en: 'ranking' },
+  { vn: 'Hình thức đào tạo', en: 'formOfTraining' },
+  { vn: 'CGPA', en: 'CGPA' },
+  //Registration Num & idNumber
+  { vn: 'Số hiệu', en: 'registrationNumber' },
+  { vn: 'Số vào sổ', en: 'idNumber' },
+]
 export {
   API_VERSION,
   API_URL,
@@ -149,4 +188,5 @@ export {
   fieldShareExtend,
   CERTIFICATE,
   DIPLOMA,
+  excelKeysMapping,
 }
