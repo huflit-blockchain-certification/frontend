@@ -20,6 +20,8 @@ import { commonSubmissionHandler } from '@/pages/api/common.api'
 import { StudentApi } from '@/pages/api/User/student.api'
 import moment from 'moment'
 import { errorMessage } from '@/components/common/Toast/response.toast.component'
+import { AutoComplete } from '@/components/common/Form/AutoComplete/autocomplete.component'
+import { cityOptions } from '@/static/city'
 
 function RegisterStudentForm({ recordId, setOpen, afterActions }: FormProps) {
   const [cookies] = useCookies(['access_token'])
@@ -82,7 +84,13 @@ function RegisterStudentForm({ recordId, setOpen, afterActions }: FormProps) {
           <Radio label="Giới tính" name="gender" control={control} options={genderOptions} />
           <Input name="nation" label="Dân tộc" control={control} required />
           <DatePicker name="dateOfBirth" label="Ngày sinh" control={control} required />
-          <Input name="address" label="Địa chỉ" control={control} required />
+          <AutoComplete
+            name="address"
+            label="Địa chỉ"
+            control={control}
+            required
+            options={cityOptions}
+          />
           {!recordId && (
             <>
               <Input name="name" label="Tên" control={control} required />

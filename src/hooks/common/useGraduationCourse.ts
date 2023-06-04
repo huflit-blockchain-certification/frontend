@@ -29,8 +29,8 @@ export default function useGraduationCourse({ options }: useGraduationCourseProp
           )
         }
         setGraduationCourses(graduationCourses.data.data)
-      } catch (err) {
-        errorMessage()
+      } catch (err: any) {
+        errorMessage(err.message)
       }
     })()
   }, [cookies.access_token, options])

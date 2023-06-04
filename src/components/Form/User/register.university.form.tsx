@@ -63,7 +63,7 @@ function RegisterUniversityForm({ recordId, setOpen, afterActions }: FormProps) 
       <div className="w-full">
         <FormLayout className="relative">
           <Input name="phone" label="Số điện thoại" control={control} required />
-          <Input name="address" label="Địa chỉ" control={control} required />
+          <Input name="address" label="Địa chỉ trụ sở chính" control={control} required />
           <Input name="name" label="Tên" control={control} required />
           <Input name="identity" label="Mã định danh" control={control} required />
           <RefInput

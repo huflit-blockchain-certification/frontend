@@ -165,8 +165,8 @@ export default function RecipientProfilePage() {
                   )
                   successMessage('Cấp bằng')
                   setOpen(false)
-                } catch (err) {
-                  errorMessage()
+                } catch (err: any) {
+                  errorMessage(err.message)
                 }
               }}
             />

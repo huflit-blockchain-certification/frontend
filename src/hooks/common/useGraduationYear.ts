@@ -29,8 +29,8 @@ export default function useGraduationYear({ options }: useGraduationYearProps) {
           )
         }
         setGraduationYears(graduationYears.data.data)
-      } catch (err) {
-        errorMessage()
+      } catch (err: any) {
+        errorMessage(err.message)
       }
     })()
   }, [cookies.access_token, options])

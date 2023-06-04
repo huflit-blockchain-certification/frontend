@@ -45,7 +45,7 @@ export default function VerifyPage({}: VerifyPageProps) {
     })()
   }, [JSON.stringify(disclosedDAC), cookies.access_token, verified])
   if (loading) return <LoadingIndicator />
-  if (verified === false)
+  if (verified === false || !disclosedDAC)
     return (
       <>
         <div
@@ -59,7 +59,7 @@ export default function VerifyPage({}: VerifyPageProps) {
         </div>
       </>
     )
-  if (verified === true) {
+  if (verified === true && disclosedDAC) {
     return (
       <div className="container py-5">
         <div className="flex flex-col items-center">

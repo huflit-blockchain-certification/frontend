@@ -30,8 +30,8 @@ export default function useStuOfUni({ options }: useStuOfUniProps) {
           )
         }
         setStudentsOfUniversity(graduationCourses.data.data)
-      } catch (err) {
-        errorMessage()
+      } catch (err: any) {
+        errorMessage(err.message)
       }
     })()
   }, [])

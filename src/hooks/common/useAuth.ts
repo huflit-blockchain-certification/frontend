@@ -55,8 +55,8 @@ export function useAuth() {
           return await AuthApi.refreshToken()
         }
         setAccessToken(accessToken)
-      } catch (err) {
-        errorMessage()
+      } catch (err: any) {
+        errorMessage(err.message)
       }
     })()
   }, [cookies?.access_token, router])

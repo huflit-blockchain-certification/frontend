@@ -47,8 +47,9 @@ export function useDisclosedDAC({
           setDisclosedDAC(disclosedDAC)
         }
         setLoading(false)
-      } catch (err) {
-        errorMessage()
+      } catch (err: any) {
+        setLoading(false)
+        errorMessage(err.message)
       }
     })()
   }, [activeStep, idDAC, cookies.access_token, JSON.stringify(checked)])
