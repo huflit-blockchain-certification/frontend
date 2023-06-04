@@ -39,7 +39,7 @@ const PLUGIN_NAMES = {
   GRADUAUATION_COURSE: {
     NAME: 'Khóa tốt nghiệp',
     SLUG: '/graduation-course',
-    ROLES: ['UNIVERSITY'],
+    ROLES: ['DOET'],
     ICON: <SlGraduation size={20} />,
     ISACTIVE: false,
   },
