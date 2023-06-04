@@ -42,6 +42,7 @@ export default function LoginPage(props: LoginProps) {
         setCookie('access_token', accessToken, { httpOnly: false, expires, path: '/' })
         setCookie('refresh_token', refreshToken, { httpOnly: false, expires, path: '/' })
         localStorage.setItem('user', JSON.stringify(userData))
+        window.dispatchEvent(new Event('storage'))
         router.push('/')
       })
     } catch (err: any) {

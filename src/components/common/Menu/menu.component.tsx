@@ -6,9 +6,8 @@ import Link from 'next/link'
 import { useCookies } from 'react-cookie'
 import CheckPermissions from '../Auth/check-permissions'
 import { DOET_ROLE, STUDENT_ROLE, UNIVERSITY_ROLE } from '@/constants'
-import { Modal } from '../Modal/modal.component'
-import { Button, TextField } from '@mui/material'
-
+import { CgProfile } from 'react-icons/cg'
+import { useAuth } from '@/hooks/common/useAuth'
 export interface Navbar {}
 
 export function Menu(props: Navbar) {
@@ -16,6 +15,7 @@ export function Menu(props: Navbar) {
   const [cookies, setCookie, removeCookie] = useCookies(['access_token', 'refresh_token'])
   const [accessToken, setAccessToken] = useState()
   const [anchorEl, setAnchorEl] = useState<HTMLElement | null>(null)
+  const { user } = useAuth()
   useEffect(() => {
     setAccessToken(cookies.access_token)
   }, [cookies.access_token])
@@ -71,10 +71,13 @@ export function Menu(props: Navbar) {
               {accessToken && (
                 <li>
                   <a
-                    className="cursor-pointer block py-2 pl-3 pr-4 text-gray-700 rounded hover:bg-gray-100 md:hover:bg-transparent md:border-0 md:hover:text-blue-700 md:p-0 dark:text-gray-400 md:dark:hover:text-white dark:hover:bg-gray-700 dark:hover:text-white md:dark:hover:bg-transparent"
+                    className="cursor-pointer py-2 pl-3 pr-4 text-gray-700 rounded 
+                    hover:bg-gray-100 md:hover:bg-transparent md:border-0 md:hover:text-blue-700 md:p-0 dark:text-gray-400 
+                    md:dark:hover:text-white dark:hover:bg-gray-700 dark:hover:text-white md:dark:hover:bg-transparent flex gap-1"
                     onClick={handleOpen}
                   >
-                    Tài khoản
+                    <CgProfile size={20} />
+                    <span>{user?.name || 'Tài khoản'}</span>
                   </a>
                   <Popover
                     id={id}

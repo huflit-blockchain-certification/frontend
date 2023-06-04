@@ -56,7 +56,7 @@ export function Select({
               fullWidth={fullWidth && true}
               ref={ref}
               placeholder={placeholder ?? ''}
-              MenuProps={{ PaperProps: { sx: { maxHeight: 350 } } }}
+              MenuProps={{ PaperProps: { sx: { maxHeight: 200 } } }}
               size={size || 'medium'}
             >
               {options &&

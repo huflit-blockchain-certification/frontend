@@ -7,7 +7,7 @@ export interface RecipientProfile {
   universityName: string
   dateOfBirth: string | undefined
   year: string | Date | undefined
-  nameCourse: string
+  nameCourse: string | undefined
   major: string
   placeOfBirth: string | undefined
   nation: string

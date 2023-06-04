@@ -1,9 +1,9 @@
-import generator from '@/utils/generator'
+import Generator from '@/utils/generator'
 import { RecipientProfile } from 'models/RecipientProfile'
 
 export const recipientProfileDefaultForm = (): RecipientProfile => {
   return {
-    id: `DAC${generator.generateRandomString(6)}`,
+    id: `DAC${Generator.generateRandomString(6)}`,
     iU: '',
     iSt: '',
     departmentName: '',

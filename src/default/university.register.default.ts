@@ -1,15 +1,15 @@
-import generator from '@/utils/generator'
+import Generator from '@/utils/generator'
 import { UserUniversity } from 'models'
 
 const registerUserUniversityDefaultForm = (): UserUniversity => {
   return {
-    name: generator.generateRandomName(),
-    address: generator.generateRandomAddress(),
-    email: generator.generateEmail(),
+    name: Generator.generateRandomName(),
+    address: Generator.generateRandomAddress(),
+    email: Generator.generateEmail(),
     gender: 'OTHER',
-    identity: generator.generateRandomString(12),
+    identity: Generator.generateRandomString(12),
     password: '123456',
-    phone: generator.generateRandomString(10),
+    phone: Generator.generateRandomString(10),
     userName: '',
     roles: ['UNIVERSITY'],
   }

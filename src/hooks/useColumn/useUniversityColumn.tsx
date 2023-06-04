@@ -1,4 +1,4 @@
-import { HiPencil } from 'react-icons/hi'
+import { HiEye } from 'react-icons/hi'
 import * as React from 'react'
 
 interface ColumnsProps {
@@ -29,7 +29,7 @@ export default function useUniversityColumns({ open, setOpen, setRecordId }: Col
     {
       headerName: 'Tùy chỉnh',
       renderCell: (params: any) => (
-        <HiPencil
+        <HiEye
           className="text-xl cursor-pointer"
           onClick={() => {
             setOpen(true)

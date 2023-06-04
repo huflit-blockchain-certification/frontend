@@ -27,6 +27,9 @@ import { useAuth } from '@/hooks/common/useAuth'
 import moment from 'moment'
 import useGraduationYear from '@/hooks/common/useGraduationYear'
 import { errorMessage } from '@/components/common/Toast/response.toast.component'
+import { AutoComplete } from '@/components/common/Form/AutoComplete/autocomplete.component'
+import { nationOptions } from '@/static/nation'
+import { cityOptions } from '@/static/city'
 
 function RecipientProfileForm({ recordId, setOpen, afterActions, idParam }: FormProps) {
   const [cookies] = useCookies(['access_token'])
@@ -109,25 +112,41 @@ function RecipientProfileForm({ recordId, setOpen, afterActions, idParam }: Form
                 defaultValue={user?.name}
               />
               <DatePicker control={control} name="dateOfBirth" label="Ngày sinh" />
-              <Input control={control} name="placeOfBirth" label="Nơi sinh" />
-              <Input control={control} name="nation" label="Dân tộc" />
+              <AutoComplete
+                control={control}
+                name="placeOfBirth"
+                label="Nơi sinh"
+                options={cityOptions}
+              />
+              <AutoComplete
+                control={control}
+                name="nation"
+                label="Dân tộc"
+                options={nationOptions}
+              />
             </>
           )}
-          <Select
+          <AutoComplete
             control={control}
             name="departmentName"
             label="Khoa"
             options={departmentOptions}
           />
-          <Select control={control} name="major" label="Ngành" options={majorOptions} />
-          <Select
+          <AutoComplete control={control} name="major" label="Ngành" options={majorOptions} />
+          <AutoComplete
             control={control}
             name="nameCourse"
             label="Khóa tốt nghiệp"
             options={graduationCourses}
+            fullWidth
           />
           <Select control={control} name="ranking" label="Xếp loại" options={rankingOptions} />
-          <Select control={control} name="year" label="Năm tốt nghiệp" options={graduationYears} />
+          <AutoComplete
+            control={control}
+            name="year"
+            label="Năm tốt nghiệp"
+            options={graduationYears}
+          />
           <Select
             control={control}
             name="formOfTraining"

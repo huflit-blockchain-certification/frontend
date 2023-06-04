@@ -1,4 +1,4 @@
-const generator = {
+const Generator = {
   generateRandomString(numbers: number) {
     let randomString = ''
 
@@ -68,6 +68,22 @@ const generator = {
 
     return `${firstName} ${lastName}`
   },
+  qrGenerator({
+    idDAC,
+    iSt,
+    sharedField,
+  }: {
+    idDAC: string | string[]
+    iSt: string | string[] | undefined
+    sharedField?: string | string[] | undefined
+  }) {
+    return (
+      window.location.origin +
+      `/verify/${idDAC}${iSt ? `?iSt=${iSt}` : ''}${
+        sharedField ? `?sharedField=${sharedField}` : ''
+      }`
+    )
+  },
 }
 
-export default generator
+export default Generator

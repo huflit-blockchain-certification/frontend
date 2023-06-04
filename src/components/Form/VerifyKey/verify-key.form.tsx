@@ -13,11 +13,13 @@ import { Toast } from '@/components/common/Toast/response.component'
 import translate from 'translate'
 import { DACDetail } from '@/pages/dac/[idDAC]'
 import { Modal } from '@/components/common/Modal/modal.component'
+import Generator from '@/utils/generator'
 
 export default function VerifyKeyForm() {
   const [loading, setLoading] = useState(false)
   const [dac, setDAC] = useState()
   const [open, setOpen] = useState(false)
+  const [qrURL, setQRURL] = useState<string | undefined>()
   const { control, handleSubmit } = useForm<VerifyKey>({
     defaultValues: verifyKeyDefault,
     resolver: yupResolver(verifyKeySchema),
@@ -32,6 +34,7 @@ export default function VerifyKeyForm() {
         }
         setDAC(verifyKey?.data?.data)
         setOpen(true)
+        setQRURL(Generator.qrGenerator({ idDAC: data.idDAC, iSt: data.identity }))
         setLoading(false)
       } catch (err: any) {
         setLoading(false)
@@ -53,8 +56,8 @@ export default function VerifyKeyForm() {
           Tra cứu văn bằng chứng chỉ
         </div>
         <Input control={control} label="Tên" name="name" required fullWidth />
-        <Input control={control} label="Mã sinh viên / CMND" name="identity" required fullWidth />
-        <Input control={control} label="Mã" name="key" required fullWidth />
+        <Input control={control} label="CMND" name="identity" required fullWidth />
+        <Input control={control} label="Mã xác thực" name="key" required fullWidth />
         <Input control={control} label="Mã hồ sơ" name="idDAC" required fullWidth />
         <Button type="submit" variant="outlined">
           Tra cứu
@@ -62,7 +65,11 @@ export default function VerifyKeyForm() {
       </form>
       {dac && (
         <Modal open={open} setOpen={setOpen}>
-          <DACDetail DAC={dac} pdfOptions={{ enable: true }} />
+          <DACDetail
+            DAC={dac}
+            pdfOptions={{ enable: true }}
+            QRCodeOptions={{ enable: true, data: qrURL }}
+          />
         </Modal>
       )}
     </div>

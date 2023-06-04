@@ -1,5 +1,6 @@
 import { errorMessage } from '@/components/common/Toast/response.toast.component'
 import { DacApi } from '@/pages/api/DAC/dac.api'
+import Generator from '@/utils/generator'
 import { useRouter } from 'next/router'
 import { useEffect, useState } from 'react'
 import { useCookies } from 'react-cookie'
@@ -42,12 +43,7 @@ export function useDisclosedDAC({
             iSt: isPublic ? iSt : undefined,
             sharedField,
           })
-          setQRURL(
-            window.location.origin +
-              `/verify/${idDAC}${iSt ? `?iSt=${iSt}` : ''}${
-                sharedField ? `?sharedField=${sharedField}` : ''
-              }`
-          )
+          setQRURL(Generator.qrGenerator({ idDAC, iSt, sharedField }))
           setDisclosedDAC(disclosedDAC)
         }
         setLoading(false)

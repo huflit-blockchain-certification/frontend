@@ -1,8 +1,9 @@
-import * as React from 'react'
+import React, { useState } from 'react'
 import csvtojson from 'csvtojson'
 import Swal from 'sweetalert2'
 import { Toast } from '../../Toast/response.component'
-import { errorMessage } from '../../Toast/response.toast.component'
+import { errorMessage, successMessage } from '../../Toast/response.toast.component'
+import { LoadingIndicator } from '../../LoadingIndicator/loadingIndicator.component'
 
 export interface CSVInputProps {
   requestAfterConfirmCSV?: (data: any[]) => Promise<any>
@@ -11,8 +12,10 @@ export interface CSVInputProps {
 }
 
 export function CSVInput({ requestAfterConfirmCSV, titleCSV, afterImport }: CSVInputProps) {
+  const [loading, setLoading] = useState(false)
   const handleCSV = (event: React.ChangeEvent<HTMLInputElement>): void => {
     try {
+      setLoading(true)
       const file = event.target.files?.[0]
       if (!file) return
       const reader = new FileReader()
@@ -36,14 +39,17 @@ export function CSVInput({ requestAfterConfirmCSV, titleCSV, afterImport }: CSVI
             afterImport(response)
           }
           if (!response) return
-          await Toast.fire({ title: 'Nhập thành công!', icon: 'success' })
         }
       }
       reader.readAsText(file)
-    } catch (err) {
-      errorMessage()
+      setLoading(false)
+      successMessage('Nhập')
+    } catch (err: any) {
+      setLoading(false)
+      errorMessage(err.message)
     }
   }
+  if (loading) return <LoadingIndicator />
   return (
     <>
       <label
