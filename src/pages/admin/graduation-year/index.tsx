@@ -32,7 +32,7 @@ export default function CertTypeListPage() {
   } = useTableControl({
     accessToken: cookies.access_token,
     listingApi: GraduationYearApi.listGraduationYear,
-    deleteApi: GraduationYearApi.detailGraduationYear,
+    deleteApi: GraduationYearApi.deleteGraduationYear,
   })
   const { columns } = useGraduationYearColumn({ setOpen, setRecordId })
 
