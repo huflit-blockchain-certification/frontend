@@ -1,9 +1,8 @@
 import React, { useState } from 'react'
 import csvtojson from 'csvtojson'
 import Swal from 'sweetalert2'
-import { Toast } from '../../Toast/response.component'
 import { errorMessage, successMessage } from '../../Toast/response.toast.component'
-import { LoadingIndicator } from '../../LoadingIndicator/loadingIndicator.component'
+import { LoadingButtonContent } from '../../LoadingButtonContent/loadingbutton-content'
 
 export interface CSVInputProps {
   requestAfterConfirmCSV?: (data: any[]) => Promise<any>
@@ -14,14 +13,16 @@ export interface CSVInputProps {
 export function CSVInput({ requestAfterConfirmCSV, titleCSV, afterImport }: CSVInputProps) {
   const [loading, setLoading] = useState(false)
   const handleCSV = (event: React.ChangeEvent<HTMLInputElement>): void => {
-    try {
-      setLoading(true)
-      const file = event.target.files?.[0]
-      if (!file) return
-      const reader = new FileReader()
-      reader.onload = async () => {
+    setLoading(true)
+    const file = event.target.files?.[0]
+    if (!file) return
+    const reader = new FileReader()
+    reader.onload = async () => {
+      try {
         const contents = reader.result as string
-        const data = await csvtojson({ ignoreEmpty: true }).fromString(contents)
+        const data = await csvtojson({ ignoreEmpty: true, delimiter: [',', ';'] }).fromString(
+          contents
+        )
         const confirmResult = await Swal.fire({
           title: `Bạn có chắc muốn nhập ${data?.length || 0} dữ liệu từ excel không ?`,
           icon: 'warning',
@@ -31,25 +32,30 @@ export function CSVInput({ requestAfterConfirmCSV, titleCSV, afterImport }: CSVI
           confirmButtonText: 'Yes',
         })
 
-        if (confirmResult.isConfirmed) {
-          if (!data?.length) return
-          if (!requestAfterConfirmCSV) return
+        if (!confirmResult.isConfirmed) return setLoading(false)
+        try {
+          if (!data?.length) {
+            throw new Error('Không có dữ liệu để nhập')
+          }
+          if (!requestAfterConfirmCSV) {
+            throw new Error('Lỗi hệ thống !')
+          }
           const response = await requestAfterConfirmCSV(data)
           if (afterImport) {
             afterImport(response)
           }
-          if (!response) return
+        } catch (err: any) {
+          throw new Error(err.message)
         }
+        setLoading(false)
+      } catch (err: any) {
+        setLoading(false)
+        errorMessage(err.message)
       }
-      reader.readAsText(file)
-      setLoading(false)
-      successMessage('Nhập')
-    } catch (err: any) {
-      setLoading(false)
-      errorMessage(err.message)
     }
+    reader.readAsText(file)
+    successMessage('Nhập')
   }
-  if (loading) return <LoadingIndicator />
   return (
     <>
       <label
@@ -58,15 +64,23 @@ export function CSVInput({ requestAfterConfirmCSV, titleCSV, afterImport }: CSVI
         focus:ring-green-300 font-medium rounded-lg text-sm px-5 py-2.5 dark:bg-green-600 
         dark:hover:bg-green-700 dark:focus:ring-green-800"
       >
-        {titleCSV || 'Excel'}
-        <input
-          id={titleCSV}
-          type="file"
-          onChange={handleCSV}
-          accept=".csv"
-          value=""
-          className="hidden"
-        />
+        {!loading ? (
+          <>
+            {titleCSV || 'Excel'}
+            <input
+              id={titleCSV}
+              type="file"
+              onChange={handleCSV}
+              accept=".csv"
+              value=""
+              className="hidden"
+            />
+          </>
+        ) : (
+          <>
+            <LoadingButtonContent />
+          </>
+        )}
       </label>
     </>
   )

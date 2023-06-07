@@ -130,7 +130,6 @@ export function DACDetail({
         <h1 className="text-2xl font-bold text-center mb-4">
           Hiệu trưởng trường {DAC?.universityName}
         </h1>
-        <div className="text-center">cấp</div>
         <div className="flex flex-col gap-3">
           {fieldDefault.map((field, index) => {
             return <DACCustomRender key={index} field={field} data={DAC?.[field]} DAC={DAC} />

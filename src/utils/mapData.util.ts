@@ -47,7 +47,7 @@ const MapData = {
       const response = await requestFn({ data: mappedData, accessToken: cookies, idParam })
       return response
     } catch (err: any) {
-      errorMessage(err.message)
+      throw new Error(err.message)
     }
   },
 }

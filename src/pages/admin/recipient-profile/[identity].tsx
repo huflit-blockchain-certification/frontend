@@ -160,9 +160,8 @@ export default function RecipientProfilePage() {
               idParam={idParam}
               afterIssue={(response: any) => {
                 try {
-                  setListData(
-                    listData.filter((item: any) => !response?.data?.data.includes(item?._id))
-                  )
+                  const mappedResponsed = response?.data?.data?.map((res: any) => res._id)
+                  setListData(listData.filter((item: any) => !mappedResponsed.includes(item._id)))
                   successMessage('Cấp bằng')
                   setOpen(false)
                 } catch (err: any) {

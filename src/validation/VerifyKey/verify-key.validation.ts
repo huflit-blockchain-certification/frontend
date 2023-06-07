@@ -6,7 +6,7 @@ const verifyKeySchema = yup.object().shape({
     .required('Tên không được để trống')
     .min(3)
     .max(50)
-    .matches(/^[a-zA-Z ]+$/),
+    .matches(/^[^\d!"#$%&'()*+,\-.\/:;<=>?@\[\\\]^_`{|}~0-9]+$/),
   identity: yup
     .string()
     .required('CMND không được để trống')
