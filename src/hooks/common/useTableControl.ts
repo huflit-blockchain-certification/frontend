@@ -61,7 +61,7 @@ export function useTableControl({
       await Promise.all(
         rowSelectionModel.map((row) => deleteApi({ id: row, accessToken, idParam }))
       )
-      setListData(listData.filter((item: any) => !rowSelectionModel.includes(item?._id)))
+      await listing()
       successMessage('Xóa thành công')
     } catch (err: any) {
       errorMessage(err.message)
@@ -103,30 +103,33 @@ export function useTableControl({
       }
     },
   }
+  const listing = async () => {
+    try {
+      setLoading(true)
+      const keyword = queryOptions?.filterModel?.quickFilterValues?.[0]
+      const listData = await listingApi({
+        page: pagination.page,
+        accessToken,
+        keyword,
+        idParam,
+        extraParams: extraInfo && { ...extraInfo.extraParams },
+      })
+      if (!listData) {
+        return
+      }
+      setListData(listData.data.data)
+      if (totalPage !== listData.data.pagination.totalPage) {
+        setTotalPage(listData.data.pagination.totalPage)
+      }
+      setLoading(false)
+    } catch (err: any) {
+      setLoading(false)
+      console.log(err.message)
+    }
+  }
   useEffect(() => {
     ;(async () => {
-      try {
-        setLoading(true)
-        const keyword = queryOptions?.filterModel?.quickFilterValues?.[0]
-        const listData = await listingApi({
-          page: pagination.page,
-          accessToken,
-          keyword,
-          idParam,
-          extraParams: extraInfo && { ...extraInfo.extraParams },
-        })
-        if (!listData) {
-          return
-        }
-        setListData(listData.data.data)
-        if (totalPage !== listData.data.pagination.totalPage) {
-          setTotalPage(listData.data.pagination.totalPage)
-        }
-        setLoading(false)
-      } catch (err: any) {
-        setLoading(false)
-        console.log(err.message)
-      }
+      await listing()
     })()
   }, [
     accessToken,
