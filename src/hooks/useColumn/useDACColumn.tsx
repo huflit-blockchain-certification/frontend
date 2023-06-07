@@ -29,32 +29,12 @@ export default function useDACColumns({ open, setOpen, setRecordId }: ColumnsPro
     {
       field: 'idNumber',
       headerName: 'Số vào sổ',
-      renderCell(params: any) {
-        return (
-          <>
-            {params?.value ? (
-              <AiOutlineCheckCircle size={18} />
-            ) : (
-              <AiOutlineCloseCircle size={18} />
-            )}
-          </>
-        )
-      },
+      width: 150,
     },
     {
       field: 'registrationNum',
       headerName: 'Số hiệu',
-      renderCell(params: any) {
-        return (
-          <>
-            {params?.value ? (
-              <AiOutlineCheckCircle size={18} />
-            ) : (
-              <AiOutlineCloseCircle size={18} />
-            )}
-          </>
-        )
-      },
+      width: 150,
     },
     {
       field: 'universityName',
