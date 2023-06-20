@@ -69,38 +69,12 @@ export function useTableControl({
   }
 
   const crudOperation: CRUDInterface = {
-    create: (response: any) => {
-      const responseData = response?.data?.data
-      if (!response || !responseData) return
-      if (Array.isArray(responseData)) {
-        setListData([...responseData, ...listData])
-      } else {
-        setListData([responseData, ...listData])
-      }
+    //Get list again is the best idea
+    create: async (response: any) => {
+      await listing()
     },
-    edit: (response: any) => {
-      const responseData = response?.data?.data
-      if (!response || !responseData) return
-      if (Array.isArray(responseData)) {
-        setListData(
-          listData.map((item: any) => {
-            const resItem = responseData.find((res) => res._id === item._id)
-            if (resItem) {
-              item = resItem
-            }
-            return item
-          })
-        )
-      } else {
-        setListData(
-          listData.map((item: any) => {
-            if (item?._id === responseData._id) {
-              item = responseData
-            }
-            return item
-          })
-        )
-      }
+    edit: async (response: any) => {
+      await listing()
     },
   }
   const listing = async () => {

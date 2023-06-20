@@ -63,7 +63,7 @@ export function DACStepper({ children, activeStep, setActiveStep, qrURL }: DACSt
             optional?: React.ReactNode
           } = {}
           if (isStepOptional(index)) {
-            labelProps.optional = <Typography variant="caption">Optional</Typography>
+            labelProps.optional = <Typography variant="caption">Tùy chọn</Typography>
           }
           if (isStepSkipped(index)) {
             stepProps.completed = false
