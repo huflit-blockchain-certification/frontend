@@ -1,6 +1,6 @@
 import { CardCertificate } from '@/components/common/CardCertificate/card-certificate.component'
 import { MainLayout } from '@/layouts'
-import React, { useEffect } from 'react'
+import React from 'react'
 import { DacApi } from '../api/DAC/dac.api'
 import { useCookies } from 'react-cookie'
 import { useTableControl } from '@/hooks/common/useTableControl'
@@ -22,8 +22,7 @@ export default function InfoPage(props: infoPageProps) {
         {!loading ? (
           <>
             {listData &&
-              listData?.map((data: any) => {
-                const dac = data?.dac
+              listData?.map((dac: any) => {
                 if (!dac) return
                 return (
                   <CardCertificate
