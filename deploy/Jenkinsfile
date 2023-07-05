@@ -5,7 +5,6 @@ pipeline {
             steps {
                 sshagent(['13.250.7.241']) {
                     sh '''
-                        ssh -i "ec2instance.pem" ec2-user@ec2-13-250-7-241.ap-southeast-1.compute.amazonaws.com "
                         cd /home/blockchain/frontend &&
                         git pull &&
                         docker-compose up -d --build
