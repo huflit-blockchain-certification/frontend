@@ -3,8 +3,9 @@ pipeline {
     stages {
         stage('Deployy') {
             steps {
-                sshagent(['13.250.7.241']) {
+                sshagent(['ec2-credential']) {
                     sh '''
+                        mkdir hello
                         cd /home/blockchain/frontend &&
                         git pull &&
                         docker-compose up -d --build
